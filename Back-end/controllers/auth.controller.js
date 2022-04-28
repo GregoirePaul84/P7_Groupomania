@@ -59,9 +59,9 @@ module.exports.login = async (req,res) => {
         const password = req.body.password;
 
         // Récupération de l'email et vérification de son existence dans la DB
-        const findUser = 'SELECT * FROM user WHERE email = ?';
+        const findUserEmail = 'SELECT * FROM user WHERE email = ?';
 
-        mySqlConnection.query( findUser, [email], async (error, results) => {
+        mySqlConnection.query( findUserEmail, [email], async (error, results) => {
             if (error) {
 
                 console.log(error);
@@ -109,7 +109,7 @@ module.exports.login = async (req,res) => {
 // ********** Déconnexion d'un utilisateur ********** //
 
 module.exports.logout = (req,res) => {
-    
+
     res.clearCookie('jwt');
     res.status(200).json({ message: "Utilisateur déconnecté !"});
 };
