@@ -82,7 +82,7 @@ module.exports.login = async (req,res) => {
                         token: jwt.sign(
                           { userId: results[0].id },
                           process.env.TOKEN_SECRET,
-                          { expiresIn: '24h' }
+                          { expiresIn: process.env.TOKEN_EXPIRES }
                         ),
                     })
                 } 
@@ -103,4 +103,13 @@ module.exports.login = async (req,res) => {
     catch {
         res.status(200).json({ error });
     }
+};
+
+
+// ********** Déconnexion d'un utilisateur ********** //
+
+module.exports.logout = (req,res) => {
+    
+    res.clearCookie('jwt');
+    res.status(200).json({ message: "Utilisateur déconnecté !"});
 };
