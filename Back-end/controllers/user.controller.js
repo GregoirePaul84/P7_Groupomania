@@ -35,6 +35,7 @@ module.exports.readOneUser = (req, res) => {
 module.exports.updateUser = (req, res) => {
     
     try {
+        console.log(req.file);
         const updatedata = `UPDATE user SET first_name= ?, last_name= ?, date_naissance= ?, profil_pic= ?, bio= ? WHERE id= ?`;
         const bodyInfos = [req.body.first_name, req.body.last_name, req.body.date_naissance, req.body.profil_pic, req.body.bio, req.params.id];
 
