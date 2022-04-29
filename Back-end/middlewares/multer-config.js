@@ -23,6 +23,7 @@ const storage = multer.diskStorage({
         // Génère un nom de fichier unique
         callback(null, name + Date.now() + '.' + extension);
     }
+    
 });
 
 // Exportation du middleware multer 
