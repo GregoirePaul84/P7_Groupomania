@@ -1,4 +1,3 @@
-const { json } = require('express');
 const mySqlConnection = require('../config/db');
 const fs = require('fs');
 
@@ -27,13 +26,16 @@ module.exports.readOneUser = (req, res) => {
     }
 }
 
-// ********** Modification d'un utilisateur ********** //
-
-module.exports.postUser = (req, res) => {
-    const picObject = JSON.parse(req.body);
-    console.log(picObject);
-    res.status(200).json( {message: "Photo envoyée"} );
-};
+// module.exports.postPicUser = (req, res) => {
+//     if(req.file) {
+//         console.log(req.file);
+//         res.status(201).json( {message: "Fichier envoyé"});
+//     }
+//     else {
+//         console.log(req.body);
+//         res.status(500).json( {message: "Erreur"} );
+//     }
+// };
 
 
 // ********** Modification d'un utilisateur ********** //

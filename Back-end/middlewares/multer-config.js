@@ -15,7 +15,7 @@ const MIME_TYPES = {
 const storage = multer.diskStorage({
     // Indique à multer d'enregistrer dans le fichier images
     destination: (req, file, callback) => {
-        callback(null, './images');
+        callback(null, 'images');
     },
     filename: (req, file, callback) => {
         // Gère le problème des espaces
