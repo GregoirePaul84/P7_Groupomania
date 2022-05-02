@@ -78,9 +78,9 @@ module.exports.login = async (req,res) => {
                     console.log("---------> Connexion réussie")
                     res.status(200).json({
                         message:`${results[0].first_name} est connecté!`, 
-                        userId: results[0].id,
+                        userId: results[0].user_id,
                         token: jwt.sign(
-                          { userId: results[0].id },
+                          { userId: results[0].user_id },
                           process.env.TOKEN_SECRET,
                           { expiresIn: process.env.TOKEN_EXPIRES }
                         ),
