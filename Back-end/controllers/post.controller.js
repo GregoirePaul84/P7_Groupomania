@@ -82,10 +82,11 @@ module.exports.createPost = (req, res) => {
 
 module.exports.deletePost = (req, res) => {
     try {
-        const sqlDeletePost = `DELETE * FROM posts WHERE posts.post_id = ${req.params.id}`;
+        const postId = req.params.id;
+        const sqlDeletePost = `DELETE FROM posts WHERE posts.post_id = ${postId}`;
         mySqlConnection.query (sqlDeletePost, (error, results) => {
             if (!error) {
-                res.status(200).json( {results} );
+                res.status(200).json( {message : "Suppression du post réussie !"} );
             }
             else {
                 res.status(500).json( {error} );
@@ -94,6 +95,6 @@ module.exports.deletePost = (req, res) => {
         
     }
     catch {
-        res.status(500).json( {message : "Suppression du post échoué"} );
+        res.status(500).json( {message : "Suppression du post échouée"} );
     }
 };
