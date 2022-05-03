@@ -1,6 +1,7 @@
 const mySqlConnection = require('../config/db');
 const fs = require('fs');
 
+
 // ********** Récupération d'un utilisateur ********** //
 
 module.exports.readOneUser = (req, res) => {

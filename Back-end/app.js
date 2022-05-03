@@ -7,7 +7,7 @@ const path = require('path');
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
 const postRoutes = require('./routes/post.routes');
-
+const commentRoutes = require('./routes/comment.routes');
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -28,6 +28,6 @@ app.use('/api/user', userRoutes);
 
 app.use('/api/post', postRoutes);
 
-
+app.use('/api/comment', commentRoutes);
 
 module.exports = app;
