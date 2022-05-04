@@ -27,16 +27,16 @@ module.exports.readOneUser = (req, res) => {
     }
 }
 
-// module.exports.postPicUser = (req, res) => {
-//     if(req.file) {
-//         console.log(req.file);
-//         res.status(201).json( {message: "Fichier envoyé"});
-//     }
-//     else {
-//         console.log(req.body);
-//         res.status(500).json( {message: "Erreur"} );
-//     }
-// };
+module.exports.postPicUser = (req, res) => {
+    if(req.file) {
+        console.log(req.file);
+        res.status(201).json( {message: "Fichier envoyé"});
+    }
+    else {
+        console.log(req.file);
+        res.status(500).json( {message: "Erreur"} );
+    }
+};
 
 
 // ********** Modification d'un utilisateur ********** //
