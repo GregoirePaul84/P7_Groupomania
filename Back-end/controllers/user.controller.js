@@ -1,5 +1,8 @@
 const mySqlConnection = require('../config/db');
-const fs = require('fs');
+
+const jwt = require('jsonwebtoken');
+
+require('dotenv').config({path: './config/.env'})
 
 
 // ********** Récupération d'un utilisateur ********** //
@@ -22,21 +25,10 @@ module.exports.readOneUser = (req, res) => {
             } 
         });
     }
-    catch {
+    catch (error) {
         res.status(500).json( {error});
     }
 }
-
-module.exports.postPicUser = (req, res) => {
-    if(req.file) {
-        console.log(req.file);
-        res.status(201).json( {message: "Fichier envoyé"});
-    }
-    else {
-        console.log(req.file);
-        res.status(500).json( {message: "Erreur"} );
-    }
-};
 
 
 // ********** Modification d'un utilisateur ********** //
@@ -44,7 +36,7 @@ module.exports.postPicUser = (req, res) => {
 module.exports.updateUser = (req, res) => {
     
     try {
-
+        
         console.log(req.file);
 
         const SqlUpdateUser = `UPDATE user SET first_name= ?, last_name= ?, date_naissance= ?, profil_pic= ?, bio= ? WHERE user_id= ?`;
@@ -88,6 +80,31 @@ module.exports.deleteUser = (req, res) => {
     catch {
         res.status(200).json( { error });
     }
-   
-
 }
+
+
+// ********** Envoi d'une photo de profil au serveur ********** //
+
+module.exports.postPicUser = (req, res) => {
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
+        const userId = decodedToken.userId;
+        const image_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+        const imageUserArray = [image_url, userId]
+        const sqlInsertProfilPic = `INSERT INTO profil_image (image_url, user_id) VALUES (?, ?)`;
+
+        mySqlConnection.query(sqlInsertProfilPic, imageUserArray, (error, results) => {
+            if (!error) {
+                res.status(201).json( {message: "Image de profil envoyée !"});
+            }
+            else {
+                res.status(500).json( {error} );
+            }
+        });
+    }
+
+    catch (error) {
+        res.status(500).json( {error});
+    }
+};

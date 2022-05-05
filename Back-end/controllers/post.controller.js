@@ -140,7 +140,7 @@ module.exports.likeDislikePost = (req, res) => {
 
         else if (req.body.like == 0) {
 
-            // Vérification si l'utilisateur a déjà liké le post
+            // Vérification si l'utilisateur a déjà disliké le post
             const sqlCheckDislike = `SELECT user_id FROM dislikes WHERE post_id = ?`;
             mySqlConnection.query( sqlCheckDislike, postId, (error, results) => {
                 for (let i in results) {
@@ -153,7 +153,7 @@ module.exports.likeDislikePost = (req, res) => {
                     }             
                 }
 
-                // Si l'utilisateur n'a pas liké, insertion du post_id et user_id dans la table likes
+                // Si l'utilisateur n'a pas disliké, insertion du post_id et user_id dans la table likes
                 const sqlDislike = `INSERT INTO dislikes(post_id, user_id) VALUES (? , ?)`;
                 mySqlConnection.query( sqlDislike, userPostId, (error, results) => {
         
