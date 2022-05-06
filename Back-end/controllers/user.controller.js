@@ -47,8 +47,11 @@ module.exports.updateUser = (req, res) => {
                 res.status(500).json( {message: "Problème d'envoi de fichier"} );;
             }
             else {
+                
                 console.log("===> Photo modifiée");
-                res.status(200).json( {message: "Photo de profil modifiée !"} );
+                if (req.body.first_name === undefined && req.body.first_name === undefined && req.body.bio === undefined && req.body.bio === undefined && req.body.date_naissance === undefined) {
+                    res.status(200).json( {message: "Photo de profil modifiée !"} );
+                }     
             }
         });
     }
