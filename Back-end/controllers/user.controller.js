@@ -37,21 +37,28 @@ module.exports.updateUser = (req, res) => {
     
     // Si l'utilisateur souhaite changer sa photo de profil
     if (req.file) {
-        console.log(req.file);
         const image_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
         const imageUserArray = [image_url, req.params.id, req.params.id];
-        const sqlInsertProfilPic = `UPDATE profil_image SET image_url= ?, user_id= ? WHERE user_id= ?`;
+        const sqlUpdateProfilPic = `UPDATE profil_image SET image_url= ?, user_id= ? WHERE user_id= ?`;
+        const sqlUpdateUserProfilPic = `UPDATE user SET profil_pic= ? WHERE user_id= ?`;
 
-        mySqlConnection.query(sqlInsertProfilPic, imageUserArray, (error, results) => {
+        // Mise à jour de la table profil_image
+        mySqlConnection.query(sqlUpdateProfilPic, imageUserArray, (error, results) => {
             if (error) {
                 res.status(500).json( {message: "Problème d'envoi de fichier"} );;
             }
             else {
-                
-                console.log("===> Photo modifiée");
-                if (req.body.first_name === undefined && req.body.first_name === undefined && req.body.bio === undefined && req.body.bio === undefined && req.body.date_naissance === undefined) {
-                    res.status(200).json( {message: "Photo de profil modifiée !"} );
-                }     
+                // Mise à jour de la colonne profil_pic de la table user
+                mySqlConnection.query(sqlUpdateUserProfilPic, [image_url, req.params.id], (error, results) => {
+                    if (error) {
+                        res.status(500).json( {error} );;
+                    }
+                    // Si aucune modification d'informations utilisateur, on renvoie un status 200
+                    else if (req.body.first_name === undefined && req.body.first_name === undefined && req.body.bio === undefined && req.body.bio === undefined && req.body.date_naissance === undefined){
+                        console.log("===> Photo modifiée");
+                        res.status(200).json( {message: "Photo de profil modifiée !"} );
+                    }
+                });
             }
         });
     }
@@ -70,8 +77,6 @@ module.exports.updateUser = (req, res) => {
             }
         });
     }
-    
-    
 }
 
 // ********** Suppression d'un utilisateur de la DB ********** //
@@ -80,7 +85,7 @@ module.exports.updateUser = (req, res) => {
 module.exports.deleteUser = (req, res) => {
 
     try {
-        const sqlDeleteUser = `DELETE FROM user WHERE user_id = ?`; 
+        const sqlDeleteUser = `DELETE FROM user WHERE user_id = ?`;
         console.log(req.params.id);
 
         mySqlConnection.query(sqlDeleteUser, req.params.id, (error, results) => {
