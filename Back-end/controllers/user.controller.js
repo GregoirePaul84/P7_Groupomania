@@ -54,7 +54,7 @@ module.exports.updateUser = (req, res) => {
                         res.status(500).json( {error} );;
                     }
                     // Si aucune modification d'informations utilisateur, on renvoie un status 200
-                    else if (req.body.first_name === undefined && req.body.first_name === undefined && req.body.bio === undefined && req.body.bio === undefined && req.body.date_naissance === undefined){
+                    else if (req.body.first_name === undefined && req.body.last_name === undefined && req.body.bio === undefined && req.body.date_naissance === undefined){
                         console.log("===> Photo modifiée");
                         res.status(200).json( {message: "Photo de profil modifiée !"} );
                     }
