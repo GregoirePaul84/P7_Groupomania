@@ -83,24 +83,27 @@ module.exports.updateUser = (req, res) => {
 
 
 module.exports.deleteUser = (req, res) => {
+    
+    const sqlDeleteUser = `DELETE FROM user WHERE user_id = ?`;
+    const sqlDeleteProfilImage = `DELETE FROM profil_image WHERE user_id = ?`;
 
-    try {
-        const sqlDeleteUser = `DELETE FROM user WHERE user_id = ?`;
-        console.log(req.params.id);
-
-        mySqlConnection.query(sqlDeleteUser, req.params.id, (error, results) => {
-            if (!error) {
-                res.status(200).json( {message: 'Utilisateur supprimé!' });
-            }
-            else {
-                res.status(500).json( {error} );
-            }
-
-        });
-    }
-    catch {
-        res.status(200).json( { error });
-    }
+    // Suppression de l'utilisateur de la table user
+    mySqlConnection.query(sqlDeleteUser, req.params.id, (error, results) => {
+        if (error) {
+            res.status(500).json( {error} );    
+        }
+        else {
+            // Suppression de la photo de profil liée à l'utilisateur
+            mySqlConnection.query(sqlDeleteProfilImage, req.params.id, (error, results) => {
+                if(error) {
+                    res.status(500).json( {error} ); 
+                }
+                else {
+                    res.status(200).json( {message: 'Utilisateur supprimé!' });
+                }
+            });
+        }
+    });
 }
 
 
