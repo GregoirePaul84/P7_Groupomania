@@ -9,25 +9,20 @@ require('dotenv').config({path: './config/.env'})
 
 module.exports.readOneUser = (req, res) => {
     
-    try {
-        // Stockage de l'id des paramètres de l'URL
-        const userId = req.params.id;
-        const sqlGetUser = `SELECT * FROM user WHERE user_id = ${userId}`; 
+    // Stockage de l'id des paramètres de l'URL
+    const userId = req.params.id;
+    const sqlGetUser = `SELECT * FROM user WHERE user_id = ${userId}`; 
 
-        mySqlConnection.query(sqlGetUser, (error, results) => {
-            
-            if (results.length == 1) {
-                res.status(200).json( {message: "Utilisateur récupéré"});
-            }
+    mySqlConnection.query(sqlGetUser, (error, results) => {
+        
+        if (results.length == 1) {
+            res.status(200).json( {message: "Utilisateur récupéré"});
+        }
 
-            else {
-                res.status(404).json( {message: "Utilisateur introuvable"} )
-            } 
-        });
-    }
-    catch (error) {
-        res.status(500).json( {error});
-    }
+        else {
+            res.status(404).json( {message: "Utilisateur introuvable"} )
+        } 
+    });
 }
 
 
@@ -65,8 +60,8 @@ module.exports.updateUser = (req, res) => {
 
     // Si l'utilisateur ne change que ses données personnelles
     if (req.body.first_name || req.body.last_name || req.body.date_naissance || req.body.bio) {
-        const SqlUpdateUser = `UPDATE user SET first_name= ?, last_name= ?, date_naissance= ?, profil_pic= ?, bio= ? WHERE user_id= ?`;
-        const bodyInfos = [req.body.first_name, req.body.last_name, req.body.date_naissance, req.body.profil_pic, req.body.bio, req.params.id];
+        const SqlUpdateUser = `UPDATE user SET first_name= ?, last_name= ?, date_naissance= ?, bio= ? WHERE user_id= ?`;
+        const bodyInfos = [req.body.first_name, req.body.last_name, req.body.date_naissance, req.body.bio, req.params.id];
 
         mySqlConnection.query(SqlUpdateUser, bodyInfos, function (error, results) {
             if (!error) {
@@ -110,25 +105,20 @@ module.exports.deleteUser = (req, res) => {
 // ********** Envoi d'une photo de profil au serveur ********** //
 
 module.exports.postPicUser = (req, res) => {
-    try {
-        const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
-        const userId = decodedToken.userId;
-        const image_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
-        const imageUserArray = [image_url, userId]
-        const sqlInsertProfilPic = `INSERT INTO profil_image (image_url, user_id) VALUES (?, ?)`;
+    
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
+    const userId = decodedToken.userId;
+    const image_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+    const imageUserArray = [image_url, userId]
+    const sqlInsertProfilPic = `INSERT INTO profil_image (image_url, user_id) VALUES (?, ?)`;
 
-        mySqlConnection.query(sqlInsertProfilPic, imageUserArray, (error, results) => {
-            if (!error) {
-                res.status(201).json( {message: "Image de profil envoyée !"});
-            }
-            else {
-                res.status(500).json( {error} );
-            }
-        });
-    }
-
-    catch (error) {
-        res.status(500).json( {error});
-    }
+    mySqlConnection.query(sqlInsertProfilPic, imageUserArray, (error, results) => {
+        if (!error) {
+            res.status(201).json( {message: "Image de profil envoyée !"});
+        }
+        else {
+            res.status(500).json( {error} );
+        }
+    });
 };

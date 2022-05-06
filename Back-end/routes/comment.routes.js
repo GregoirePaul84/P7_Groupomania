@@ -4,7 +4,7 @@ const auth = require('../middlewares/auth.middleware');
 const multer = require('../middlewares/multer-config');
 
 router.get('/:id', auth, commentCtlr.readAllComments);
-router.get('/:id', auth, commentCtlr.readOneComment);
+// router.get('/:id', auth, commentCtlr.readOneComment);
 router.post('/', auth, multer, commentCtlr.createComment);
 router.delete('/:id', auth, commentCtlr.deleteComment);
 
