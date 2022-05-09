@@ -216,3 +216,37 @@ module.exports.likeDislikePost = (req, res) => {
         res.status(500).json( {error} );
     }
 };
+
+// ********** Comptage de likes ********** //
+
+module.exports.countLike = (req, res) => {
+
+    const sqlCountLikes = `SELECT COUNT(*) FROM likes WHERE post_id = ?`;
+
+    mySqlConnection.query(sqlCountLikes, req.body.post_id, (error, results) => {
+        if (error) {
+            res.status(500).json( {error} );
+        }
+        else {
+            res.status(200).json( {results} );
+        }
+    });
+
+};
+
+// ********** Comptage de dislikes ********** //
+
+module.exports.countdisLike = (req, res) => {
+
+    const sqlCountDislikes = `SELECT COUNT(*) FROM dislikes WHERE post_id = ?`;
+
+    mySqlConnection.query(sqlCountDislikes, req.body.post_id, (error, results) => {
+        if (error) {
+            res.status(500).json( {error} );
+        }
+        else {
+            res.status(200).json( {results} );
+        }
+    });
+
+};
