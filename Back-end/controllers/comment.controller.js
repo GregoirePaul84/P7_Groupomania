@@ -46,57 +46,71 @@ module.exports.createComment = (req, res) => {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
     const userId = decodedToken.userId;
+    const commentBody = [req.body.post_id, userId];
 
-    // Si le commentaire comporte une image
-    if(req.file) {
-        const image_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
-        req.body.Imgurl = image_url;
-        const imageUserArray = [image_url, userId];
-        const commentBody = [req.body.post_id, userId, req.body.text, image_url];
-        const sqlInsertCommentImg = `INSERT INTO comment_image (image_url, user_id) VALUES (?, ?)`;
-        const sqlCreateComment = `INSERT INTO comments(post_id, user_id, text, image_url) VALUES (?, ?, ?, ?)`;
+    // Insertion du commentaire dans la DB
+    const sqlCreateComment = `INSERT INTO comments(post_id, user_id) VALUES (?, ?)`;
 
-        mySqlConnection.query(sqlInsertCommentImg, imageUserArray, (error, results) => {
-            if (error) {
-                res.status(500).json( {error} );
-            }
-            // Si le commentaire comporte une image seule
-            else if (req.body.text === undefined) {
-                console.log("===> Image créée");
+    mySqlConnection.query(sqlCreateComment, commentBody, (error, results) => {
+        if (error) {
+            res.status(500).json( {error} );
+        }
+        else {
+            console.log("===> Commentaire créé");
+        
+            // Si une image est présente, on met à jour l'URL de l'image dans la table "comments"
+            if(req.file) {
+                const image_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+                req.body.imgUrl = image_url;
                 
-                mySqlConnection.query( sqlCreateComment, commentBody, (error, results) => {
-            
+                const sqlUpdateImgUrl = `UPDATE comments SET image_url= ? WHERE comment_id= LAST_INSERT_ID()`;
+
+                mySqlConnection.query( sqlUpdateImgUrl, image_url, (error, results) => {
                     if (error) {
                         res.status(500).json( {error} );
                     }
                     else {
-                        console.log("===> Commentaire créé");
-                        res.status(201).json( {message: "Commentaire avec image seule envoyée !"});
-                    } 
-                }); 
+                        console.log("===> URL de l'image modifiée !");
+                    }
+                });
             }
-            else {
-                console.log("===> Image créée");
-            }
-        });
-    };
-    
-    // Si le commentaire comporte au moins du texte
-    if (req.body.text) {
-        const sqlCreateComment = `INSERT INTO comments(post_id, user_id, text, image_url) VALUES (?, ?, ?, ?)`;
-        const commentBody = [req.body.post_id, userId, req.body.text, req.body.Imgurl];
 
-        mySqlConnection.query( sqlCreateComment, commentBody, (error, results) => {
-            
-            if (error) {
-                res.status(500).json( {error} );
+            // Si du texte est présent, on met à jour le texte dans la table "comments"
+            if(req.body.text) {
+                const sqlUpdateText = `UPDATE comments SET text= ? WHERE comment_id= LAST_INSERT_ID()`;
+
+                mySqlConnection.query( sqlUpdateText, req.body.text, (error, results) => {
+                    
+                    if (error) {
+                        res.status(500).json( {error} );
+                    }
+                    else if (req.file === undefined) {
+                        console.log("===> Texte créé !");
+                        res.status(200).json( {message: "Texte créé !"} )
+                    } 
+                });
             }
-            else {
-                console.log("===> Commentaire créé");
-                res.status(201).json( {message: "Commentaire créé !"} )
-            } 
-        });
-    } 
+
+            // Si une image est présente, on insert un nouvel objet dans comment_image
+            if (req.file) {
+                const imageUserArray = [req.body.imgUrl, userId];
+                const sqlInsertCommentImg = `INSERT INTO comment_image (comment_id, image_url, user_id) VALUES (LAST_INSERT_ID(), ?, ?)`;
+
+                mySqlConnection.query( sqlInsertCommentImg, imageUserArray, (error, results) => { 
+                    if (error) {
+                        res.status(500).json( {error} );
+                    }
+                    if (req.body.text === undefined) {
+                        console.log("===> Image créée");
+                        res.status(201).json( {message: "Commentaire avec image seule envoyé !"});
+                    } 
+                    else {
+                        res.status(201).json( {message: "Commentaire image + texte envoyé !"});
+                    }
+                });
+            }
+        }
+    });
 }
 
 // ********** Suppression d'un commentaire ********** //
