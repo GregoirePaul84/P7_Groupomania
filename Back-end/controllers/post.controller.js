@@ -52,29 +52,74 @@ module.exports.readOnePost = (req, res) => {
 
 module.exports.createPost = (req, res) => {
     
-    try {
-        // Récupération de l'ID du token afin de lier le post à l'userID
-        const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
-        const userId = decodedToken.userId;
-        
-        const sqlCreatePost = `INSERT INTO posts(user_id, post_body) VALUES (?, ?)`;
-        const postBody = [userId, req.body.post_body];
+    // Récupération de l'ID du token
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
+    const userId = decodedToken.userId;
 
-        mySqlConnection.query( sqlCreatePost, postBody, (error, results) => {
-            
-            if (!error) {
-                res.status(201).json( {message: "Post créé"} )
+    // Insertion du post dans la DB
+    const sqlCreateComment = `INSERT INTO posts(user_id) VALUES (?)`;
+
+    mySqlConnection.query(sqlCreateComment, userId, (error, results) => {
+        if (error) {
+            res.status(500).json( {error} );
+        }
+        else {
+            console.log("===> Post créé");
+
+            // Si du texte est présent, on met à jour le texte dans la table "posts"
+            if(req.body.text) {
+                const sqlUpdateText = `UPDATE posts SET text= ? WHERE post_id= LAST_INSERT_ID()`;
+
+                mySqlConnection.query( sqlUpdateText, req.body.text, (error, results) => {
+                    
+                    if (error) {
+                        res.status(500).json( {error} );
+                    }
+                    // Si il n'y a pas d'image
+                    else if (req.file === undefined) {
+                        console.log("===> Texte créé !");
+                        res.status(201).json( {message: "Texte créé !"} )
+                    } 
+                });
             }
-            else {
-                res.status(500).json( {error} );
-            } 
-        });
-        
-    }
-    catch (error) {
-        res.status(500).json( {error} );
-    }
+
+            // Si une image est présente, on met à jour l'URL de l'image dans la table "posts"
+            if (req.file) {
+
+                const image_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+                
+                const sqlUpdateImgUrl = `UPDATE posts SET image_url= ? WHERE post_id= LAST_INSERT_ID()`;
+
+                mySqlConnection.query( sqlUpdateImgUrl, image_url, (error, results) => {
+                    if (error) {
+                        res.status(500).json( {error} );
+                    }
+                    else {
+                        console.log("===> URL de l'image modifiée !");
+                    }
+                });
+
+                // Puis on insert un nouvel objet dans la table "post_image"
+                const imageUserArray = [image_url, userId];
+                const sqlInsertPostImg = `INSERT INTO post_image (post_id, image_url, user_id) VALUES (LAST_INSERT_ID(), ?, ?)`;
+
+                mySqlConnection.query( sqlInsertPostImg, imageUserArray, (error, results) => { 
+                    if (error) {
+                        res.status(500).json( {error} );
+                    }
+                    // Si il n'y a pas de texte
+                    if (req.body.text === undefined) {
+                        console.log("===> Image créée");
+                        res.status(201).json( {message: "Post avec image seule envoyé !"});
+                    } 
+                    else {
+                        res.status(201).json( {message: "Post image + texte envoyé !"});
+                    }
+                });
+            }
+        }
+    });
 };
 
 // ********** Suppression d'un post ********** //
