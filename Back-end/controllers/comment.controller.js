@@ -57,9 +57,27 @@ module.exports.createComment = (req, res) => {
         }
         else {
             console.log("===> Commentaire créé");
-        
+
+            // Si du texte est présent, on met à jour le texte dans la table "comments"
+            if(req.body.text) {
+                const sqlUpdateText = `UPDATE comments SET text= ? WHERE comment_id= LAST_INSERT_ID()`;
+
+                mySqlConnection.query( sqlUpdateText, req.body.text, (error, results) => {
+                    
+                    if (error) {
+                        res.status(500).json( {error} );
+                    }
+                    // Si il n'y a pas d'image
+                    else if (req.file === undefined) {
+                        console.log("===> Texte créé !");
+                        res.status(200).json( {message: "Texte créé !"} )
+                    } 
+                });
+            }
+
             // Si une image est présente, on met à jour l'URL de l'image dans la table "comments"
-            if(req.file) {
+            if (req.file) {
+
                 const image_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
                 req.body.imgUrl = image_url;
                 
@@ -73,26 +91,8 @@ module.exports.createComment = (req, res) => {
                         console.log("===> URL de l'image modifiée !");
                     }
                 });
-            }
 
-            // Si du texte est présent, on met à jour le texte dans la table "comments"
-            if(req.body.text) {
-                const sqlUpdateText = `UPDATE comments SET text= ? WHERE comment_id= LAST_INSERT_ID()`;
-
-                mySqlConnection.query( sqlUpdateText, req.body.text, (error, results) => {
-                    
-                    if (error) {
-                        res.status(500).json( {error} );
-                    }
-                    else if (req.file === undefined) {
-                        console.log("===> Texte créé !");
-                        res.status(200).json( {message: "Texte créé !"} )
-                    } 
-                });
-            }
-
-            // Si une image est présente, on insert un nouvel objet dans comment_image
-            if (req.file) {
+                // Puis on insert un nouvel objet dans la table "comment_image"
                 const imageUserArray = [req.body.imgUrl, userId];
                 const sqlInsertCommentImg = `INSERT INTO comment_image (comment_id, image_url, user_id) VALUES (LAST_INSERT_ID(), ?, ?)`;
 
@@ -100,6 +100,7 @@ module.exports.createComment = (req, res) => {
                     if (error) {
                         res.status(500).json( {error} );
                     }
+                    // Si il n'y a pas de texte
                     if (req.body.text === undefined) {
                         console.log("===> Image créée");
                         res.status(201).json( {message: "Commentaire avec image seule envoyé !"});
