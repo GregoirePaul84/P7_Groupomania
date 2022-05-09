@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const postCtlr = require('../controllers/post.controller');
 const auth = require('../middlewares/auth.middleware');
-const multer = require('../middlewares/multer-config');
+const upload = require('../middlewares/multer-config');
 
 // Récupérer tous les posts
 router.get('/', auth, postCtlr.readAllPosts);
@@ -10,7 +10,7 @@ router.get('/', auth, postCtlr.readAllPosts);
 router.get('/:id', auth, postCtlr.readOnePost);
 
 // Créer un post
-router.post('/', auth, multer, postCtlr.createPost);
+router.post('/', auth, upload.single('post_image'), postCtlr.createPost);
 
 // Liker / Disliker un post
 router.post('/:id', auth, postCtlr.likeDislikePost);

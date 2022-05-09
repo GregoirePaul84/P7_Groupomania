@@ -13,19 +13,30 @@ const MIME_TYPES = {
   
 // Objet de configuration pour multer
 const storage = multer.diskStorage({
-    // Indique à multer d'enregistrer dans le fichier images
+    // Indique à multer les dossiers où il doit enregistrer les images
     destination: (req, file, callback) => {
-        callback(null, 'images');
+        if (file.fieldname === "profil_image") {
+            callback(null, './images/profil_images');
+        }
+        if (file.fieldname === "post_image") {
+            callback(null, './images/post_images');
+        }
+        if (file.fieldname === "comment_image") {
+            callback(null, './images/comment_images');     
+        }
     },
+
     filename: (req, file, callback) => {
         // Gère le problème des espaces
         const name = file.originalname.split(' ').join('_');
         const extension = MIME_TYPES[file.mimetype];
         // Génère un nom de fichier unique
-        callback(null, name + '.' + extension);
+        callback(null, name + 'file.' + extension);
     },
     
 });
 
 // Exportation du middleware multer 
-module.exports = multer({storage: storage}).single('image');
+const upload = multer({storage: storage});
+
+module.exports = upload;
