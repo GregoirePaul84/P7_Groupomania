@@ -33,8 +33,7 @@ module.exports.register = async (req, res) => {
         mySqlConnection.query( addNewUser, user, (error, results) => {
             
             if(error) {
-                console.log(error);
-                res.status(409).json({ message: "Utilisateur déjà existant" });
+                res.status(409).json({ error });
             }
 
             else {
@@ -75,7 +74,7 @@ module.exports.login = async (req,res) => {
                 const comparePassword = await bcrypt.compare(password, hashedPassword);
 
                 if (comparePassword) {
-                    console.log("---------> Connexion réussie")
+                    console.log("===> Connexion réussie")
                     res.status(200).json({
                         message:`${results[0].first_name} est connecté!`, 
                         userId: results[0].user_id,
@@ -87,7 +86,7 @@ module.exports.login = async (req,res) => {
                     })
                 } 
                 else {
-                    console.log("---------> Mot de passe incorrect")
+                    console.log("===> Mot de passe incorrect")
                     res.status(403).json("Mot de passe incorrect!")
                 }
             }

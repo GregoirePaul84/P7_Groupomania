@@ -11,7 +11,7 @@ passwordSchema
 .has().lowercase()                                              // Doit contenir des minuscules
 .has().digits(2)                                                // Doit contenir au moins 2 chiffres
 .has().not().spaces()                                           // Espaces interdits
-.is().not().oneOf(['Passw0rd', 'Password123', 'Azerty123']);    // Valeurs interdites
+.is().not().oneOf(['Passw0rd', 'Password123']);    // Valeurs interdites
 
 // Vérification de la qualité du password
 module.exports = (req, res, next) => {
@@ -24,6 +24,6 @@ module.exports = (req, res, next) => {
     // Si le mot de passe n'est pas conforme 
     else {
         console.log('Mot de passe non conforme');
-        return res.status(400).json( { message: "Le mot de passe doit contenir entre 8 et 20 caractères, au moins 1 majuscule, au moins 2 chiffres"} )
+        return res.status(400).json( {message: "Merci de créer un mot de passe fort: 8-20 caractères, A-Z, a-z, 0-9, pas d'espaces"} );
     }
 };

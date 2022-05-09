@@ -8,9 +8,7 @@ const multer = require('../middlewares/multer-config');
 
 router.get('/:id', auth, userCtlr.readOneUser);
 router.post('/', auth, multer, userCtlr.postPicUser);
-// router.delete('/image', auth, multer, userCtlr.postPicUser);
 router.put('/:id', auth, multer, userCtlr.updateUser);
 router.delete('/:id', auth, userCtlr.deleteUser);
-
 
 module.exports = router;
