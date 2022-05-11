@@ -9,14 +9,12 @@ require('dotenv').config({path: './config/.env'})
 
 module.exports.readOneUser = (req, res) => {
     
-    // Stockage de l'id des paramètres de l'URL
-    const userId = req.params.id;
-    const sqlGetUser = `SELECT * FROM user WHERE user_id = ${userId}`; 
+    const sqlGetUser = `SELECT * FROM user WHERE user_id = ?`; 
 
-    mySqlConnection.query(sqlGetUser, (error, results) => {
+    mySqlConnection.query(sqlGetUser, req.params.id, (error, results) => {
         
         if (results.length == 1) {
-            res.status(200).json( {message: "Utilisateur récupéré"});
+            res.status(200).json( {message: "Utilisateur récupéré !", results});
         }
 
         else {

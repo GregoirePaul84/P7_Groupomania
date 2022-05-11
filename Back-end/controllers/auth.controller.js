@@ -96,9 +96,7 @@ module.exports.login = async (req,res) => {
             }         
             
         })
-        
     }
-
     catch {
         res.status(200).json({ error });
     }
