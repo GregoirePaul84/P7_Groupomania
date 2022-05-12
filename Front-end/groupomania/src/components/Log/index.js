@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import RegisterForm from './RegisterForm';
 import LoginForm from './LoginForm';
 
-const Log = () => {
+const Log = (props) => {
     const [registerModal, setRegisterModal] = useState(true);
     const [loginModal, setLoginModal] = useState(false);
 
@@ -10,14 +10,14 @@ const Log = () => {
         if (event.target.id === "register"){
             setLoginModal(false);
             setRegisterModal(true);
-            
+            props.color_block[1](true);
         }
-        else if (event.target.id === "login") {
+        else if (event.target.id === "login") { 
             setLoginModal(true);
             setRegisterModal(false);
-            
-        }
+            props.color_block[1](false);
 
+        }
     }
 
     return (
