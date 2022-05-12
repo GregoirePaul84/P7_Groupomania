@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import RegisterForm from './Register';
-import LoginForm from './Login';
+import RegisterForm from './RegisterForm';
+import LoginForm from './LoginForm';
 
 const Log = () => {
     const [registerModal, setRegisterModal] = useState(true);
@@ -10,10 +10,12 @@ const Log = () => {
         if (event.target.id === "register"){
             setLoginModal(false);
             setRegisterModal(true);
+            
         }
         else if (event.target.id === "login") {
             setLoginModal(true);
             setRegisterModal(false);
+            
         }
 
     }

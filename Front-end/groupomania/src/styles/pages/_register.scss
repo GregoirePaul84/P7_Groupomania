@@ -1,0 +1,89 @@
+.register-page {
+    background-image: url("../../images/cities-city-singapore-naght.jpg");
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    
+    .colored-box-red {
+        background: #C23A2D;
+        display: inline-block;
+        width: 18.8em;
+        height: 28em;
+        opacity: 69%;
+        margin-left: 20%;
+        position: relative;
+        z-index: 1;
+        bottom: 5px;
+        right: 5px;
+        transform: skew(358deg, -2deg);
+          
+    }
+
+    .colored-box-purple {
+        background: #483993;
+        display: inline-block;
+        width: 18.8em;
+        height: 28em;
+        opacity: 69%;
+        margin-left: 20%;
+        position: relative;
+        z-index: 1;
+        bottom: 5px;
+        right: 5px;
+        transform: skew(358deg, -2deg);
+    }
+
+    .log-container{
+        width: 18em;
+        height: 28em;
+        margin-left: 20%;
+        position: absolute;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: #222029;
+        .groupomania-logo {
+            width: 100%;
+            padding: 40px 20px;
+        }
+    };
+
+    .form-container {
+        display:flex;
+        flex-direction: column-reverse;
+        margin: 40px 25px;
+        
+        ul {
+            display: flex;
+            text-align: center;
+            gap: 2em;
+            vertical-align: middle;
+        }
+    }
+    #register {
+        background: #C23A2D;
+        width: 8em;
+        height: 3em;
+        border-radius: 13px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+    }
+
+    #login {
+        background: #483993;
+        width: 8em;
+        height: 3em;
+        border-radius: 13px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 10px;
+    }
+    
+};
+
