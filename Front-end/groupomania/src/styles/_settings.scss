@@ -7,7 +7,6 @@
         src: local('Almarai Regular'), url('../styles/assets/fonts/Almarai-Regular.woff'), format('woff');
     }
         
-    
     @font-face {
         font-family: 'Almarai Light';
         font-style: normal;
@@ -22,8 +21,9 @@
         font-weight: normal;
         src: local('Almarai Bold'), url('../styles/assets/fonts/Almarai-Bold.woff'), format('woff');
     }
-        
-
+    
+    font-family: 'Almarai Regular', sans-serif;
+    
     // Réglages généraux
     margin: 0;
     padding: 0;
@@ -31,11 +31,9 @@
     background-repeat: no-repeat;
     background-size: cover;
     list-style: none;
-    
     color: #ffffff;
-    &::selection {
-        background-color: lightblue;
-    }
+   
 }
+
 
 

@@ -7,8 +7,8 @@
     .colored-box-red {
         background: #C23A2D;
         display: inline-block;
-        width: 20.8em;
-        height: 32em;
+        width: 20.9em;
+        height: 34em;
         opacity: 69%;
         margin-left: 20%;
         position: relative;
@@ -22,8 +22,8 @@
     .colored-box-purple {
         background: #483993;
         display: inline-block;
-        width: 20.8em;
-        height: 32em;
+        width: 20.9em;
+        height: 34em;
         opacity: 69%;
         margin-left: 20%;
         position: relative;
@@ -33,9 +33,9 @@
         transform: skew(358deg, -2deg);
     }
 
-    .log-container{
+    .log-container {
         width: 20em;
-        height: 32em;
+        height: 34em;
         margin-left: 20%;
         position: absolute;
         z-index: 2;
@@ -44,35 +44,111 @@
         flex-direction: column;
         background: #222029;
 
+        .img-container {
+            display: flex;
+            flex-direction: row-reverse;
+            margin: 25px 0;
+
+            h1{
+                align-self: center;
+                margin-right: 20px;
+            }
+
+            .bounce-in-right {
+                -webkit-animation: bounce-in-right 1.1s both;
+                        animation: bounce-in-right 1.1s both;
+            }
+        }
+
         .groupomania-message {
             position: absolute;
-            top: 3.7em;
-            left: 5em;
+            top: 5.2em;
+            left: 5.3em;
             font-weight: bold;
-            font-size: 1.2em;
+            font-size: 1em;
             width: 100%;
+            font-weight: 300;
         }
 
         .groupomania-logo {
-            width: 100%;
-            padding: 30px;
+            width: 70px;
+            height: 70px;
+            margin-right: 6px
         }
     };
 
     .form-container {
-        margin: 0 25px;
+        margin: 0 40px;
+
+        div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2{
+            font-size: 1.1em;
+            font-style: italic;
+            text-align: center;
+            margin-top: 20px;
+        }
         
         ul {
             display: flex;
             text-align: center;
             gap: 2em;
             vertical-align: middle;
-            margin-bottom: 1em;
+            margin-bottom: 1.2em;
         }
-        form {
+        #login-form {
             display: flex;
             flex-direction: column;
             gap: 5px;
+
+            label {
+                font-size:0.9em;
+                margin-left: 10px;
+                color: E6E6E6;
+                font-family: 'Almarai Light';
+            }
+
+            input {
+                border-radius: 13px;
+                margin-bottom: 8px;
+                background: #E6E6E6;
+                height: 25px;
+                color: #222029;
+            }
+
+            .submit-button-red {
+                background-color: #C23A2D;
+                width: 8em;
+                height: 3em;
+                border-radius: 13px;
+                align-self: center;
+                margin-top: 13px;
+                font-weight: bold;
+                transition: transform 400ms;
+                border: none;
+                color: #ffffff;
+                &:hover {
+                    transform: scale(1.15);
+                }
+            }
+            .submit-button-purple {
+                background-color: #483993;
+                width: 8em;
+                height: 3em;
+                border-radius: 13px;
+                align-self: center;
+                margin-top: 2em;
+                font-weight: bold;
+                transition: transform 400ms;
+                border: none;
+                color: #ffffff;
+                &:hover {
+                    transform: scale(1.15);
+                }
+            }
         }
     }
     #register {
@@ -80,11 +156,10 @@
         width: 8em;
         height: 3em;
         border-radius: 13px;
-        font-weight: bold;
         display: flex;
         align-items: center;
         justify-content: center;
-        
+        font-size: 0.9em;
     }
 
     #login {
@@ -92,11 +167,11 @@
         width: 8em;
         height: 3em;
         border-radius: 13px;
-        font-weight: bold;
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 0 10px;
+        font-size: 0.9em;
     }
     
 };

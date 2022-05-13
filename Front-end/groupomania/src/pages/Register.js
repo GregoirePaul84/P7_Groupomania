@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Log from '../components/Log';
-import logo from '../images/icon-left-font-monochrome-white.svg';
+import logo from '../images/Logo.png';
 
 const Register = () => {
 
@@ -14,11 +14,12 @@ const Register = () => {
             </div>
             <div className="log-container">
                 <div className="img-container">
+                    <h1 className="bounce-in-right">Groupomania</h1>
                     <img src={ logo } alt="Logo de Groupomania" className="groupomania-logo" />
                 </div>
-                <h1 className="groupomania-message">
+                <h2 className="groupomania-message">
                     Réseau social d'entreprise
-                </h1>
+                </h2>
                 <Log color_block={[changeColor, setChangeColor]}/>
             </div>
         </div>

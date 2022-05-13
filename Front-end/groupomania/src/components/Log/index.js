@@ -2,21 +2,24 @@ import React, { useState } from 'react';
 import RegisterForm from './RegisterForm';
 import LoginForm from './LoginForm';
 
+
 const Log = (props) => {
     const [registerModal, setRegisterModal] = useState(true);
     const [loginModal, setLoginModal] = useState(false);
+    console.log(LoginForm);
 
     const handleModals = (event) => {
         if (event.target.id === "register"){
             setLoginModal(false);
             setRegisterModal(true);
             props.color_block[1](true);
+            
         }
         else if (event.target.id === "login") { 
             setLoginModal(true);
             setRegisterModal(false);
             props.color_block[1](false);
-
+           
         }
     }
 
