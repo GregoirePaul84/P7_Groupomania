@@ -10,6 +10,34 @@ const RegisterForm = () => {
   const handleRegister = (event) => {
     // On empêche le rechargement par défaut de la page lors de la soumission du formulaire
     event.preventDefault();
+
+    const emailError = document.querySelector('.email.error');
+    const passwordError = document.querySelector('.password.error');
+
+    axios({
+      method: "post",
+      url: `${process.env.REACT_APP_API_URL}api/auth/register`,
+      withCredentials: true,
+      data: {
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        password: password
+
+      }
+    })
+    .then((res) => {
+      if (res.data.errors) {
+        emailError.innerHTML = res.data.errors.email;
+        passwordError.innerHTML = res.data.errors.password;
+      }
+      else {
+        window.location = '/';
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   }
 
     return (
