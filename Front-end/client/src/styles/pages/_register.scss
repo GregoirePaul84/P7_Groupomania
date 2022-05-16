@@ -119,6 +119,12 @@
                 color: #222029;
             }
 
+            .email_error, .password_error {
+                color: #C23A2D;
+                font-size: 0.9em;
+                margin-left: 10px;
+            }
+
             .submit-button-red {
                 background-color: #C23A2D;
                 width: 8em;

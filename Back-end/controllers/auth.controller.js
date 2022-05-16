@@ -61,14 +61,19 @@ module.exports.login = async (req,res) => {
         const findUserEmail = 'SELECT * FROM user WHERE email = ?';
 
         mySqlConnection.query( findUserEmail, [email], async (error, results) => {
-            if (error) {
+            
+            if (email && password === '') {
+                res.status(200).json({ empty_password: "Merci d'indiquer votre mot de passe" });
+                return;
+            }
 
-                console.log(error);
-                res.status(200).json({ error });
+            if (password && email === '') {
+                res.status(200).json({ empty_email: "Merci d'indiquer votre email" });
+                return;
             }
             
-            if (results.length == 1) {
-
+            if (email && password) {
+                console.log(results);
                 // Récupération du password hashé de la base de données
                 const hashedPassword = results[0].password;
                 const comparePassword = await bcrypt.compare(password, hashedPassword);
@@ -87,12 +92,13 @@ module.exports.login = async (req,res) => {
                 } 
                 else {
                     console.log("===> Mot de passe incorrect")
-                    res.status(403).json("Mot de passe incorrect!")
+                    res.status(403).json( {wrong_password: 'Mot de passe incorrect !'} )
                 }
             }
             
             else {
-                res.status(404).json({ message: 'Utilisateur non trouvé!' });
+                console.log(req.body);
+                res.status(404).json( { error } );
             }         
             
         })

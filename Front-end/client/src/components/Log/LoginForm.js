@@ -9,8 +9,8 @@ const LoginForm = () => {
         // On empêche le rechargement par défaut de la page lors de la soumission du formulaire
         event.preventDefault();
 
-        const emailError = document.querySelector('.email.error');
-        const passwordError = document.querySelector('.password.error');
+        const emailError = document.querySelector('.email_error');
+        const passwordError = document.querySelector('.password_error');
 
         axios({
           method: "post",
@@ -22,18 +22,38 @@ const LoginForm = () => {
           },
         })
 
-        .then((res) => {
-            if (res.data.errors) {
-              emailError.innerHTML = res.data.errors.email;
-              passwordError.innerHTML = res.data.errors.password;
-            }
-            else {
-              alert('connecté !')
-            }
+        .then((res, error) => {
+          
+          // Si le champ email est vide
+          if (res.data.empty_email) {
+            emailError.innerHTML = `${res.data.empty_email}`;
+            return;
+          }
+
+          // Si le champ password est vide
+          if (res.data.empty_password) {
+            passwordError.innerHTML = `${res.data.empty_password}`;
+            return;
+          }
+
+          // Si l'email et le password correspondent
+          else {
+            console.log(res);
+            alert('connecté !')
+            // window.location = '/';
+          }  
         })
 
         .catch((error) => {
-          console.log(error);
+
+          // Si mot de passe incorrect
+          if (error.response.data.wrong_password) {
+            passwordError.innerHTML = `${error.response.data.wrong_password}`;
+          }
+          else {
+            console.log(error);
+          }
+          
         })
     }
 
@@ -43,14 +63,14 @@ const LoginForm = () => {
             <br />
             <label htmlFor="email">Email</label>
             <input type="text" name="email" id="email" onChange={(event) => setEmail(event.target.value)} />
-            <div className="email error">
-
+            <div className="email_error">
+              {/* Merci d'inquer votre email */}
             </div>
             <br />
             <label htmlFor="password">Mot de passe</label>
             <input type="password" name="password" id="password" onChange={(event) => setPassword(event.target.value)} />
-            <div className="email error">
-
+            <div className="password_error">
+              {/* Merci d'indiquer votre mot de passe */}
             </div>
             <br />
             <input type="submit" value="Se connecter" className='submit-button-purple' />
