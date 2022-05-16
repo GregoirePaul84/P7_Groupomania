@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 
-
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -14,26 +13,28 @@ const LoginForm = () => {
         const passwordError = document.querySelector('.password.error');
 
         axios({
-        method: "post",
-        url: `${process.env.REACT_APP_API_URL}api/auth/login`,
-        withCredentials: true,
-        data: {
-            email: email,
-            password: password
-        }
+          method: "post",
+          url: `${process.env.REACT_APP_API_URL}api/auth/login`,
+          withCredentials: true,
+          data: {
+              email: email,
+              password: password
+          },
         })
+
         .then((res) => {
             if (res.data.errors) {
               emailError.innerHTML = res.data.errors.email;
               passwordError.innerHTML = res.data.errors.password;
             }
             else {
-              window.location = '/';
+              alert('connecté !')
             }
-          })
-          .catch((error) => {
-            console.log(error);
-          })
+        })
+
+        .catch((error) => {
+          console.log(error);
+        })
     }
 
     return (

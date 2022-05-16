@@ -32,7 +32,7 @@ const RegisterForm = () => {
         passwordError.innerHTML = res.data.errors.password;
       }
       else {
-        window.location = '/';
+        alert('compte créé !')
       }
     })
     .catch((error) => {
