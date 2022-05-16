@@ -47,7 +47,7 @@
         .img-container {
             display: flex;
             flex-direction: row-reverse;
-            margin: 25px 0;
+            margin: 25px 0 20px 0;
 
             h1{
                 align-self: center;
@@ -78,18 +78,19 @@
     };
 
     .form-container {
-        margin: 0 40px;
+        margin: 0 39px;
 
         div {
             display: flex;
             flex-direction: column;
         }
 
-        h2{
-            font-size: 1.1em;
+        h3{
+            font-size: 1em;
             font-style: italic;
             text-align: center;
-            margin-top: 20px;
+            margin: 20px 0;
+            color: rgb(64, 189, 64);
         }
         
         ul {
@@ -99,7 +100,8 @@
             vertical-align: middle;
             margin-bottom: 1.2em;
         }
-        #login-form {
+        
+        #login-form, #register-form {
             display: flex;
             flex-direction: column;
             gap: 5px;
@@ -113,16 +115,15 @@
 
             input {
                 border-radius: 13px;
-                margin-bottom: 8px;
                 background: #E6E6E6;
-                height: 25px;
+                height: 20px;
                 color: #222029;
             }
 
-            .email_error, .password_error {
+            .last_name_error, .first_name_error, .email_error, .password_error, .password_confirm_error {
                 color: #C23A2D;
-                font-size: 0.9em;
-                margin-left: 10px;
+                font-size: 0.8em;
+                height: 10px;
             }
 
             .submit-button-red {
@@ -131,7 +132,7 @@
                 height: 3em;
                 border-radius: 13px;
                 align-self: center;
-                margin-top: 3px;
+                margin-top: 8px;
                 font-weight: bold;
                 transition: transform 400ms;
                 border: none;
@@ -156,6 +157,7 @@
                 }
             }
         }
+        
     }
     #register {
         background: #C23A2D;

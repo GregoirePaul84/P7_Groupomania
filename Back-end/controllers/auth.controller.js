@@ -12,12 +12,18 @@ module.exports.register = async (req, res) => {
     
     try {
 
-        // Création d'une variable "user" contenant les informations utilisateur obligatoires
+        
         const firstName = req.body.first_name;
         const lastName = req.body.last_name;
         const email = req.body.email;
+        const regExName = new RegExp("^[A-Za-z. 'àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ-]{2,20}$");
+        const regExEmail = new RegExp("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,6}$|^$");
+        const testFirstName = regExName.test(firstName);
+        const testLastName = regExName.test(lastName);
+        const testEmail = regExEmail.test(email);
         const passwordHash = await bcrypt.hash(req.body.password, 10);
 
+        // Création d'une variable "user" contenant les informations utilisateur obligatoires
         const user = {
             first_name: firstName,
             last_name: lastName,
@@ -25,7 +31,18 @@ module.exports.register = async (req, res) => {
             password: passwordHash
         }
 
-        console.log(user);
+        if (testFirstName === false) {
+            res.status(400).json( {wrong_first_name: "Prénom incorrect"} );
+            return;
+        }
+        if (testLastName === false) {
+            res.status(400).json( {wrong_last_name: "Nom non conforme"} );
+            return;
+        }
+        if (testEmail === false) {
+            res.status(400).json( {wrong_email: "Email incorrect"} );
+            return;
+        }
 
         // Envoi des données user dans la DB
         const addNewUser = 'INSERT INTO user SET ?';
@@ -80,14 +97,18 @@ module.exports.login = async (req,res) => {
 
                 if (comparePassword) {
                     console.log("===> Connexion réussie")
+                    const token = jwt.sign(
+                        { userId: results[0].user_id },
+                        process.env.TOKEN_SECRET,
+                        { expiresIn: process.env.TOKEN_EXPIRES }
+                    );
+
+                    res.cookie("jwt", token);
+
                     res.status(200).json({
                         message:`${results[0].first_name} est connecté!`, 
                         userId: results[0].user_id,
-                        token: jwt.sign(
-                          { userId: results[0].user_id },
-                          process.env.TOKEN_SECRET,
-                          { expiresIn: process.env.TOKEN_EXPIRES }
-                        ),
+                        token: token
                     })
                 } 
                 else {

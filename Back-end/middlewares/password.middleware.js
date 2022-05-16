@@ -24,6 +24,6 @@ module.exports = (req, res, next) => {
     // Si le mot de passe n'est pas conforme 
     else {
         console.log('Mot de passe non conforme');
-        return res.status(400).json( {message: "Merci de créer un mot de passe fort: 8-20 caractères, A-Z, a-z, 0-9, pas d'espaces"} );
+        return res.status(400).json( {weak_password: "Doit contenir 8-20 caractères, A-Z, a-z, 0-9"} );
     }
 };

@@ -38,6 +38,8 @@ const LoginForm = () => {
 
           // Si l'email et le password correspondent
           else {
+            emailError.innerHTML = ``;
+            passwordError.innerHTML = ``;
             console.log(res);
             alert('connecté !')
             // window.location = '/';
@@ -59,20 +61,16 @@ const LoginForm = () => {
 
     return (
         <form action="" onSubmit={handleLogin} id="login-form">
-            <h2>Heureux de vous revoir !</h2>
-            <br />
             <label htmlFor="email">Email</label>
             <input type="text" name="email" id="email" onChange={(event) => setEmail(event.target.value)} />
             <div className="email_error">
               {/* Merci d'inquer votre email */}
             </div>
-            <br />
             <label htmlFor="password">Mot de passe</label>
             <input type="password" name="password" id="password" onChange={(event) => setPassword(event.target.value)} />
             <div className="password_error">
-              {/* Merci d'indiquer votre mot de passe */}
+              {/* Merci d'indiquer votre mot de passe || Mot de passe incorrect */}
             </div>
-            <br />
             <input type="submit" value="Se connecter" className='submit-button-purple' />
         </form>
     );
