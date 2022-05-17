@@ -6,13 +6,78 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: hidden;
+
+    .profil-pic-name_box {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        
+        .user-name {
+            width: 45%;
+            h2{
+                font-size: 1em;
+                margin-bottom: 10px;
+            }   
+            span {
+                font-size: 0.9em;
+            }
+        }
+    }
     
     .profil-pic {
         align-self: center;
         margin-top: 25px;
         img {
-            width: 150px;
+            width: 120px;
             border-radius: 33px;
+        }
+    }
+
+    .biography, .informations {
+        margin: 1em 0 2em 1em;
+        display: inline-block;
+
+        .title-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1em;
+            .biography-title {
+                color: #8D76FF;
+                width: 40%;
+            }
+            .purple-line {
+                border-bottom: 1px solid #8D76FF;
+                width: 50%;
+                align-self: center;
+                margin-right: 10px;
+            }
+            .informations-title {
+                color: #8D76FF;
+                width: 40%;
+            }
+        }
+        
+        .biography-content {
+            font-family: 'Almarai Light', serif;
+            margin-right: 10px;
+        }
+
+        .informations-content {
+            .info-box {
+                display: flex;
+                justify-content: space-between;
+                margin: 0 10px 15px 0;
+                
+                .info-key {
+                    font-size: 0.9em;
+                    font-weight: bold;
+                }
+                .info-value {
+                    font-family: 'Almarai Light', serif;
+                    font-size: 0.9em;
+                }
+            }
         }
     }
 }

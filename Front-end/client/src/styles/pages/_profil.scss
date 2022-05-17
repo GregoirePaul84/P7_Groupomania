@@ -13,10 +13,11 @@
     .profil-container {
         border: 1px solid;
         height: 90vh;
+        min-height: 678px;
         width: 80vw;
-        min-width: 674px;
+        min-width: 981px;
         display: flex;
         flex-direction: column;
-        
+
     }
 }
