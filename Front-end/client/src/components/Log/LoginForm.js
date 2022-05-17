@@ -40,9 +40,7 @@ const LoginForm = () => {
           else {
             emailError.innerHTML = ``;
             passwordError.innerHTML = ``;
-            console.log(res);
-            alert('connecté !')
-            // window.location = '/';
+            window.location = '/profil/:id';
           }  
         })
 

@@ -1,0 +1,22 @@
+.background-transparent {
+    background-color: rgba(34, 32, 41, 0.4);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profil-page {
+    background-image: url("../../images/cities-city-singapore-naght.jpg");
+    height: 100vh;
+
+    .profil-container {
+        border: 1px solid;
+        height: 90vh;
+        width: 80vw;
+        min-width: 674px;
+        display: flex;
+        flex-direction: column;
+        
+    }
+}

@@ -1,5 +1,9 @@
 // Regroupement et importation de tous les styles
 
 @import './settings';
-@import './pages/register';
 @import './animations/animations';
+@import './pages/register';
+@import './pages/home';
+@import './pages/profil';
+@import './components/nav-bar';
+@import './components/user_description';
