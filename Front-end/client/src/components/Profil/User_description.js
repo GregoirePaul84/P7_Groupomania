@@ -9,7 +9,7 @@ const User_description = () => {
         <section className='user-description-box'>
             <div className="profil-pic-name_box">
                 <div className="profil-pic">
-                    <img src={profilPic} alt="Photo de profil de l'utilisateur" />
+                    <img src={profilPic} alt="Utilisateur" />
                 </div>
                 <div className="user-name">
                     <h2>Zeus, Dieu des dieux</h2>
@@ -18,7 +18,7 @@ const User_description = () => {
             </div>
             <div className="biography">
                 <div className="title-line">
-                    <h3 className="biography-title">
+                    <h3 className="user-titles">
                         Biographie
                     </h3>
                     <div className="purple-line"></div>
@@ -29,7 +29,7 @@ const User_description = () => {
             </div>
             <div className="informations">
                 <div className="title-line">
-                    <h3 className="informations-title">
+                    <h3 className="user-titles">
                         Informations
                     </h3>
                     <div className="purple-line"></div>
