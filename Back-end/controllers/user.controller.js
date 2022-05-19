@@ -99,24 +99,39 @@ module.exports.deleteUser = (req, res) => {
     });
 }
 
+// ********** Récupérer une photo de profil ********** //
+
+module.exports.readProfilImage = (req, res) => {
+    const sqlGetUser = `SELECT profil_pic FROM user WHERE user_id = ?`;
+
+    mySqlConnection.query(sqlGetUser, req.params.id, (error, results) => {
+        if (error) {
+            res.status(500).json( {error} ); 
+        }
+        else {
+            res.status(200).json({results});
+        }
+    });
+}
+
 
 // ********** Envoi d'une photo de profil au serveur ********** //
 
-module.exports.postPicUser = (req, res) => {
+// module.exports.postPicUser = (req, res) => {
     
-    const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
-    const userId = decodedToken.userId;
-    const image_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
-    const imageUserArray = [image_url, userId]
-    const sqlInsertProfilPic = `INSERT INTO profil_image (image_url, user_id) VALUES (?, ?)`;
+//     const token = req.headers.authorization.split(' ')[1];
+//     const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
+//     const userId = decodedToken.userId;
+//     const image_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+//     const imageUserArray = [image_url, userId]
+//     const sqlInsertProfilPic = `INSERT INTO profil_image (image_url, user_id) VALUES (?, ?)`;
 
-    mySqlConnection.query(sqlInsertProfilPic, imageUserArray, (error, results) => {
-        if (!error) {
-            res.status(201).json( {message: "Image de profil envoyée !"});
-        }
-        else {
-            res.status(500).json( {error} );
-        }
-    });
-};
+//     mySqlConnection.query(sqlInsertProfilPic, imageUserArray, (error, results) => {
+//         if (!error) {
+//             res.status(201).json( {message: "Image de profil envoyée !"});
+//         }
+//         else {
+//             res.status(500).json( {error} );
+//         }
+//     });
+// };

@@ -1,9 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from '../../images/icon-left-font-monochrome-white.svg';
-import picLogout from '../../images/Photos de profil groupomania/zeus_arte.PNG';
 
-const NavBar = () => {
+const NavBar = (props) => {
+
+    const objectUser = props.user_info;
+
     return (
         <header>
             <div className="groupomania-logo">
@@ -23,7 +25,7 @@ const NavBar = () => {
                     </div>
                     <div className="picture-logout">
                         <NavLink to="/">
-                            <img src={picLogout} alt="" />
+                            <img src={objectUser.profil_pic} alt="" />
                         </NavLink> 
                     </div>
                 </div>

@@ -5,12 +5,15 @@ import { faPaperPlane} from '@fortawesome/free-solid-svg-icons'
 import { faCamera} from '@fortawesome/free-solid-svg-icons'
 import { faAddressBook} from '@fortawesome/free-solid-svg-icons'
 
-const Posts = () => {
+const Posts = (props) => {
+
+    const objectUser = props.user_info;
+
     return (
         <section className='main-section-profil'>
             <div className="input-pictures-contact-box">
                 <div className="input-box">
-                    <input type="text" placeholder='Quoi de neuf, Zeus?' />
+                    <input type="text" placeholder={`Quoi de neuf, ${objectUser.first_name} ?`}/>
                     <FontAwesomeIcon icon={ faPaperPlane } />
                 </div>
                 <ul className="pictures-contact-box">

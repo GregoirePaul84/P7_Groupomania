@@ -13,14 +13,13 @@
         display: flex;
         align-items: center;
         justify-content: space-around;
-        margin-left: 10px;
+        margin: 30px 0 0 15px;
         
         .user-name {
             width: 45%;
             
             h2{
                 font-size: 1.2em;
-                margin-bottom: 20px;
             }
             path {
                 color: #8D76FF;
@@ -35,15 +34,15 @@
     
     .profil-pic {
         align-self: center;
-        margin-top: 25px;
+        
         img {
-            width: 120px;
+            width: 160px;
             border-radius: 33px;
         }
     }
 
     .biography, .informations {
-        margin: 1em 0 2em 1em;
+        margin: 0 0 2em 1em;
         display: inline-block;
 
         .title-line {
@@ -59,18 +58,33 @@
         }
 
         .informations-content {
+            
             .info-box {
                 display: flex;
-                justify-content: space-between;
                 margin: 0 10px 15px 0;
+
+                &:nth-child(2) .info-key {
+                    margin-right: 52px;
+                }
+                &:nth-child(3) .info-key {
+                    margin-right: 59px;
+                }
+                &:nth-child(4) .info-key {
+                    margin-right: 31px;
+                }
+
+                svg {
+                    margin-right: 10px;
+                }
                 
                 .info-key {
-                    font-size: 0.9em;
+                    margin-right: 10px;
                     font-weight: bold;
                 }
+
                 .info-value {
                     font-family: 'Almarai Light', serif;
-                    font-size: 0.9em;
+                    
                 }
             }
         }

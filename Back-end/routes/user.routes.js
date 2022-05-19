@@ -7,7 +7,10 @@ const upload = require('../middlewares/multer-config');
 router.get('/:id', auth, userCtlr.readOneUser);
 
 // Envoyer une photo de profil à la DB
-router.post('/', auth, upload.single('profil_image'), userCtlr.postPicUser);
+// router.post('/', auth, upload.single('profil_image'), userCtlr.postPicUser);
+
+// Récupérer une photo de profil
+router.get("/image/:id", auth, userCtlr.readProfilImage);
 
 // Modifier les infos ou la photo utilisateur
 router.put('/:id', auth, upload.single('profil_image'), userCtlr.updateUser);
