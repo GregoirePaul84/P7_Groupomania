@@ -97,12 +97,13 @@ module.exports.login = async (req,res) => {
 
                 if (comparePassword) {
                     console.log("===> Connexion réussie")
+
                     const token = jwt.sign(
                         { userId: results[0].user_id },
                         process.env.TOKEN_SECRET,
                         { expiresIn: process.env.TOKEN_EXPIRES }
                     );
-
+                                        
                     res.cookie("jwt", token);
 
                     res.status(200).json({

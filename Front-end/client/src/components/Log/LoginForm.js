@@ -20,6 +20,7 @@ const LoginForm = () => {
               email: email,
               password: password
           },
+          
         })
 
         .then((res, error) => {
@@ -40,7 +41,7 @@ const LoginForm = () => {
           else {
             emailError.innerHTML = ``;
             passwordError.innerHTML = ``;
-            window.location = '/profil/:id';
+            window.location = `/profil/${res.data.userId}`;
           }  
         })
 

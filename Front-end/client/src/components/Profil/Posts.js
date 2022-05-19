@@ -10,7 +10,7 @@ const Posts = () => {
         <section className='main-section-profil'>
             <div className="input-pictures-contact-box">
                 <div className="input-box">
-                    <input type="text" value="Quoi de neuf, Zeus?" />
+                    <input type="text" placeholder='Quoi de neuf, Zeus?' />
                     <FontAwesomeIcon icon={ faPaperPlane } />
                 </div>
                 <ul className="pictures-contact-box">
