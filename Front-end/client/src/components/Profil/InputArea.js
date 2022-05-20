@@ -31,7 +31,7 @@ const Posts = (props) => {
                     <div className="purple-line"></div>
                 </div>
             </div>
-            <UserPosts />
+            <UserPosts user_info={objectUser}/>
         </section>
     );
 };

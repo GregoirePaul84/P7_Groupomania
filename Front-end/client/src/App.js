@@ -8,13 +8,6 @@ const App = () => {
   
   const dispatch = useDispatch();
   
-  // useEffect(()=> {
-  //   function getToken() {
-  //     console.log("bonjour");
-  //   }
-  //   getToken();
-  // }, [])
-
   // Récupération du cookie et décodage du token pour récupérer l'user Id 
   const readCookie = document.cookie;
   const token = readCookie.split('jwt=')[1];

@@ -22,7 +22,6 @@ const Profil = () => {
                     <NavBar user_info={objectUser}/>
                     <UserDescription user_info={objectUser}/>
                     <InputArea user_info={objectUser}/>
-                    
                 </div>
             </div>
         </div>
