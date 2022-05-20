@@ -12,9 +12,6 @@ const User_description = (props) => {
                 <div className="profil-pic">
                     <img src={objectUser.profil_pic} alt="Utilisateur" />
                 </div>
-                <div className="user-name">
-                    <h2>{objectUser.first_name}, {objectUser.last_name}</h2>
-                </div>
             </div>
             <div className="biography">
                 <div className="title-line">

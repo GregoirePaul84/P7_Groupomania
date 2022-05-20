@@ -24,7 +24,7 @@ const NavBar = (props) => {
                         </NavLink>    
                     </div>
                     <div className="picture-logout">
-                        <NavLink to="/">
+                        <NavLink to="/logout">
                             <img src={objectUser.profil_pic} alt="" />
                         </NavLink> 
                     </div>

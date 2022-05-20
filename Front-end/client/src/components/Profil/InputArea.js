@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane} from '@fortawesome/free-solid-svg-icons'
 import { faCamera} from '@fortawesome/free-solid-svg-icons'
 import { faAddressBook} from '@fortawesome/free-solid-svg-icons'
+import UserPosts from './UserPosts';
 
 const Posts = (props) => {
 
@@ -11,6 +12,9 @@ const Posts = (props) => {
 
     return (
         <section className='main-section-profil'>
+            <div className="user-name">
+                <h2>{objectUser.first_name}, {objectUser.last_name} </h2>
+            </div>
             <div className="input-pictures-contact-box">
                 <div className="input-box">
                     <input type="text" placeholder={`Quoi de neuf, ${objectUser.first_name} ?`}/>
@@ -27,6 +31,7 @@ const Posts = (props) => {
                     <div className="purple-line"></div>
                 </div>
             </div>
+            <UserPosts />
         </section>
     );
 };

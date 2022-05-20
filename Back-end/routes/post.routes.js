@@ -6,6 +6,9 @@ const upload = require('../middlewares/multer-config');
 // Récupérer tous les posts
 router.get('/', auth, postCtlr.readAllPosts);
 
+// Récupérer tous les posts d'un utilisateur
+router.get('/all/:id', auth, postCtlr.readAllPostsUser);
+
 // Récupérer 1 post
 router.get('/:id', auth, postCtlr.readOnePost);
 

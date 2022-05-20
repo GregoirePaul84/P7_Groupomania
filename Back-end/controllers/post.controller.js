@@ -25,6 +25,21 @@ module.exports.readAllPosts = (req, res) => {
     }
 };
 
+// ********** Récupération de tous les posts d'un utilisateur ********** //
+
+module.exports.readAllPostsUser = (req, res) => {
+    
+    const sqlGetAllPostsUser = `SELECT * FROM posts WHERE user_id = ?`;
+    mySqlConnection.query( sqlGetAllPostsUser, req.params.id, (error, results) => {
+        if (!error) {
+            res.status(200).json( {results} )
+        }
+        else {
+            res.status(500).json( {error} )
+        }
+    });
+};
+
 // ********** Récupération d'un post ********** //
 
 module.exports.readOnePost = (req, res) => {
@@ -53,7 +68,7 @@ module.exports.readOnePost = (req, res) => {
 module.exports.createPost = (req, res) => {
     
     // Récupération de l'ID du token
-    const token = req.headers.authorization.split(' ')[1];
+    const token = req.headers.cookie.split('jwt=')[1];
     const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
     const userId = decodedToken.userId;
 

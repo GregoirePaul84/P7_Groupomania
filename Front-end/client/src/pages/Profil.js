@@ -1,7 +1,7 @@
 import React from 'react';
-import NavBar from '../components/Profil/Nav-bar';
-import Posts from '../components/Profil/Posts';
-import UserDescription from '../components/Profil/User_description';
+import NavBar from '../components/Profil/NavBar';
+import InputArea from '../components/Profil/InputArea';
+import UserDescription from '../components/Profil/UserDescription';
 import { useSelector } from 'react-redux';
 
 
@@ -16,12 +16,13 @@ const Profil = () => {
 
     return (
         
-            <div className="profil-page">
-                <div className="background-transparent">
+        <div className="profil-page">
+            <div className="background-transparent">
                 <div className="profil-container">
                     <NavBar user_info={objectUser}/>
                     <UserDescription user_info={objectUser}/>
-                    <Posts user_info={objectUser}/>
+                    <InputArea user_info={objectUser}/>
+                    
                 </div>
             </div>
         </div>
