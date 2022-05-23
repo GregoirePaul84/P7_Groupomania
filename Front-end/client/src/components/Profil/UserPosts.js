@@ -11,20 +11,25 @@ const UserPosts = (props) => {
   let posts = {};
   posts = useSelector((state) => state.userPostReducer);
   const postsArray = posts.results;
-  console.log(postsArray);
 
   if (loadPostsUser && userId !== undefined) {
     dispatch(getUserPosts(userId));
     setLoadPostUser(false);
   }
+
+  if (postsArray === undefined) {
+    return;
+  }
+
+  console.log(postsArray);
   
   return (
       <div>
         <div className="user-posts-container">
           <ul>
-            {/* {postsArray.map((post) => {
-                return <li>{post.text}</li> })
-              } */}
+            {postsArray.map((post) => {
+                return <li key={post.post_id}>{post.text}</li> })
+              }
           </ul>
         </div>
       </div>

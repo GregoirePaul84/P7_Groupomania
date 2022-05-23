@@ -8,6 +8,10 @@ import UserPosts from './UserPosts';
 
 const Posts = (props) => {
 
+    function handleClick() {
+        console.log('✨ Ceci est un clic ✨')
+    }
+
     const objectUser = props.user_info;
 
     return (
@@ -17,7 +21,7 @@ const Posts = (props) => {
             </div>
             <div className="input-pictures-contact-box">
                 <div className="input-box">
-                    <input type="text" placeholder={`Quoi de neuf, ${objectUser.first_name} ?`}/>
+                    <input type="text" placeholder={`Quoi de neuf, ${objectUser.first_name} ?`} onClick={handleClick}/>
                     <FontAwesomeIcon icon={ faPaperPlane } />
                 </div>
                 <ul className="pictures-contact-box">
