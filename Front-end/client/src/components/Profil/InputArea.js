@@ -34,8 +34,8 @@ const Posts = (props) => {
                     <h3 className="user-titles">Publications</h3>
                     <div className="purple-line"></div>
                 </div>
+                <UserPosts user_info={objectUser}/>
             </div>
-            <UserPosts user_info={objectUser}/>
         </section>
     );
 };

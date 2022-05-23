@@ -105,3 +105,22 @@
     }
   }
   
+// Animation du spinner des cards
+
+.spinner {
+        animation: spin infinite 5s linear;
+        font-size: 2em;
+        path {
+                color: #8D76FF;
+        }
+      }
+    
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    

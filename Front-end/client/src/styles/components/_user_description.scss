@@ -19,9 +19,32 @@
     
     .profil-pic {
         align-self: center;
+        position: relative;
+
+        .change-profil-pic {
+            position: absolute;
+            width: 160px;
+            height: 130px;
+            border-radius: 33px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+
+            svg {
+                height: 25px;
+            }
+            
+            &:hover {
+                opacity: 1;
+                cursor: pointer;
+                background-color: rgba(141, 118, 255, 0.3);     
+            }
+        }
         
         img {
             width: 160px;
+            height: 130px;
             border-radius: 33px;
         }
     }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserPosts } from '../../actions/user_posts.actions';
+import Card from './Card';
 
 const UserPosts = (props) => {
 
@@ -8,6 +9,7 @@ const UserPosts = (props) => {
   
   const [loadPostsUser, setLoadPostUser] = useState(true);
   const dispatch = useDispatch();
+
   let posts = {};
   posts = useSelector((state) => state.userPostReducer);
   const postsArray = posts.results;
@@ -21,18 +23,14 @@ const UserPosts = (props) => {
     return;
   }
 
-  console.log(postsArray);
-  
   return (
-      <div>
-        <div className="user-posts-container">
-          <ul>
-            {postsArray.map((post) => {
-                return <li key={post.post_id}>{post.text}</li> })
-              }
-          </ul>
-        </div>
-      </div>
+      
+    <div className="user-posts-container">
+      {postsArray.map((post) => {
+        return <Card post={post} key={post.post_id} /> })
+      }
+    </div>
+      
   );
 };
 

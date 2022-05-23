@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAt, faCakeCandles, faLocationDot, faPhone} from '@fortawesome/free-solid-svg-icons'
+import { faCamera, faAt, faCakeCandles, faLocationDot, faPhone} from '@fortawesome/free-solid-svg-icons'
 
 const User_description = (props) => {
 
@@ -10,6 +10,9 @@ const User_description = (props) => {
         <section className='user-description-box'>
             <div className="profil-pic-name_box">
                 <div className="profil-pic">
+                    <div className="change-profil-pic">
+                        <FontAwesomeIcon icon={ faCamera } />
+                    </div>
                     <img src={objectUser.profil_pic} alt="Utilisateur" />
                 </div>
             </div>
@@ -21,7 +24,7 @@ const User_description = (props) => {
                     <div className="purple-line"></div>
                 </div>
                 <div className="biography-content">
-                    "{objectUser.bio}"
+                    {objectUser.bio}
                 </div>
             </div>
             <div className="informations">
