@@ -11,7 +11,6 @@ require('dotenv').config({path: './config/.env'})
 module.exports.register = async (req, res) => {
     
     try {
-
         
         const firstName = req.body.first_name;
         const lastName = req.body.last_name;
@@ -28,7 +27,8 @@ module.exports.register = async (req, res) => {
             first_name: firstName,
             last_name: lastName,
             email: email,
-            password: passwordHash
+            password: passwordHash,
+            profil_pic: 'http://localhost:3000/images/empty_profil_pic.png'
         }
 
         if (testFirstName === false) {
