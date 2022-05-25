@@ -1,7 +1,9 @@
 import axios from "axios";
 
 export const GET_USER = "GET_USER";
+export const GET_USER_POSTS = "GET_USER_POSTS";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
+export const SEND_POST = "SEND_POST";
 
 export const getUser = (userId) => {
 
@@ -64,4 +66,45 @@ export const uploadPicture = (data, userId) => {
             console.log(error);
         }
     }
+}
+
+export const sendPost = (postContent, userId) => {
+    return async (dispatch) => {
+
+        try {
+            // Transformation de la valeur de l'input en format JSON
+            const data = JSON.stringify({
+                "text": `${postContent}`
+              });
+
+            // Envoie des données au backend
+            const res = await axios({
+                method: "post",
+                url: `${process.env.REACT_APP_API_URL}api/post`,
+                withCredentials: true,
+                data: data,
+                headers: { "Content-Type": "application/json" },
+            });
+
+            dispatch({
+                type: SEND_POST,
+                payload: res.data.post
+            });
+
+            // Récupération de tous les posts de l'utilisateur pour actualiser le dernier post
+            const res2 = await axios({
+                method: "get",
+                url: `${process.env.REACT_APP_API_URL}api/post/all/${userId}`,
+                withCredentials: true,
+            });
+            dispatch({
+                type: GET_USER_POSTS,
+                payload: res2.data
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
 }

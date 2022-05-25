@@ -5,14 +5,21 @@ import { faPaperPlane} from '@fortawesome/free-solid-svg-icons'
 import { faCamera} from '@fortawesome/free-solid-svg-icons'
 import { faAddressBook} from '@fortawesome/free-solid-svg-icons'
 import UserPosts from './UserPosts';
+import { sendPost } from '../../actions/user.actions';
+import { useDispatch } from 'react-redux';
 
 const Posts = (props) => {
 
-    function handleClick() {
-        console.log('✨ Ceci est un clic ✨')
-    }
-
     const objectUser = props.user_info;
+    const userId = objectUser.user_id;
+    console.log(objectUser);
+    const dispatch = useDispatch();
+
+    function writePost() {
+        const postContent = document.querySelector('.input-send-post').value;
+        dispatch(sendPost(postContent, userId));
+
+    }
 
     return (
         <section className='main-section-profil'>
@@ -21,8 +28,8 @@ const Posts = (props) => {
             </div>
             <div className="input-pictures-contact-box">
                 <div className="input-box">
-                    <input type="text" placeholder={`Quoi de neuf, ${objectUser.first_name} ?`} onClick={handleClick}/>
-                    <FontAwesomeIcon icon={ faPaperPlane } />
+                    <input type="text" placeholder={`Quoi de neuf, ${objectUser.first_name} ?`} className="input-send-post" />
+                    <FontAwesomeIcon icon={ faPaperPlane } onClick={writePost}/>
                 </div>
                 <ul className="pictures-contact-box">
                     <li><FontAwesomeIcon icon={ faCamera } />Photos</li>

@@ -29,7 +29,7 @@ module.exports.readAllPosts = (req, res) => {
 
 module.exports.readAllPostsUser = (req, res) => {
     
-    const sqlGetAllPostsUser = `SELECT * FROM posts WHERE user_id = ?`;
+    const sqlGetAllPostsUser = `SELECT * FROM posts WHERE user_id = ? ORDER BY created DESC`;
     mySqlConnection.query( sqlGetAllPostsUser, req.params.id, (error, results) => {
         if (!error) {
             res.status(200).json( {results} )
