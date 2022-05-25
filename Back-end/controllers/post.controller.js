@@ -102,7 +102,7 @@ module.exports.createPost = (req, res) => {
             // Si une image est présente, on met à jour l'URL de l'image dans la table "posts"
             if (req.file) {
 
-                const image_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+                const image_url = `${req.protocol}://${req.get('host')}/images/post/${req.file.filename}`;
                 
                 const sqlUpdateImgUrl = `UPDATE posts SET image_url= ? WHERE post_id= LAST_INSERT_ID()`;
 

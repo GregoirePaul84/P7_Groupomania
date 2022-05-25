@@ -5,9 +5,11 @@ import Card from './Card';
 
 const UserPosts = (props) => {
 
-  const userId = props.user_info.user_id;
+  const userInfo = props.user_info;
+  const userId = userInfo.user_id;
   
   const [loadPostsUser, setLoadPostUser] = useState(true);
+
   const dispatch = useDispatch();
 
   let posts = {};
@@ -22,7 +24,35 @@ const UserPosts = (props) => {
   if (postsArray === undefined) {
     return;
   }
+  
+  console.log(props);
 
+ if (postsArray.length === 0) {
+  return (
+    <div className="user-posts-container">
+      <div className="card-container">
+        <div className="card-smallContainer">
+          <div className="card-user-picture">
+            <img src={userInfo.profil_pic} alt="utilisateur" />
+          </div>
+          <div className="card-name-user">
+            <h3>{userInfo.first_name}, {userInfo.last_name}</h3>
+            <p>{userInfo.email}</p>
+          </div>
+          <div className="card-message">
+            <div className="post-content">
+              <div className='message'>
+                Vous n'avez encore rien écrit... 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+ }
+ 
+ else {
   return (
       
     <div className="user-posts-container">
@@ -31,7 +61,10 @@ const UserPosts = (props) => {
       }
     </div>
       
-  );
-};
+  )
+ }
+
+  
+}
 
 export default UserPosts;

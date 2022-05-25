@@ -8,9 +8,10 @@ const Card = ({post}) => {
     const userData = useSelector((state) => state.userReducer);
     let objectUser = {};
     objectUser = userData.results[0];
-    
+    const imgUrl = post.image_url;
     
     return (
+        
         <div className="card-container">
             <div className="card-smallContainer">
                 <div className="card-user-picture">
@@ -23,7 +24,14 @@ const Card = ({post}) => {
                 <div className="card-message">
                     <FontAwesomeIcon icon={ faPaperPlane } />
                     <span className="post-date">{post.created}</span>
-                    <div className='message'>{post.text}</div>
+                    <div className="post-content">
+                        <div className='message'>{post.text}</div>
+                        { (imgUrl) ? 
+                            <div className='picture'>
+                                <img src={imgUrl} alt="post utilisateur" />
+                            </div>
+                            : <div></div>}
+                    </div>
                 </div>
                 <div className="card-likes-comments">
                 <FontAwesomeIcon icon={ faMessage } />

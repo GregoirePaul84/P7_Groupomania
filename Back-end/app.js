@@ -33,6 +33,7 @@ app.use(cors(corsOptions));
 app.use(express.json({limit: '50mb'}));
 
 app.use('/images', express.static(path.join(__dirname, 'images/profil_images')));
+app.use('/images/post', express.static(path.join(__dirname, 'images/post_images')));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
