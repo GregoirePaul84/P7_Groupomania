@@ -103,7 +103,7 @@ module.exports.login = async (req,res) => {
                         process.env.TOKEN_SECRET,
                         { expiresIn: process.env.TOKEN_EXPIRES }
                     );
-                                        
+                    
                     res.cookie("jwt", token);
 
                     res.status(200).json({

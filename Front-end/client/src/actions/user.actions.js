@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const GET_USER = "GET_USER";
+export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
 
 export const getUser = (userId) => {
 
@@ -24,6 +25,40 @@ export const getUser = (userId) => {
                 payload: res.data
             });
             
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export const uploadPicture = (data, userId) => {
+    return async (dispatch) => {
+        try {
+            
+            const res = await axios({
+                method: "put",
+                url: `${process.env.REACT_APP_API_URL}api/user/${userId}`,
+                withCredentials: true,
+                data: data,
+                headers: { "Content-Type": "multipart/form-data" },
+                
+            });
+
+            dispatch({
+                type: UPLOAD_PICTURE,
+                payload: res.data.picture
+            });
+
+            const res2 = await axios({
+                method: "get",
+                url: `${process.env.REACT_APP_API_URL}api/user/${userId}`,
+                withCredentials: true,
+            });
+
+            dispatch({
+                type: GET_USER,
+                payload: res2.data
+            });
             
         } catch (error) {
             console.log(error);

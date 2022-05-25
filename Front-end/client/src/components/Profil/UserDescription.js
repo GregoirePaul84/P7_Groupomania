@@ -1,6 +1,7 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCamera, faAt, faCakeCandles, faLocationDot, faPhone} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAt, faCakeCandles, faLocationDot, faPhone} from '@fortawesome/free-solid-svg-icons';
+import ChangeProfilPic from './ChangeProfilPic';
 
 const User_description = (props) => {
 
@@ -10,9 +11,7 @@ const User_description = (props) => {
         <section className='user-description-box'>
             <div className="profil-pic-name_box">
                 <div className="profil-pic">
-                    <div className="change-profil-pic">
-                        <FontAwesomeIcon icon={ faCamera } />
-                    </div>
+                    <ChangeProfilPic />
                     <img src={objectUser.profil_pic} alt="Utilisateur" />
                 </div>
             </div>
