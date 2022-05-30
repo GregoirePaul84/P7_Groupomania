@@ -72,16 +72,6 @@
                 display: flex;
                 margin: 0 10px 15px 0;
 
-                &:nth-child(2) .info-key {
-                    margin-right: 31%;
-                }
-                &:nth-child(3) .info-key {
-                    margin-right: 19.5%;
-                }
-                &:nth-child(4) .info-key {
-                    margin-right: 26%;
-                }
-
                 svg {
                     margin-right: 10px;
                 }
@@ -92,6 +82,7 @@
                 }
 
                 .info-value {
+                    margin-left: auto;
                     font-family: 'Almarai Light', serif;
                     
                 }
