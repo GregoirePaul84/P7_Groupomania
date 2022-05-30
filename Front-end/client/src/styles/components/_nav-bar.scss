@@ -21,6 +21,7 @@ header {
     padding: 2em;
 
     .home-settings-links {
+        position: relative;
         display: flex;
         gap: 2em;
         align-items: center;
@@ -36,10 +37,53 @@ header {
         }
 
         .picture-logout {
+            position: relative;
             img {
                 border-radius: 50%;
                 width: 55px;
                 height: 55px;
+            }
+            svg {
+                position: absolute;
+                right: 18px;
+                top: 19px;
+                height: 20px;
+                visibility: hidden;
+
+                path {
+                    color: black;
+                }
+            }
+            &:hover {
+                img {
+                    opacity: 0.75;
+                }
+                svg {
+                    visibility: visible;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .logout-action {
+            visibility: hidden;
+            position: absolute;
+            width: 140px;
+            right: -8px;
+            bottom: -22px;
+            font-size: 0.9em;
+            background-color: hsl(251deg, 9%, 23%);
+            text-align: center;
+            padding: 4px 2px;
+            border: 1px solid #8D76FF;
+            cursor: pointer;
+            transition: transform 400ms;
+            &:hover {
+                transform: scale(1.05);
+            }
+
+            svg {
+                margin-right: 5px;
             }
         }
     }

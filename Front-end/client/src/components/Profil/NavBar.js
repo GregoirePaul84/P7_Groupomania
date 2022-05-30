@@ -1,8 +1,14 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from '../../images/icon-left-font-monochrome-white.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 const NavBar = (props) => {
+
+    function logoutPop() {
+        document.querySelector('.logout-action').style.visibility = "visible";
+    }
 
     const objectUser = props.user_info;
 
@@ -23,11 +29,16 @@ const NavBar = (props) => {
                             Paramètres
                         </NavLink>    
                     </div>
-                    <div className="picture-logout">
-                        <NavLink to="/logout">
-                            <img src={objectUser.profil_pic} alt="" />
-                        </NavLink> 
+                    <div className="picture-logout" onClick={logoutPop}>
+                        <img src={objectUser.profil_pic} alt="déconnexion utilisateur" />
+                        <FontAwesomeIcon icon={ faRightFromBracket } />
                     </div>
+                    <NavLink to="/logout">
+                        <button className="logout-action">
+                            <FontAwesomeIcon icon={ faRightFromBracket } />
+                            Se déconnecter
+                        </button>
+                    </NavLink> 
                 </div>
             </nav>
         </header>
