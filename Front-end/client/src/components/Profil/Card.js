@@ -8,18 +8,18 @@ const Card = ({post}) => {
 
     const dispatch = useDispatch();
 
+    function addLike() {
+        const postId = post.post_id;
+        console.log("==> post liké");
+        console.log(postId);
+        dispatch(likePost(postId));
+    }
+
     useEffect(() => {
         const postId = post.post_id;
         dispatch(displayLikes(postId));
 
     }, [dispatch, post.post_id])
-
-    function addLike() {
-        const postId = post.post_id;
-        console.log("==> post liké");
-        console.log(postId);
-        dispatch(likePost(postId))
-    }
     
     const userData = useSelector((state) => state.userReducer);
     const likeData = useSelector((state) => state.postReducer);
@@ -32,7 +32,7 @@ const Card = ({post}) => {
         return;
     }
     else {
-        console.log(likeData.post[0]);
+        console.log(post);
     }
     
     return (
@@ -66,9 +66,9 @@ const Card = ({post}) => {
                 <FontAwesomeIcon icon={ faMessage } />
                 <span>1 commentaire</span>
                 <FontAwesomeIcon className="thumbs-up" icon={ faThumbsUp } onClick={ addLike }/>
-                <span className="post-like">1 like</span>
+                <span className="post-like">{post.like_number} like</span>
                 <FontAwesomeIcon className="thumbs-down" icon={ faThumbsDown } />
-                <span className="post-dislike">2 dislike</span>
+                <span className="post-dislike">{post.dislike_number} dislike</span>
                 </div>
             </div>
         </div>
