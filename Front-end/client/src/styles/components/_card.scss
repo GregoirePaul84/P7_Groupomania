@@ -42,11 +42,26 @@
 
         .card-name-user {
             height: 77px;
-            width: 80%;
+            width: 60%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             border-bottom: 1px solid #7D7D7D;
+        }
+
+        .modify-delete {
+            padding: 10px;
+            width: 20%;
+            border-bottom: 1px solid hsl(0deg 0% 49%);
+
+            svg {
+                margin-left: 25px;
+                cursor: pointer;
+                path:hover {
+                    color: #8D76FF;
+                }
+                
+            }
         }
 
         .card-message {
@@ -101,6 +116,13 @@
                    } 
                     
                 }
+            }
+
+            .post-like {
+                color: rgb(0, 216, 0);
+            }
+            .post-dislike {
+                color: rgb(255, 30, 30);
             }
             
         }

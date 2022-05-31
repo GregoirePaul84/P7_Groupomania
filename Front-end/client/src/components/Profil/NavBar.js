@@ -8,6 +8,9 @@ const NavBar = (props) => {
 
     function logoutPop() {
         document.querySelector('.logout-action').style.visibility = "visible";
+        setTimeout(function () {
+            document.querySelector('.logout-action').style.visibility = "hidden";
+          }, 5000);   
     }
 
     const objectUser = props.user_info;

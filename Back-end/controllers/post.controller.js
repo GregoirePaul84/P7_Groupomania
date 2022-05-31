@@ -163,7 +163,7 @@ module.exports.deletePost = (req, res) => {
 module.exports.likeDislikePost = (req, res) => {
     try {
         // Récupération de l'ID du token, de l'ID du post dans les paramètres de requête
-        const token = req.headers.authorization.split(' ')[1];
+        const token = req.headers.cookie.split('jwt=')[1];
         const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
         const userId = decodedToken.userId;
         const postId = req.params.id;
@@ -189,7 +189,17 @@ module.exports.likeDislikePost = (req, res) => {
                 mySqlConnection.query( sqlLike, userPostId, (error, results) => {
         
                     if (!error) {
-                        res.status(200).json( {message : "Like ajouté !"} );
+
+                        // Incrémentation du like dans la table posts
+                        const sqlInsertPost = `Update posts Set like_number=like_number+1 where post_id=?`;
+                        mySqlConnection.query( sqlInsertPost, userPostId, (error, results) => {
+                            if (!error) {
+                                res.status(200).json( {message : "Like ajouté !"} );
+                            }
+                            else {
+                                res.status(500).json( {error} );
+                            } 
+                        });
                     }
                     else {
                         res.status(500).json( {error} );
@@ -237,8 +247,9 @@ module.exports.likeDislikePost = (req, res) => {
 module.exports.countLike = (req, res) => {
 
     const sqlCountLikes = `SELECT COUNT(*) FROM likes WHERE post_id = ?`;
+    const postId = req.body.post_id;
 
-    mySqlConnection.query(sqlCountLikes, req.body.post_id, (error, results) => {
+    mySqlConnection.query(sqlCountLikes, postId, (error, results) => {
         if (error) {
             res.status(500).json( {error} );
         }

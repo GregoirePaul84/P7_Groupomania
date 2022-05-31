@@ -5,7 +5,7 @@ import { faPaperPlane} from '@fortawesome/free-solid-svg-icons'
 import { faCamera} from '@fortawesome/free-solid-svg-icons'
 import { faAddressBook} from '@fortawesome/free-solid-svg-icons'
 import UserPosts from './UserPosts';
-import { sendPost } from '../../actions/user.actions';
+import { sendPost } from '../../actions/post.actions';
 import { useDispatch } from 'react-redux';
 
 const Posts = (props) => {
