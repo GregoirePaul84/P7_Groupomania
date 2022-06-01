@@ -4,6 +4,7 @@ import { GET_USER_POSTS } from "./user_posts.actions";
 export const SEND_POST = "SEND_POST";
 export const DELETE_POST = "DELETE_POST";
 export const LIKE_POST = "LIKE_POST";
+export const CANCEL_LIKE_POST = "CANCEL_LIKE_POST";
 export const DISPLAY_LIKES = "DISPLAY_LIKES"
 
 export const sendPost = (postContent, userId) => {
@@ -33,9 +34,9 @@ export const sendPost = (postContent, userId) => {
             const res2 = await axios({
                 method: "get",
                 url: `${process.env.REACT_APP_API_URL}api/post/all/${userId}`,
-                withCredentials: true,
-                
+                withCredentials: true,   
             });
+
             dispatch({
                 type: GET_USER_POSTS,
                 payload: res2.data
@@ -48,8 +49,8 @@ export const sendPost = (postContent, userId) => {
 }
 
 
-export const likePost = (postId) => {
-    console.log(postId);
+export const likePost = (postId, userId) => {
+    console.log(userId);
     return async (dispatch) => {
         try {
             const data = JSON.stringify({
@@ -67,6 +68,59 @@ export const likePost = (postId) => {
                 type: LIKE_POST,
                 payload: res.data
             });
+
+            // Récupération de tous les posts de l'utilisateur pour actualiser le like
+            const res2 = await axios({
+                method: "get",
+                url: `${process.env.REACT_APP_API_URL}api/post/all/${userId}`,
+                withCredentials: true,   
+            });
+
+            dispatch({
+                type: GET_USER_POSTS,
+                payload: res2.data
+            });
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+
+export const cancelLikePost = (postId, userId) => {
+    console.log(postId);
+    return async (dispatch) => {
+        try {
+            const data = JSON.stringify({
+                "like": "0"
+            });
+            
+            const res = await axios({
+                method: "post",
+                url: `${process.env.REACT_APP_API_URL}api/post/cancel/${postId}`,
+                withCredentials: true,
+                data: data,
+                headers: { "Content-Type": "application/json" },
+            });
+
+            dispatch({
+                type: CANCEL_LIKE_POST,
+                payload: res.data
+            });
+
+            // Récupération de tous les posts de l'utilisateur pour actualiser l'annulation du like'
+            const res2 = await axios({
+                method: "get",
+                url: `${process.env.REACT_APP_API_URL}api/post/all/${userId}`,
+                withCredentials: true,   
+            });
+
+            dispatch({
+                type: GET_USER_POSTS,
+                payload: res2.data
+            });
+
         } catch (error) {
             console.log(error);
         }
@@ -75,7 +129,7 @@ export const likePost = (postId) => {
 
 
 export const displayLikes = (postId) => {
-    console.log(postId);
+    
     return async (dispatch) => {
         try {
             const data = JSON.stringify({
@@ -89,10 +143,12 @@ export const displayLikes = (postId) => {
                 data: data,
                 headers: { "Content-Type": "application/json" },
             });
+
             dispatch({
                 type: DISPLAY_LIKES,
                 payload: res.data.results
             });
+
         } catch (error) {
             console.log(error);
         }

@@ -18,6 +18,9 @@ router.post('/', auth, upload.single('post_image'), postCtlr.createPost);
 // Liker / Disliker un post
 router.post('/:id', auth, postCtlr.likeDislikePost);
 
+// Annulation d'un like / dislike
+router.post('/cancel/:id', auth, postCtlr.cancelLikeDislike);
+
 // Compter les likes
 router.post('/:id/like', auth, postCtlr.countLike);
 
