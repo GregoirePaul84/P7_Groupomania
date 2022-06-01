@@ -25,12 +25,16 @@ const Card = ({post}) => {
 
     const toggleLike = () => {
         setActive(!isActive);
-        console.log(isActive);
+        
         if (isActive === true) {
             addLike();
+            const selectElt = document.querySelector(`.post_id${postId}`);
+            selectElt.classList.add('active-green');
         }
         else if (isActive === false) {
             removeLike();
+            const selectElt = document.querySelector(`.post_id${postId}`);
+            selectElt.classList.remove('active-green');
         }
     };
 
@@ -49,9 +53,6 @@ const Card = ({post}) => {
 
     if (likeData.post === undefined) {
         return;
-    }
-    else {
-        console.log(post);
     }
     
     return (
@@ -84,7 +85,7 @@ const Card = ({post}) => {
                 <div className="card-likes-comments">
                 <FontAwesomeIcon icon={ faMessage } />
                 <span>1 commentaire</span>
-                <FontAwesomeIcon className="thumbs-up" icon={ faThumbsUp } onClick={ toggleLike }/>
+                <FontAwesomeIcon className={"thumbs-up " + "post_id" + postId} icon={ faThumbsUp } onClick={toggleLike}/>
                 <span className="post-like">{post.like_number} like</span>
                 <FontAwesomeIcon className="thumbs-down" icon={ faThumbsDown } />
                 <span className="post-dislike">{post.dislike_number} dislike</span>
