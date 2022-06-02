@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faThumbsUp, faMessage, faThumbsDown, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
 import { displayLikes, likePost, cancelLikePost, dislikePost, cancelDislikePost } from '../../actions/post.actions';
-import Comments from './Comments';
+import Comments, {displayComments, hideComments} from './Comments';
+
 
 
 const Card = ({post}) => {
@@ -15,6 +16,7 @@ const Card = ({post}) => {
 
     const [greenActive, setGreenActive] = useState(true);
     const [redActive, setRedActive] = useState(true);
+    const [visibility, setVisibility] = useState(true);
 
     function addLike() {
         console.log(`==> post liké : post_id ${postId}`);
@@ -66,6 +68,17 @@ const Card = ({post}) => {
         }
     };
 
+    const toggleVisibility = () => {
+        setVisibility(!visibility);
+        console.log(visibility);
+        if (visibility) {
+            displayComments(postId);
+        }
+        else {
+            hideComments(postId);
+        }
+    }
+
     useEffect(() => {
         const postId = post.post_id;
         dispatch(displayLikes(postId));
@@ -111,16 +124,18 @@ const Card = ({post}) => {
                     </div>
                 </div>
                 <div className="card-likes-comments">
-                <FontAwesomeIcon icon={ faMessage } />
+                <FontAwesomeIcon icon={ faMessage } onClick={toggleVisibility}/>
                 <span>1 commentaire</span>
+                {/* eslint-disable-next-line */}
                 <FontAwesomeIcon className={"thumbs-up " + "post_id-green" + postId} icon={ faThumbsUp } onClick={toggleLike}/>
                 <span className="post-like">{post.like_number} like</span>
+                {/* eslint-disable-next-line */}
                 <FontAwesomeIcon className={"thumbs-down " + "post_id-red" + postId} icon={ faThumbsDown } onClick={toggleDislike} />
                 <span className="post-dislike">{post.dislike_number} dislike</span>
                 </div>
             </div>
         </div>
-        <Comments />
+        <Comments postId={postId}/>
         </>
     );
 };
