@@ -114,18 +114,29 @@
             margin-right: 25px;
             gap: 15px;
 
+            .fa-message path {
+                &:hover {
+                    color: #8D76FF;
+                }
+            }
+
             .thumbs-up path {
                 &:hover {
                     color:rgb(0, 216, 0);
                 }
-                
             }
 
             .active-green path{
                 color:rgb(0, 216, 0);
             }
             
-            .thumbs-down path:hover {
+            .thumbs-down path {
+                &:hover {
+                    color: rgb(255, 30, 30);
+                }
+            }
+
+            .active-red path{
                 color: rgb(255, 30, 30);
             }
 

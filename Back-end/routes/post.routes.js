@@ -21,7 +21,6 @@ router.post('/:id', auth, postCtlr.likeDislikePost);
 // Annulation d'un like / dislike
 router.post('/cancel/:id', auth, postCtlr.cancelLikeDislike);
 
-
 // Supprimer un post
 router.delete('/:id', auth, postCtlr.deletePost);
 

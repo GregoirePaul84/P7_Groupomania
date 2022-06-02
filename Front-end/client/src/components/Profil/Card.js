@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faThumbsUp, faMessage, faThumbsDown, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
-import { displayLikes, likePost, cancelLikePost } from '../../actions/post.actions';
+import { displayLikes, likePost, cancelLikePost, dislikePost, cancelDislikePost } from '../../actions/post.actions';
+import Comments from './Comments';
+
 
 const Card = ({post}) => {
 
@@ -11,7 +13,8 @@ const Card = ({post}) => {
 
     const dispatch = useDispatch();
 
-    const [isActive, setActive] = useState(true);
+    const [greenActive, setGreenActive] = useState(true);
+    const [redActive, setRedActive] = useState(true);
 
     function addLike() {
         console.log(`==> post liké : post_id ${postId}`);
@@ -23,18 +26,43 @@ const Card = ({post}) => {
         dispatch(cancelLikePost(postId, userId));
     }
 
+    function addDislike() {
+        console.log(`==> post disliké : post_id ${postId}`);
+        dispatch(dislikePost(postId, userId));
+    }
+
+    function removeDislike() {
+        console.log(`==> dislike annulé : post_id ${postId}`);
+        dispatch(cancelDislikePost(postId, userId));
+    }
+
     const toggleLike = () => {
-        setActive(!isActive);
+        setGreenActive(!greenActive);
         
-        if (isActive === true) {
+        if (greenActive === true) {
             addLike();
-            const selectElt = document.querySelector(`.post_id${postId}`);
+            const selectElt = document.querySelector(`.post_id-green${postId}`);
             selectElt.classList.add('active-green');
         }
-        else if (isActive === false) {
+        else if (greenActive === false) {
             removeLike();
-            const selectElt = document.querySelector(`.post_id${postId}`);
+            const selectElt = document.querySelector(`.post_id-green${postId}`);
             selectElt.classList.remove('active-green');
+        }
+    };
+
+    const toggleDislike = () => {
+        setRedActive(!redActive);
+        
+        if (redActive === true) {
+            addDislike();
+            const selectElt = document.querySelector(`.post_id-red${postId}`);
+            selectElt.classList.add('active-red');
+        }
+        else if (redActive === false) {
+            removeDislike();
+            const selectElt = document.querySelector(`.post_id-red${postId}`);
+            selectElt.classList.remove('active-red');
         }
     };
 
@@ -56,7 +84,7 @@ const Card = ({post}) => {
     }
     
     return (
-        
+        <>
         <div className="card-container">
             <div className="card-smallContainer">
                 <div className="card-user-picture">
@@ -85,13 +113,15 @@ const Card = ({post}) => {
                 <div className="card-likes-comments">
                 <FontAwesomeIcon icon={ faMessage } />
                 <span>1 commentaire</span>
-                <FontAwesomeIcon className={"thumbs-up " + "post_id" + postId} icon={ faThumbsUp } onClick={toggleLike}/>
+                <FontAwesomeIcon className={"thumbs-up " + "post_id-green" + postId} icon={ faThumbsUp } onClick={toggleLike}/>
                 <span className="post-like">{post.like_number} like</span>
-                <FontAwesomeIcon className="thumbs-down" icon={ faThumbsDown } />
+                <FontAwesomeIcon className={"thumbs-down " + "post_id-red" + postId} icon={ faThumbsDown } onClick={toggleDislike} />
                 <span className="post-dislike">{post.dislike_number} dislike</span>
                 </div>
             </div>
         </div>
+        <Comments />
+        </>
     );
 };
 

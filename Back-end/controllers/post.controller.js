@@ -214,7 +214,17 @@ module.exports.likeDislikePost = (req, res) => {
             mySqlConnection.query( sqlDislike, userPostId, (error, results) => {
     
                 if (!error) {
-                    res.status(200).json( {message : "Dislike ajouté !"} );
+
+                    // Incrémentation du dislike dans la table posts
+                    const sqlInsertPost = `UPDATE posts Set dislike_number=dislike_number+1 where post_id=?`;
+                    mySqlConnection.query( sqlInsertPost, userPostId, (error, results) => {
+                        if (!error) {
+                            res.status(200).json( {message : "Dislike ajouté !"} );
+                        }
+                        else {
+                            res.status(500).json( {error} );
+                        } 
+                    });
                 }
                 else {
                     res.status(500).json( {error} );
@@ -224,7 +234,7 @@ module.exports.likeDislikePost = (req, res) => {
     }
 };
 
-// ********** Annulation d'un like ********** //
+// ********** Annulation d'un like / dislike ********** //
 
 module.exports.cancelLikeDislike = (req, res) => {
 

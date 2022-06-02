@@ -1,4 +1,4 @@
-import { DISPLAY_LIKES, LIKE_POST, SEND_POST} from "../actions/post.actions";
+import { DISLIKE_POST, DISPLAY_LIKES, LIKE_POST, SEND_POST} from "../actions/post.actions";
 
 const initialState = {};
 
@@ -12,6 +12,12 @@ export default function postReducer(state= initialState, action) {
             }
             
         case LIKE_POST: 
+            return {
+                ...state,
+                post: action.payload,
+            }
+            
+        case DISLIKE_POST: 
             return {
                 ...state,
                 post: action.payload,
