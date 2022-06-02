@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faThumbsUp, faMessage, faThumbsDown, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
 import { displayLikes, likePost, cancelLikePost, dislikePost, cancelDislikePost } from '../../actions/post.actions';
 import Comments, {displayComments, hideComments} from './Comments';
+import InputComments from './InputComments';
 
 
 
@@ -135,7 +136,8 @@ const Card = ({post}) => {
                 </div>
             </div>
         </div>
-        <Comments postId={postId}/>
+        <InputComments postId={postId} infoUser={objectUser}/>
+        <Comments postId={postId} infoUser={objectUser}/>
         </>
     );
 };

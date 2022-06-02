@@ -24,47 +24,43 @@ const UserPosts = (props) => {
   if (postsArray === undefined) {
     return;
   }
-  
-  console.log(props);
 
- if (postsArray.length === 0) {
-  return (
-    <div className="user-posts-container">
-      <div className="card-container">
-        <div className="card-smallContainer">
-          <div className="card-user-picture">
-            <img src={userInfo.profil_pic} alt="utilisateur" />
-          </div>
-          <div className="card-name-user">
-            <h3>{userInfo.first_name}, {userInfo.last_name}</h3>
-            <p>{userInfo.email}</p>
-          </div>
-          <div className="card-message">
-            <div className="post-content">
-              <div className='message'>
-                Vous n'avez encore rien écrit... 
+  if (postsArray.length === 0) {
+    return (
+      <div className="user-posts-container">
+        <div className="card-container">
+          <div className="card-smallContainer">
+            <div className="card-user-picture">
+              <img src={userInfo.profil_pic} alt="utilisateur" />
+            </div>
+            <div className="card-name-user">
+              <h3>{userInfo.first_name}, {userInfo.last_name}</h3>
+              <p>{userInfo.email}</p>
+            </div>
+            <div className="card-message">
+              <div className="post-content">
+                <div className='message'>
+                  Vous n'avez encore rien écrit... 
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  )
- }
- 
- else {
-  return (
-      
-    <div className="user-posts-container">
-      {postsArray.map((post) => {
-        return <Card post={post} key={post.post_id} /> })
-      }
-    </div>
-      
-  )
- }
-
+    )
+  }
   
+  else {
+    return (
+        
+      <div className="user-posts-container">
+        {postsArray.map((post) => {
+          return <Card post={post} key={post.post_id} /> })
+        }
+      </div>
+        
+    )
+  }
 }
 
 export default UserPosts;

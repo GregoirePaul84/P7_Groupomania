@@ -12,7 +12,7 @@ const Posts = (props) => {
 
     const objectUser = props.user_info;
     const userId = objectUser.user_id;
-    console.log(objectUser);
+    
     const dispatch = useDispatch();
 
     function writePost() {

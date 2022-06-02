@@ -7,7 +7,7 @@ export const LIKE_POST = "LIKE_POST";
 export const CANCEL_LIKE_POST = "CANCEL_LIKE_POST";
 export const DISLIKE_POST = "DISLIKE_POST";
 export const CANCEL_DISLIKE_POST = "CANCEL_DISLIKE_POST";
-export const DISPLAY_LIKES = "DISPLAY_LIKES"
+export const DISPLAY_LIKES = "DISPLAY_LIKES";
 
 export const sendPost = (postContent, userId) => {
     return async (dispatch) => {

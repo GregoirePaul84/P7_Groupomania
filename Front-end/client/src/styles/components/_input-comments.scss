@@ -1,0 +1,75 @@
+.input-comments-container {
+    display: none;
+
+    .flex-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 550px;
+        min-height: 165px;
+        background-color: hsl(250deg 44% 40% / 13%);
+        margin-top: 2em;
+        overflow: hidden;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .input-comments-smallContainer {
+        background-color: #383641;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 90%;
+        border-radius: 20px;
+        min-height: 100px;
+        margin-top: 1em;
+
+        .input-comments-user-picture {
+            flex-grow: 2;
+            max-width: 115px;
+            height: 77px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #7D7D7D;
+
+            img {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+            }
+        }
+
+        .input-comments-name-user {
+            height: 77px;
+            flex-grow: 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 1px solid #7D7D7D;
+        }
+
+        .input-box {
+            display: flex;
+            align-items: center;
+            margin: 1em 0;
+
+            input {
+                height: 35px;
+                width: 250px;
+                color: #222029;
+                border-radius: 25px;
+                padding-left: 20px;
+                margin-right: 15px;
+            }
+            svg {
+                height: 25px;             
+                cursor: pointer;
+                transition: transform 400ms;
+                &:hover {
+                    transform: scale(1.15);
+                }
+            }
+        }
+    }
+}

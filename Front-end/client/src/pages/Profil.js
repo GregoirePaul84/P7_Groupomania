@@ -1,6 +1,6 @@
 import React from 'react';
 import NavBar from '../components/Profil/NavBar';
-import InputArea from '../components/Profil/InputArea';
+import InputPost from '../components/Profil/InputPost';
 import UserDescription from '../components/Profil/UserDescription';
 import { useSelector } from 'react-redux';
 
@@ -21,7 +21,7 @@ const Profil = () => {
                 <div className="profil-container">
                     <NavBar user_info={objectUser}/>
                     <UserDescription user_info={objectUser}/>
-                    <InputArea user_info={objectUser}/>
+                    <InputPost user_info={objectUser}/>
                 </div>
             </div>
         </div>

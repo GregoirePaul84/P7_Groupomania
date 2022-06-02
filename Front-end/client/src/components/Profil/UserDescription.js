@@ -6,7 +6,6 @@ import ChangeProfilPic from './ChangeProfilPic';
 const User_description = (props) => {
 
     const objectUser = props.user_info;
-    console.log(objectUser);
         
     return (
         <section className='user-description-box'>

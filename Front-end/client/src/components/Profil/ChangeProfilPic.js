@@ -15,7 +15,6 @@ const ChangeProfilPic = () => {
         return;
     }
     
-    console.log(file);
     const userId = userData[0].user_id;
 
     function handlePicture(e) {
