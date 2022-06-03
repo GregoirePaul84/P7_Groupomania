@@ -8,6 +8,7 @@ export default function commentsReducer (state = initialState, action) {
         case GET_COMMENTS:
             return action.payload;
             
+            
         default:
             return state;
     }

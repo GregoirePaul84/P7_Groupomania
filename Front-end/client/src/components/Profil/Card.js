@@ -84,7 +84,7 @@ const Card = ({post}) => {
     useEffect(() => {
         const postId = post.post_id;
         dispatch(displayLikes(postId));
-        dispatch(getComments(postId));
+        dispatch(getComments());
 
     }, [dispatch, post.post_id])
     
@@ -143,7 +143,8 @@ const Card = ({post}) => {
         </div>
         <InputComments postId={postId} infoUser={objectUser}/>
         {commentsArray.map((comment) => {
-          return <Comments postId={postId} comment={comment} key={comment.comment_id} /> })
+            if (comment.post_id === postId) 
+                return <Comments postId={postId} comment={commentsArray} key={comment.comment_id} /> })
         }
         </>
     );

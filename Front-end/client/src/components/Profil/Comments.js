@@ -24,6 +24,9 @@ export function hideComments(postId) {
 const Comments = (props) => {
 
     const postId = props.postId;
+    console.log(props);
+    const comments = props.comment;
+    console.log(comments);
    
     return (
         // eslint-disable-next-line
