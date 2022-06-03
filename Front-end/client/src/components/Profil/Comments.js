@@ -6,38 +6,40 @@ import { faPaperPlane, faThumbsUp, faThumbsDown, faTrashCan, faPen} from '@forta
 export function displayComments(postId) {
     const selectInput = document.querySelector(`.input-post_id${postId}`);
     selectInput.style.display = "block";
-    const selectContainer = document.querySelector(`.post_id${postId}`);
-    selectContainer.style.display = "block";
+    const selectContainer = document.querySelectorAll(`.post_id${postId}`);
+    for (let i=0; i<selectContainer.length; i+=1) {
+        selectContainer[i].style.display = "block";
+    }
 }
 
 export function hideComments(postId) {
     const selectInput = document.querySelector(`.input-post_id${postId}`);
     selectInput.style.display = "none";
-    const selectContainer = document.querySelector(`.post_id${postId}`);
-    selectContainer.style.display = "none";
+    const selectContainer = document.querySelectorAll(`.post_id${postId}`);
+    for (let i=0; i<selectContainer.length; i+=1) {
+        selectContainer[i].style.display = "none";
+    }
 }
 
 const Comments = (props) => {
 
     const postId = props.postId;
-    const objectUser = props.infoUser;
-    console.log(objectUser);
-
+   
     return (
         // eslint-disable-next-line
         <div className={"comments-container " + "post_id" + postId}>
             <div className="flex-container">
                 <div className="comments-smallContainer">
                     <div className="comment-user-picture">
-                        <img src={objectUser.profil_pic} alt="utilisateur" />
+                        <img src={"objectUser.profil_pic"} alt="utilisateur" />
                     </div>
                     <div className="comment-name-user">
-                        <h3>{objectUser.first_name}, {objectUser.last_name}</h3>
-                        <p>{objectUser.email}</p>
+                        <h3>{"objectUser.first_name"}, {"objectUser.last_name"}</h3>
+                        <p>{"objectUser.email"}</p>
                     </div>
                     <div className="modify-delete">
-                        <FontAwesomeIcon icon={faPen} />
-                        <FontAwesomeIcon icon={faTrashCan} />
+                        <FontAwesomeIcon className="pen" icon={faPen}/>
+                        <FontAwesomeIcon className="garbage" icon={faTrashCan} />
                     </div>
                     <div className="comment-message">
                         <FontAwesomeIcon icon={ faPaperPlane } />

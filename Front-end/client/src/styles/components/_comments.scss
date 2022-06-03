@@ -52,14 +52,28 @@
             display: flex;
             justify-content: flex-end;
 
-            svg {
+            .fa-pen {
                 margin-left: 25px;
                 cursor: pointer;
-                path:hover {
-                    color: #8D76FF;
+                path {
+                    height: 100%;
+                    width: 100%;
+                    &:hover {
+                        color: #8D76FF;
+                    }
                 }
-                
             }
+            .fa-trash-can {
+                margin-left: 25px;
+                cursor: pointer;
+                path {
+                    height: 100%;
+                    width: 100%;
+                    &:hover {
+                        color: rgb(255, 30, 30);
+                    }
+                }
+            }  
         }
 
         .comment-message {

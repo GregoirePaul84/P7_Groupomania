@@ -43,7 +43,7 @@ module.exports.readAllComments = (req, res) => {
 module.exports.createComment = (req, res) => {
     
     // Récupération de l'ID du token
-    const token = req.headers.authorization.split(' ')[1];
+    const token = req.headers.cookie.split('jwt=')[1];
     const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
     const userId = decodedToken.userId;
     const commentBody = [req.body.post_id, userId];

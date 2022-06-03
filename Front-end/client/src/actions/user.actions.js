@@ -4,6 +4,7 @@ export const GET_USER = "GET_USER";
 export const GET_USER_POSTS = "GET_USER_POSTS";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
 
+
 export const getUser = (userId) => {
 
     // Envoi au reducer pour stocker dans le store de Redux

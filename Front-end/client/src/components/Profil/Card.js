@@ -5,7 +5,7 @@ import { faPaperPlane, faThumbsUp, faMessage, faThumbsDown, faTrashCan, faPen} f
 import { displayLikes, likePost, cancelLikePost, dislikePost, cancelDislikePost } from '../../actions/post.actions';
 import Comments, {displayComments, hideComments} from './Comments';
 import InputComments from './InputComments';
-
+import { getComments} from '../../actions/post_comments.actions';
 
 
 const Card = ({post}) => {
@@ -70,6 +70,7 @@ const Card = ({post}) => {
     };
 
     const toggleVisibility = () => {
+        
         setVisibility(!visibility);
         console.log(visibility);
         if (visibility) {
@@ -83,20 +84,24 @@ const Card = ({post}) => {
     useEffect(() => {
         const postId = post.post_id;
         dispatch(displayLikes(postId));
+        dispatch(getComments(postId));
 
     }, [dispatch, post.post_id])
     
     const userData = useSelector((state) => state.userReducer);
     const likeData = useSelector((state) => state.postReducer);
+    const commentsData = useSelector((state) => state.commentsReducer);
     
     let objectUser = {};
     objectUser = userData.results[0];
     const imgUrl = post.image_url;
+    const commentsArray = commentsData.results;
+    console.log(commentsArray);
 
-    if (likeData.post === undefined) {
+    if (likeData.post === undefined || commentsArray === undefined) {
         return;
     }
-    
+
     return (
         <>
         <div className="card-container">
@@ -110,7 +115,7 @@ const Card = ({post}) => {
                 </div>
                 <div className="modify-delete">
                     <FontAwesomeIcon icon={faPen} />
-                    <FontAwesomeIcon icon={faTrashCan} />
+                    <FontAwesomeIcon icon={faTrashCan} onClick={console.log("post supprimé")} />
                 </div>
                 <div className="card-message">
                     <FontAwesomeIcon icon={ faPaperPlane } />
@@ -137,7 +142,9 @@ const Card = ({post}) => {
             </div>
         </div>
         <InputComments postId={postId} infoUser={objectUser}/>
-        <Comments postId={postId} infoUser={objectUser}/>
+        {commentsArray.map((comment) => {
+          return <Comments postId={postId} comment={comment} key={comment.comment_id} /> })
+        }
         </>
     );
 };
