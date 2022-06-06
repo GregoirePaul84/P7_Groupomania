@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faThumbsUp, faThumbsDown, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
 
@@ -24,13 +24,28 @@ export function hideComments(postId) {
 const Comments = (props) => {
 
     const postId = props.postId;
-    console.log(props);
     const comments = props.comment;
     console.log(comments);
-   
+    let textComment = undefined;
+    let commentId = undefined;
+    
+    useEffect(() => {
+        for (let i in comments) {
+            if (postId === comments[i].post_id) {
+                // eslint-disable-next-line
+                textComment = comments[i].text;
+                
+                commentId = comments[i].comment_id;
+                
+                const selectComment = document.querySelector('.comment_id'+commentId);
+                const selectMessageBox = selectComment.querySelector('.message');
+                selectMessageBox.innerHTML = `${textComment}`;
+            }
+        }      
+    }, []);
+    
     return (
-        // eslint-disable-next-line
-        <div className={"comments-container " + "post_id" + postId}>
+        
             <div className="flex-container">
                 <div className="comments-smallContainer">
                     <div className="comment-user-picture">
@@ -48,12 +63,9 @@ const Comments = (props) => {
                         <FontAwesomeIcon icon={ faPaperPlane } />
                         <span className="comment-date"></span>
                         <div className="comment-content">
-                            <div className='message'></div>
-                            { (1 + 1 === 3) ?
-                                <div className='picture'>
-                                    <img src={""} alt="commentaire utilisateur" />
-                                </div>
-                                : <div></div>}
+                            <div className='message'>
+                            
+                            </div>
                         </div>
                     </div>
                     <div className="comments-likes">
@@ -66,8 +78,8 @@ const Comments = (props) => {
                     </div>
                 </div>
             </div>
-        </div>
     );
+    
 };
 
 export default Comments;

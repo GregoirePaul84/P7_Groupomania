@@ -142,10 +142,17 @@ const Card = ({post}) => {
             </div>
         </div>
         <InputComments postId={postId} infoUser={objectUser}/>
+        {/* eslint-disable-next-line */}
         {commentsArray.map((comment) => {
-            if (comment.post_id === postId) 
-                return <Comments postId={postId} comment={commentsArray} key={comment.comment_id} /> })
-        }
+            if (comment.post_id === postId) {
+                return (
+                    // eslint-disable-next-line
+                    <div className={"comments-container " + "post_id" + postId + " comment_id" + comment.comment_id} key={comment.comment_id}> 
+                        <Comments postId={postId} comment={commentsArray} key={comment.comment_id} />
+                    </div>
+                )
+            }
+        })}
         </>
     );
 };
