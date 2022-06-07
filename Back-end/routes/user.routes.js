@@ -3,6 +3,10 @@ const userCtlr = require('../controllers/user.controller');
 const auth = require('../middlewares/auth.middleware');
 const upload = require('../middlewares/multer-config');
 
+
+// Récupérer tous les utilisateurs
+router.get('/', auth, userCtlr.readAllUsers);
+
 // Récupérer un utilisateur
 router.get('/:id', auth, userCtlr.readOneUser);
 

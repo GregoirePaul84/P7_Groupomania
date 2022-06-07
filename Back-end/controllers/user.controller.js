@@ -4,6 +4,24 @@ const jwt = require('jsonwebtoken');
 
 require('dotenv').config({path: './config/.env'})
 
+// ********** Récupération de tous les utilisateurs ********** //
+
+module.exports.readAllUsers = (req, res) => {
+    
+    const sqlGetAllUsers = `SELECT * FROM user`; 
+
+    mySqlConnection.query(sqlGetAllUsers, (error, results) => {
+        
+        if (results) {
+            res.status(200).json( {message: "Utilisateurs récupérés !", results});
+        }
+
+        else {
+            res.status(404).json( {error} )
+        } 
+    });
+}
+
 
 // ********** Récupération d'un utilisateur ********** //
 
