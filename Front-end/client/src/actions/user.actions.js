@@ -1,8 +1,33 @@
 import axios from "axios";
 
+export const GET_ALL_USERS = "GET_ALL_USERS";
 export const GET_USER = "GET_USER";
 export const GET_USER_POSTS = "GET_USER_POSTS";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
+
+export const getAllUsers = () => {
+
+    // Envoi au reducer pour stocker dans le store de Redux
+    return async (dispatch) => {
+
+        try {
+
+            const res = await axios({
+                method: "get",
+                url: `${process.env.REACT_APP_API_URL}api/user`,
+                withCredentials: true,
+            });
+
+            dispatch({
+                type: GET_ALL_USERS,
+                payload: res.data
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
 
 
 export const getUser = (userId) => {

@@ -20,7 +20,8 @@ const App = () => {
 
   const UserIdContext = React.createContext();
   
-  dispatch(getUser(userId));
+  console.log(userId);
+  dispatch(getUser(24));
 
   return (
     <UserIdContext.Provider value={decodedToken}>

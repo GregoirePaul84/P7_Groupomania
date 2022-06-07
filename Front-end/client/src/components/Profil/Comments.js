@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faThumbsUp, faThumbsDown, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from '../../actions/user.actions';
+import { getAllUsers } from '../../actions/user.actions';
 
 
 export function displayComments(postId) {
@@ -28,35 +28,57 @@ const Comments = (props) => {
     const dispatch = useDispatch();
     const postId = props.postId;
     const comments = props.comment;
-    console.log(comments);
-
     
     useEffect(() => {
 
-        dispatch(getUser());
+        dispatch(getAllUsers());
 
         for (let i in comments) {
             if (postId === comments[i].post_id) {
                 
                 const textComment = comments[i].text; 
                 const commentId = comments[i].comment_id;
-                const userId = props.comment[i].user_id;
-                dispatch(getUser(userId));
-                // const selectImgBox = selectComment.querySelector('.user-picture');
-                // selectImgBox.setAttribute('src', )
+    
                 const selectComment = document.querySelector('.comment_id'+commentId);
                 const selectMessageBox = selectComment.querySelector('.message');
-                selectMessageBox.innerHTML = `${textComment}`;
+                selectMessageBox.textContent = `${textComment}`;
             }
         }
 
     // eslint-disable-next-line    
     }, []);
 
-    const userData = useSelector((state) => state.userReducer);
-    const userResults = userData.results;
-    const firstName = userResults.first_name;
-    console.log(firstName);
+    const allUsersData = useSelector((state) => state.userAllReducer);
+    const usersResults = allUsersData.results;
+    console.log(usersResults);
+    
+    useEffect(() => {
+        for (let j in comments) {
+            const commentId = comments[j].comment_id;
+            if (usersResults !== undefined) {
+                const findUserById = usersResults.find(x => x.user_id === comments[j].user_id);
+                console.log(findUserById);
+        
+                const selectComment = document.querySelector('.comment_id'+commentId);
+                const selectImgBox = selectComment.querySelector('.user-picture');
+                selectImgBox.setAttribute('src', findUserById.profil_pic)
+
+                const selectName = selectComment.querySelector('h3');
+                selectName.textContent = findUserById.first_name + ', ' + findUserById.last_name;
+
+                const selectEmail = selectComment.querySelector('p');
+                selectEmail.textContent = findUserById.email;
+
+                const selectDate = selectComment.querySelector('.comment-date');
+                selectDate.textContent = findUserById.created;
+            }
+            
+        }
+    // eslint-disable-next-line
+    }, [usersResults]);
+    
+    // const firstName = userResults.first_name;
+    // console.log(firstName);
 
     
     return (
@@ -64,11 +86,11 @@ const Comments = (props) => {
             <div className="flex-container">
                 <div className="comments-smallContainer">
                     <div className="comment-user-picture">
-                        <img className="user-picture" src={"objectUser.profil_pic"} alt="utilisateur" />
+                        <img className="user-picture" src={"profil_pic"} alt="utilisateur" />
                     </div>
                     <div className="comment-name-user">
-                        <h3>{"objectUser.first_name"}, {"objectUser.last_name"}</h3>
-                        <p>{"objectUser.email"}</p>
+                        <h3>{"first_name"}, {"last_name"}</h3>
+                        <p>{"email"}</p>
                     </div>
                     <div className="modify-delete">
                         <FontAwesomeIcon className="pen" icon={faPen}/>
@@ -76,7 +98,7 @@ const Comments = (props) => {
                     </div>
                     <div className="comment-message">
                         <FontAwesomeIcon icon={ faPaperPlane } />
-                        <span className="comment-date"></span>
+                        <span className="comment-date">{"created"}</span>
                         <div className="comment-content">
                             <div className='message'>
                             
