@@ -18,7 +18,6 @@ const Posts = (props) => {
     function writePost() {
         const postContent = document.querySelector('.input-send-post').value;
         dispatch(sendPost(postContent, userId));
-
     }
 
     return (

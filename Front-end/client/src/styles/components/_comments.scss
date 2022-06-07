@@ -1,7 +1,6 @@
 .comments-container {
-    display: none;
     max-width: 550px;
-    min-height: 280px;
+    min-height: 220px;
     background-color: rgba(72, 57, 147, 0.13);
     overflow: hidden;
     &:nth-last-child{
@@ -20,7 +19,6 @@
         flex-wrap: wrap;
         width: 90%;
         border-radius: 20px;
-        margin: 2em 0;
 
         .comment-user-picture {
             flex-grow: 2;

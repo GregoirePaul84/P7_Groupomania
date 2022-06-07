@@ -50,14 +50,12 @@ const Comments = (props) => {
 
     const allUsersData = useSelector((state) => state.userAllReducer);
     const usersResults = allUsersData.results;
-    console.log(usersResults);
     
     useEffect(() => {
         for (let j in comments) {
             const commentId = comments[j].comment_id;
             if (usersResults !== undefined) {
                 const findUserById = usersResults.find(x => x.user_id === comments[j].user_id);
-                console.log(findUserById);
         
                 const selectComment = document.querySelector('.comment_id'+commentId);
                 const selectImgBox = selectComment.querySelector('.user-picture');
@@ -76,11 +74,7 @@ const Comments = (props) => {
         }
     // eslint-disable-next-line
     }, [usersResults]);
-    
-    // const firstName = userResults.first_name;
-    // console.log(firstName);
 
-    
     return (
         
             <div className="flex-container">
@@ -101,16 +95,15 @@ const Comments = (props) => {
                         <span className="comment-date">{"created"}</span>
                         <div className="comment-content">
                             <div className='message'>
-                            
                             </div>
                         </div>
                     </div>
                     <div className="comments-likes">
                         {/* eslint-disable-next-line */}
-                        <FontAwesomeIcon className={"thumbs-up " + "comment_id-green" + postId} icon={ faThumbsUp } onClick={console.log("toggleLike")}/>
+                        <FontAwesomeIcon className={"thumbs-up " + "comment_id-green" + postId} icon={ faThumbsUp } />
                         <span className="comment-like">{""} like</span>
                         {/* eslint-disable-next-line */}
-                        <FontAwesomeIcon className={"thumbs-down " + "comment_id-red" + postId} icon={ faThumbsDown } onClick={console.log("toggleDislike")} />
+                        <FontAwesomeIcon className={"thumbs-down " + "comment_id-red" + postId} icon={ faThumbsDown } />
                         <span className="comment-dislike">{""} dislike</span>
                     </div>
                 </div>

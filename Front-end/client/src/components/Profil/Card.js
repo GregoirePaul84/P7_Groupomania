@@ -87,6 +87,7 @@ const Card = ({post}) => {
         dispatch(getComments());
 
     }, [dispatch, post.post_id])
+
     
     const userData = useSelector((state) => state.userReducer);
     const likeData = useSelector((state) => state.postReducer);
@@ -96,6 +97,7 @@ const Card = ({post}) => {
     objectUser = userData.results[0];
     const imgUrl = post.image_url;
     const commentsArray = commentsData.results;
+
     console.log(commentsArray);
 
     if (likeData.post === undefined || commentsArray === undefined) {
@@ -115,7 +117,7 @@ const Card = ({post}) => {
                 </div>
                 <div className="modify-delete">
                     <FontAwesomeIcon icon={faPen} />
-                    <FontAwesomeIcon icon={faTrashCan} onClick={console.log("post supprimé")} />
+                    <FontAwesomeIcon icon={faTrashCan} />
                 </div>
                 <div className="card-message">
                     <FontAwesomeIcon icon={ faPaperPlane } />
@@ -141,18 +143,21 @@ const Card = ({post}) => {
                 </div>
             </div>
         </div>
-        <InputComments postId={postId} infoUser={objectUser}/>
-        {/* eslint-disable-next-line */}
-        {commentsArray.map((comment) => {
-            if (comment.post_id === postId) {
-                return (
-                    // eslint-disable-next-line
-                    <div className={"comments-container " + "post_id" + postId + " comment_id" + comment.comment_id} key={comment.comment_id}> 
-                        <Comments postId={postId} comment={commentsArray} key={comment.comment_id} />
-                    </div>
-                )
-            }
-        })}
+        <div className={"input-comments-container " + "input-post_id" + postId}>
+            <InputComments postId={postId} infoUser={objectUser}/>
+            {/* eslint-disable-next-line */}
+            {commentsArray.map((comment) => {
+                if (comment.post_id === postId) {
+                    
+                    return (
+                        // eslint-disable-next-line
+                        <div className={"comments-container " + "post_id" + postId + " comment_id" + comment.comment_id} key={comment.comment_id}> 
+                            <Comments postId={postId} comment={commentsArray} key={comment.comment_id} />
+                        </div>
+                    )
+                }
+            })}
+        </div>
         </>
     );
 };
