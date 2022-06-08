@@ -64,7 +64,7 @@ export const deletePost = (postId, userId) => {
 
             dispatch({
                 type: DELETE_POST,
-                payload: res.data
+                payload: res.postId
             });
 
             // Récupération de tous les posts de l'utilisateur pour actualiser la suppression

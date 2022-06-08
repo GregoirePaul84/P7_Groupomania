@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faThumbsUp, faMessage, faThumbsDown, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
-import { displayLikes, likePost, cancelLikePost, dislikePost, cancelDislikePost } from '../../actions/post.actions';
+import { displayLikes, likePost, cancelLikePost, dislikePost, cancelDislikePost, deletePost } from '../../actions/post.actions';
 import Comments, {displayComments, hideComments} from './Comments';
 import InputComments from './InputComments';
 import { getComments} from '../../actions/post_comments.actions';
+import { getUserPosts } from '../../actions/user_posts.actions';
 
 
 const Card = ({post}) => {
@@ -81,10 +82,11 @@ const Card = ({post}) => {
         }
     }
 
-    const deletePost = () => {
-        console.log('post supprimé');
-        dispatch(deletePost(postId));
+    const deleteArticle = () => {
+        dispatch(deletePost(postId))
+            .then(() => dispatch(getUserPosts(userId)))
     }
+    
 
     useEffect(() => {
         const postId = post.post_id;
@@ -124,7 +126,10 @@ const Card = ({post}) => {
                 </div>
                 <div className="modify-delete">
                     <FontAwesomeIcon icon={faPen} />
-                    <FontAwesomeIcon icon={faTrashCan} onClick={deletePost} />
+                    <FontAwesomeIcon icon={faTrashCan} onClick={() => {
+                        if (window.confirm('Êtes-vous sûr de vouloir supprimer ce post ?'))
+                            { deleteArticle() }
+                    }} />
                 </div>
                 <div className="card-message">
                     <FontAwesomeIcon icon={ faPaperPlane } />

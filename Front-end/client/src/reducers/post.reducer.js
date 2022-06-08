@@ -12,10 +12,7 @@ export default function postReducer(state= initialState, action) {
             }
 
         case DELETE_POST:
-            return {
-                ...state,
-                post: action.payload,
-            }
+            return state.filter((post) => post.post_id !== action.payload.postId);
             
         case LIKE_POST: 
             return {
