@@ -55,25 +55,38 @@ module.exports.createComment = (req, res) => {
             res.status(500).json( {error} );
         }
         else {
-            console.log("===> Commentaire créé");
 
-            // Si du texte est présent, on met à jour le texte dans la table "comments"
-            if(req.body.text) {
-                const sqlUpdateText = `UPDATE comments SET text= ? WHERE comment_id= LAST_INSERT_ID()`;
+            // Incrémentation du commentaire dans la table posts
+            const sqlInsertPost = `UPDATE posts Set comments_number=comments_number+1 where post_id=?`;
+            
+            mySqlConnection.query( sqlInsertPost, req.body.post_id, (error, results) => {
+                if (!error) {
 
-                mySqlConnection.query( sqlUpdateText, req.body.text, (error, results) => {
-                    
-                    if (error) {
-                        res.status(500).json( {error} );
-                    }
-                    // Si il n'y a pas d'image
-                    else if (req.file === undefined) {
-                        console.log("===> Texte créé !");
-                        res.status(200).json( {message: "Texte créé !"} )
+                    console.log("===> Commentaire créé");
+
+                    // Si du texte est présent, on met à jour le texte dans la table "comments"
+                    if(req.body.text) {
+                        const sqlUpdateText = `UPDATE comments SET text= ? WHERE comment_id= LAST_INSERT_ID()`;
+
+                        mySqlConnection.query( sqlUpdateText, req.body.text, (error, results) => {
+                            
+                            if (error) {
+                                res.status(500).json( {error} );
+                            }
+                            // Si il n'y a pas d'image
+                            else if (req.file === undefined) {
+                                console.log("===> Texte créé !");
+                                res.status(200).json( {message: "Texte créé !"} )
+                            } 
+                        });
                     } 
-                });
-            }
-
+                }
+                
+                else {
+                    res.status(500).json( {error} );
+                } 
+            });
+            
             // Si une image est présente, on met à jour l'URL de l'image dans la table "comments"
             if (req.file) {
 

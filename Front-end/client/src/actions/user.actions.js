@@ -31,6 +31,7 @@ export const getAllUsers = () => {
 
 
 export const getUser = (userId) => {
+    console.log(userId);
 
     // Envoi au reducer pour stocker dans le store de Redux
     return async (dispatch) => {

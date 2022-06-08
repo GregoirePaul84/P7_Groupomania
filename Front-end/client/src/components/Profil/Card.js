@@ -12,6 +12,7 @@ const Card = ({post}) => {
 
     const postId = post.post_id;
     const userId = post.user_id;
+    console.log(post);
 
     const dispatch = useDispatch();
 
@@ -93,12 +94,14 @@ const Card = ({post}) => {
     const likeData = useSelector((state) => state.postReducer);
     const commentsData = useSelector((state) => state.commentsReducer);
     
+
     let objectUser = {};
     objectUser = userData.results[0];
     const imgUrl = post.image_url;
     const commentsArray = commentsData.results;
-
-    console.log(commentsArray);
+    const numberOfComments = post.comments_number;
+    const numberOfLikes = post.like_number;
+    const numberOfDislikes = post.dislike_number;
 
     if (likeData.post === undefined || commentsArray === undefined) {
         return;
@@ -133,18 +136,19 @@ const Card = ({post}) => {
                 </div>
                 <div className="card-likes-comments">
                 <FontAwesomeIcon icon={ faMessage } onClick={toggleVisibility}/>
-                <span>1 commentaire</span>
+                { (numberOfComments > 1) ? <span>{numberOfComments} commentaires</span> : <span>{numberOfComments} commentaire</span> }
                 {/* eslint-disable-next-line */}
                 <FontAwesomeIcon className={"thumbs-up " + "post_id-green" + postId} icon={ faThumbsUp } onClick={toggleLike}/>
-                <span className="post-like">{post.like_number} like</span>
+                { (numberOfLikes > 1) ? <span className="post-like">{numberOfLikes} likes</span> : <span className="post-like">{numberOfLikes} like</span> }
                 {/* eslint-disable-next-line */}
                 <FontAwesomeIcon className={"thumbs-down " + "post_id-red" + postId} icon={ faThumbsDown } onClick={toggleDislike} />
-                <span className="post-dislike">{post.dislike_number} dislike</span>
+                { (numberOfDislikes > 1) ? <span className="post-dislike">{numberOfDislikes} likes</span> : <span className="post-dislike">{numberOfDislikes} like</span> }
                 </div>
             </div>
         </div>
+        {/* eslint-disable-next-line */}
         <div className={"input-comments-container " + "input-post_id" + postId}>
-            <InputComments postId={postId} infoUser={objectUser}/>
+            <InputComments postId={postId} infoUser={objectUser} />
             {/* eslint-disable-next-line */}
             {commentsArray.map((comment) => {
                 if (comment.post_id === postId) {

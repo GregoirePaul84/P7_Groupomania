@@ -2,13 +2,16 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment} from '@fortawesome/free-solid-svg-icons'
 import { sendComment } from '../../actions/post_comments.actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserPosts } from '../../actions/user_posts.actions';
 
 const InputComments = (props) => {
     
     const postId = props.postId;
     const objectUser = props.infoUser;
-    
+    const userId = objectUser.user_id;
+    console.log(userId);
+
     const dispatch = useDispatch();
 
     function writeComment() {
@@ -24,12 +27,14 @@ const InputComments = (props) => {
         
         if (typeof commentContent === 'string' && commentContent !== '') {
             console.log(commentContent);
-            dispatch(sendComment(commentContent, postId));
-            
+            dispatch(sendComment(commentContent, postId))
+                .then(() => dispatch(getUserPosts(userId)));
         }
     }
-    
-    
+
+    const postData = useSelector((state) => state.userPostReducer);
+    console.log(postData);
+     
     return (
         // eslint-disable-next-line
         <div>
@@ -44,7 +49,7 @@ const InputComments = (props) => {
                     </div>
                     <div className="input-box">
                         <input type="text" placeholder={`Ecrivez un commentaire !`} className="input-send-comment" />
-                        <FontAwesomeIcon icon={ faComment } onClick={writeComment}/>
+                        <FontAwesomeIcon icon={ faComment } onClick={writeComment} />
                     </div>
                 </div>
             </div>
