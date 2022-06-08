@@ -12,7 +12,6 @@ const Card = ({post}) => {
 
     const postId = post.post_id;
     const userId = post.user_id;
-    console.log(post);
 
     const dispatch = useDispatch();
 
@@ -82,6 +81,11 @@ const Card = ({post}) => {
         }
     }
 
+    const deletePost = () => {
+        console.log('post supprimé');
+        dispatch(deletePost(postId));
+    }
+
     useEffect(() => {
         const postId = post.post_id;
         dispatch(displayLikes(postId));
@@ -120,7 +124,7 @@ const Card = ({post}) => {
                 </div>
                 <div className="modify-delete">
                     <FontAwesomeIcon icon={faPen} />
-                    <FontAwesomeIcon icon={faTrashCan} />
+                    <FontAwesomeIcon icon={faTrashCan} onClick={deletePost} />
                 </div>
                 <div className="card-message">
                     <FontAwesomeIcon icon={ faPaperPlane } />

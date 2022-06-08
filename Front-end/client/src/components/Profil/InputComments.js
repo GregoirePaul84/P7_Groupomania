@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment} from '@fortawesome/free-solid-svg-icons'
 import { sendComment } from '../../actions/post_comments.actions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getUserPosts } from '../../actions/user_posts.actions';
 
 const InputComments = (props) => {
@@ -10,7 +10,6 @@ const InputComments = (props) => {
     const postId = props.postId;
     const objectUser = props.infoUser;
     const userId = objectUser.user_id;
-    console.log(userId);
 
     const dispatch = useDispatch();
 
@@ -31,9 +30,6 @@ const InputComments = (props) => {
                 .then(() => dispatch(getUserPosts(userId)));
         }
     }
-
-    const postData = useSelector((state) => state.userPostReducer);
-    console.log(postData);
      
     return (
         // eslint-disable-next-line

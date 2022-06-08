@@ -20,7 +20,6 @@ const App = () => {
 
   const UserIdContext = React.createContext();
   
-  console.log(userId);
   dispatch(getUser(userId));
 
   return (

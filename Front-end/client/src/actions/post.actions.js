@@ -50,6 +50,41 @@ export const sendPost = (postContent, userId) => {
     }
 }
 
+export const deletePost = (postId, userId) => {
+    return async (dispatch) => {
+
+        try {
+
+            // Envoie des données au backend
+            const res = await axios({
+                method: "delete",
+                url: `${process.env.REACT_APP_API_URL}api/post/${postId}`,
+                withCredentials: true,
+            });
+
+            dispatch({
+                type: DELETE_POST,
+                payload: res.data
+            });
+
+            // Récupération de tous les posts de l'utilisateur pour actualiser la suppression
+            const res2 = await axios({
+                method: "get",
+                url: `${process.env.REACT_APP_API_URL}api/post/all/${userId}`,
+                withCredentials: true,   
+            });
+
+            dispatch({
+                type: GET_USER_POSTS,
+                payload: res2.data
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
 
 export const likePost = (postId, userId) => {
     console.log(userId);

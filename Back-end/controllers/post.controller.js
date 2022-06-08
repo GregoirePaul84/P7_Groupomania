@@ -132,17 +132,24 @@ module.exports.createPost = (req, res) => {
 module.exports.deletePost = (req, res) => {
     
     const postId = req.params.id;
-    const sqlDeletePost = `DELETE FROM posts WHERE posts.post_id = ${postId}`;
-    mySqlConnection.query (sqlDeletePost, (error, results) => {
+    const sqlDeletePost = `DELETE FROM posts WHERE posts.post_id = ?`;
+    mySqlConnection.query (sqlDeletePost, postId, (error, results) => {
         if (!error) {
-            res.status(200).json( {message : "Suppression du post réussie !"} );
+            const sqlDeleteComments = `DELETE FROM comments WHERE comments.post_id = ?`;
+            mySqlConnection.query(sqlDeleteComments, postId, (error, results) => {
+                if (!error) {
+                    res.status(200).json( {message : "Suppression du post réussie !"} ); 
+                }
+                else {
+                    res.status(500).json( {error} ); 
+                }
+            })
         }
         else {
             res.status(500).json( {error} );
         }
     })         
-    
-};
+}
 
 // ********** Like / Dislike d'un post ********** //
 
