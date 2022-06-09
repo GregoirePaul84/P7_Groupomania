@@ -15,6 +15,9 @@ router.get('/:id', auth, postCtlr.readOnePost);
 // Créer un post
 router.post('/', auth, upload.single('post_image'), postCtlr.createPost);
 
+// Modifier un post
+router.put('/:id', auth, postCtlr.updatePost);
+
 // Liker / Disliker un post
 router.post('/:id', auth, postCtlr.likeDislikePost);
 

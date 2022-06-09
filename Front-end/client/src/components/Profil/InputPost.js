@@ -17,7 +17,9 @@ const Posts = (props) => {
 
     function writePost() {
         const postContent = document.querySelector('.input-send-post').value;
-        dispatch(sendPost(postContent, userId));
+        dispatch(sendPost(postContent, userId))
+            .then(() => document.querySelector('.input-send-post').value = '');
+
     }
 
     return (
@@ -26,10 +28,10 @@ const Posts = (props) => {
                 <h2>{objectUser.first_name}, {objectUser.last_name} </h2>
             </div>
             <div className="input-pictures-contact-box">
-                <div className="input-box">
+                <form className="input-box">
                     <input type="text" placeholder={`Quoi de neuf, ${objectUser.first_name} ?`} className="input-send-post" />
                     <FontAwesomeIcon icon={ faPaperPlane } onClick={writePost}/>
-                </div>
+                </form>
                 <ul className="pictures-contact-box">
                     <li><FontAwesomeIcon icon={ faCamera } />Photos</li>
                     <li><FontAwesomeIcon icon={ faAddressBook } />Contacts</li>

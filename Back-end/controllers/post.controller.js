@@ -127,6 +127,26 @@ module.exports.createPost = (req, res) => {
     });
 };
 
+
+// ********** Modification d'un post ********** //
+
+module.exports.updatePost = (req, res) => {
+    
+    const postId = req.params.id;
+    const newText = req.body.text;
+    const updateArray = [newText, postId]
+
+    const sqlUpdatePost = `UPDATE posts SET text = ? WHERE post_id = ?`;
+    mySqlConnection.query (sqlUpdatePost, updateArray, (error, results) => {
+        if (!error) {  
+            res.status(200).json( {message : "Modification du post réussie !"} ); 
+        }
+        else {
+            res.status(500).json( {error} );
+        }
+    })         
+}
+
 // ********** Suppression d'un post ********** //
 
 module.exports.deletePost = (req, res) => {

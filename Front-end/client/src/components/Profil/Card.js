@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faThumbsUp, faMessage, faThumbsDown, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
-import { displayLikes, likePost, cancelLikePost, dislikePost, cancelDislikePost, deletePost } from '../../actions/post.actions';
+import { likePost, cancelLikePost, dislikePost, cancelDislikePost, deletePost, updatePost } from '../../actions/post.actions';
 import Comments, {displayComments, hideComments} from './Comments';
 import InputComments from './InputComments';
 import { getComments} from '../../actions/post_comments.actions';
@@ -19,6 +19,15 @@ const Card = ({post}) => {
     const [greenActive, setGreenActive] = useState(true);
     const [redActive, setRedActive] = useState(true);
     const [visibility, setVisibility] = useState(true);
+    const [isUpdated, setIsUpdated] = useState(false);
+    const [textUpdate, setTextUpdate] = useState(null);
+
+    const updateItem = () => {
+        if(textUpdate) {
+            console.log(textUpdate);
+            dispatch(updatePost(postId, textUpdate, userId));
+        }
+    }
 
     function addLike() {
         console.log(`==> post liké : post_id ${postId}`);
@@ -89,15 +98,13 @@ const Card = ({post}) => {
     
 
     useEffect(() => {
-        const postId = post.post_id;
-        dispatch(displayLikes(postId));
+        dispatch(getUserPosts(userId));
         dispatch(getComments());
 
-    }, [dispatch, post.post_id])
+    }, [dispatch, userId])
 
     
     const userData = useSelector((state) => state.userReducer);
-    const likeData = useSelector((state) => state.postReducer);
     const commentsData = useSelector((state) => state.commentsReducer);
     
 
@@ -109,7 +116,7 @@ const Card = ({post}) => {
     const numberOfLikes = post.like_number;
     const numberOfDislikes = post.dislike_number;
 
-    if (likeData.post === undefined || commentsArray === undefined) {
+    if (commentsArray === undefined) {
         return;
     }
 
@@ -125,7 +132,7 @@ const Card = ({post}) => {
                     <p>{objectUser.email}</p>
                 </div>
                 <div className="modify-delete">
-                    <FontAwesomeIcon icon={faPen} />
+                    <FontAwesomeIcon icon={faPen} onClick={() => setIsUpdated(!isUpdated)}/>
                     <FontAwesomeIcon icon={faTrashCan} onClick={() => {
                         if (window.confirm('Êtes-vous sûr de vouloir supprimer ce post ?'))
                             { deleteArticle() }
@@ -135,7 +142,19 @@ const Card = ({post}) => {
                     <FontAwesomeIcon icon={ faPaperPlane } />
                     <span className="post-date">{post.created}</span>
                     <div className="post-content">
-                        <div className='message'>{post.text}</div>
+                        {isUpdated === false && <div className='message'>{post.text}</div>}
+                        {isUpdated && (
+                            <div className="update-post">
+                                <textarea
+                                    className="update-content"
+                                    defaultValue={post.text}
+                                    onChange={ (e) => setTextUpdate(e.target.value)}
+                                />
+                                <div className="update-button">
+                                    <button className='btn' onClick={updateItem}>Modifier</button>
+                                </div>
+                            </div>
+                        )}
                         { (imgUrl) ? 
                             <div className='picture'>
                                 <img src={imgUrl} alt="post utilisateur" />

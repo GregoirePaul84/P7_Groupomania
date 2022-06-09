@@ -12,6 +12,9 @@ router.get('/', auth, commentCtlr.readAllComments);
 // Créer un commentaire
 router.post('/', auth, upload.single('comment_image'), commentCtlr.createComment);
 
+// Modifier un post
+router.put('/:id', auth, commentCtlr.updateComment);
+
 // Supprimer un commentaire
 router.delete('/:id', auth, commentCtlr.deleteComment);
 

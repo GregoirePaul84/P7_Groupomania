@@ -102,9 +102,10 @@
             }
             .post-content {
                 display: flex;
-                gap: 2em;
+
                 .message {
-                    margin: 10px 0 10px 15px;
+                    flex-basis: 100%;
+                    margin: 10px 15px;
                 }
                 .picture {
                     height: 100px;
@@ -117,6 +118,36 @@
                     }
                 }
             }
+            .update-post {
+                display: flex;
+                flex-basis: 100%;
+                flex-wrap: wrap;
+                justify-content: center;
+                textarea {
+                    flex-basis: 100%;
+                    margin: 10px 15px;
+                    background-color: #383641;
+                    border-radius: 10px;
+                    padding: 5px 10px;
+                }
+                .update-button {
+                    margin-bottom: 10px;
+                    .btn {
+                        background-color: #2A2831;
+                        border: 2px solid #8D76FF;
+                        border-radius: 10px;
+                        padding: 4px;
+                        cursor: pointer;
+                        font-weight: bold;
+                        transition: transform 400ms;
+                        &:hover {
+                            transform: scale(1.15);
+                        }
+                    }
+                }
+
+            }
+            
         }
 
         .card-likes-comments {

@@ -126,6 +126,26 @@ module.exports.createComment = (req, res) => {
     });
 }
 
+
+// ********** Modification d'un commentaire ********** //
+
+module.exports.updateComment = (req, res) => {
+    
+    const commentId = req.params.id;
+    const newText = req.body.text;
+    const updateArray = [newText, commentId];
+
+    const sqlUpdatePost = `UPDATE comments SET text = ? WHERE comment_id = ?`;
+    mySqlConnection.query (sqlUpdatePost, updateArray, (error, results) => {
+        if (!error) {  
+            res.status(200).json( {message : "Modification du commentaire réussie !"} ); 
+        }
+        else {
+            res.status(500).json( {error} );
+        }
+    })         
+}
+
 // ********** Suppression d'un commentaire ********** //
 
 module.exports.deleteComment = (req, res) => {
