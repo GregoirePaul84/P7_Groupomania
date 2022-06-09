@@ -25,7 +25,8 @@ const Card = ({post}) => {
     const updateItem = () => {
         if(textUpdate) {
             console.log(textUpdate);
-            dispatch(updatePost(postId, textUpdate, userId));
+            dispatch(updatePost(postId, textUpdate, userId))
+                .then(() => setIsUpdated(false));
         }
     }
 
