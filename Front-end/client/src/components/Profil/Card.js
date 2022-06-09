@@ -7,12 +7,14 @@ import Comments, {displayComments, hideComments} from './Comments';
 import InputComments from './InputComments';
 import { getComments} from '../../actions/post_comments.actions';
 import { getUserPosts } from '../../actions/user_posts.actions';
+import { convertTime } from '../../App';
 
 
 const Card = ({post}) => {
 
     const postId = post.post_id;
     const userId = post.user_id;
+    const isoDate = post.created;
 
     const dispatch = useDispatch();
 
@@ -21,6 +23,7 @@ const Card = ({post}) => {
     const [visibility, setVisibility] = useState(true);
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
+
 
     const updateItem = () => {
         if(textUpdate) {
@@ -141,7 +144,7 @@ const Card = ({post}) => {
                 </div>
                 <div className="card-message">
                     <FontAwesomeIcon icon={ faPaperPlane } />
-                    <span className="post-date">{post.created}</span>
+                    <span className="post-date">{convertTime(isoDate)}</span>
                     <div className="post-content">
                         {isUpdated === false && <div className='message'>{post.text}</div>}
                         {isUpdated && (
