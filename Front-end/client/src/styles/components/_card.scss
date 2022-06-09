@@ -12,13 +12,11 @@
 
 .card-container {
     min-width: 620px;
-    min-height: 240px;
     background-color: #2A2831;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 2em;
-    overflow: hidden;
+    margin: 1em 0;
     border-radius: 20px;
     
     .card-smallContainer {
@@ -129,6 +127,8 @@
                     background-color: #383641;
                     border-radius: 10px;
                     padding: 5px 10px;
+                    resize: vertical;
+                    min-height: 37px;
                 }
                 .update-button {
                     margin-bottom: 10px;
