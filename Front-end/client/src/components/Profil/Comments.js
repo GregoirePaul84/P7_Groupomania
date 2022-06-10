@@ -4,7 +4,7 @@ import { faPaperPlane, faThumbsUp, faThumbsDown, faTrashCan, faPen} from '@forta
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../../actions/user.actions';
 import { convertTime } from '../../App';
-import { cancelLikeComment, likeComment } from '../../actions/comment.actions';
+import { cancelLikeComment, getComments, likeComment } from '../../actions/comment.actions';
 
 
 export function displayComments(postId) {
@@ -28,9 +28,11 @@ export function hideComments(postId) {
 const Comments = (props) => {
 
     const dispatch = useDispatch();
-    const postId = props.postId;
     const comments = props.comments;
     const commentId = props.commentId;
+    const likeNumber = props.nbOfLikes;
+    const commentText = props.commentText;
+    const commentDate = props.commentDate;
 
     const [greenActive, setGreenActive] = useState(true);
     const [redActive, setRedActive] = useState(true);
@@ -38,17 +40,10 @@ const Comments = (props) => {
     useEffect(() => {
 
         dispatch(getAllUsers());
-
-        for (let i in comments) {
-            if (postId === comments[i].post_id) {
-                
-                const textComment = comments[i].text; 
-    
-                const selectComment = document.querySelector('.comment_id'+commentId);
-                const selectMessageBox = selectComment.querySelector('.message');
-                selectMessageBox.textContent = `${textComment}`;
-            }
-        }
+        
+        const selectComment = document.querySelector('.comment_id'+commentId);
+        const selectMessageBox = selectComment.querySelector('.message');
+        selectMessageBox.textContent = `${commentText}`; 
 
     // eslint-disable-next-line    
     }, []);
@@ -61,8 +56,6 @@ const Comments = (props) => {
 
             if (usersResults !== undefined) {
                 const findUserById = usersResults.find(x => x.user_id === comments[j].user_id);
-                const findDateComment = comments.find(x => x.created === comments[j].created);
-                console.log(findDateComment.created);
         
                 const selectComment = document.querySelector('.comment_id'+commentId);
                 const selectImgBox = selectComment.querySelector('.user-picture');
@@ -75,7 +68,7 @@ const Comments = (props) => {
                 selectEmail.textContent = findUserById.email;
 
                 const selectDate = selectComment.querySelector('.comment-date');
-                const transformedDate = convertTime(findDateComment.created);
+                const transformedDate = convertTime(commentDate);
                 selectDate.textContent = transformedDate;
 
                 const selectThumbUp = selectComment.querySelector('.thumbs-up');
@@ -91,12 +84,14 @@ const Comments = (props) => {
 
     function addLike() {
         console.log(`==> commentaire liké : comment_id ${commentId}`);
-        dispatch(likeComment(commentId));
+        dispatch(likeComment(commentId))
+            .then(() => dispatch(getComments()));
     }
 
     function removeLike() {
         console.log(`==> like annulé : comment_id ${commentId}`);
-        dispatch(cancelLikeComment(commentId));
+        dispatch(cancelLikeComment(commentId))
+            .then(() => dispatch(getComments()));
     }
 
     const toggleLike = () => {
@@ -155,7 +150,7 @@ const Comments = (props) => {
                     <div className="comments-likes">
                         {/* eslint-disable-next-line */}
                         <FontAwesomeIcon className={"thumbs-up comment"} icon={ faThumbsUp }  onClick={toggleLike}/>
-                        <span className="comment-like">{""} like</span>
+                        <span className="comment-like">{likeNumber} like</span>
                         {/* eslint-disable-next-line */}
                         <FontAwesomeIcon className={"thumbs-down"} icon={ faThumbsDown } onClick={toggleDislike}/>
                         <span className="comment-dislike">{""} dislike</span>

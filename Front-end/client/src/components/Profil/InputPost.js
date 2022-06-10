@@ -7,6 +7,7 @@ import { faAddressBook} from '@fortawesome/free-solid-svg-icons'
 import UserPosts from './UserPosts';
 import { sendPost } from '../../actions/post.actions';
 import { useDispatch } from 'react-redux';
+import { getUserPosts } from '../../actions/user_posts.actions';
 
 const Posts = (props) => {
 
@@ -18,7 +19,9 @@ const Posts = (props) => {
     function writePost() {
         const postContent = document.querySelector('.input-send-post').value;
         dispatch(sendPost(postContent, userId))
-            .then(() => document.querySelector('.input-send-post').value = '');
+            .then(() => document.querySelector('.input-send-post').value = '')
+            .then(() => dispatch(getUserPosts(userId)));
+
 
     }
 

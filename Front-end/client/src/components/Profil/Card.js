@@ -28,29 +28,34 @@ const Card = ({post}) => {
         if(textUpdate) {
             console.log(textUpdate);
             dispatch(updatePost(postId, textUpdate, userId))
-                .then(() => setIsUpdated(false));
+                .then(() => setIsUpdated(false))
+                .then(() => dispatch(getUserPosts(userId)));
         }
     }
 
     function addLike() {
         console.log(`==> post liké : post_id ${postId}`);
-        dispatch(likePost(postId, userId));
+        dispatch(likePost(postId, userId))
+            .then(() => dispatch(getUserPosts(userId)));
     }
 
     function removeLike() {
         console.log(`==> like annulé : post_id ${postId}`);
-        dispatch(cancelLikePost(postId, userId));
+        dispatch(cancelLikePost(postId, userId))
+            .then(() => dispatch(getUserPosts(userId)));
     }
 
     function addDislike() {
         console.log(`==> post disliké : post_id ${postId}`);
-        dispatch(dislikePost(postId, userId));
+        dispatch(dislikePost(postId, userId))
+            .then(() => dispatch(getUserPosts(userId)));
     }
 
     function removeDislike() {
         console.log(`==> dislike annulé : post_id ${postId}`);
-        dispatch(cancelDislikePost(postId, userId));
-    }
+        dispatch(cancelDislikePost(postId, userId))
+            .then(() => dispatch(getUserPosts(userId)));
+    }   
 
     const toggleLike = () => {
         setGreenActive(!greenActive);
@@ -187,7 +192,13 @@ const Card = ({post}) => {
                     return (
                         // eslint-disable-next-line
                         <div className={"comments-container " + "post_id" + postId + " comment_id" + comment.comment_id} key={comment.comment_id}> 
-                            <Comments postId={postId} comments={commentsArray} commentId={comment.comment_id} key={comment.comment_id} />
+                            <Comments postId={postId} 
+                                comments={commentsArray}
+                                commentDate={comment.created}
+                                commentText={comment.text}
+                                commentId={comment.comment_id}
+                                nbOfLikes={comment.like_number} 
+                                key={comment.comment_id} />
                         </div>
                     )
                 }
