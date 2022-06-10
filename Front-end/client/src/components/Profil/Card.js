@@ -5,7 +5,7 @@ import { faPaperPlane, faThumbsUp, faMessage, faThumbsDown, faTrashCan, faPen} f
 import { likePost, cancelLikePost, dislikePost, cancelDislikePost, deletePost, updatePost } from '../../actions/post.actions';
 import Comments, {displayComments, hideComments} from './Comments';
 import InputComments from './InputComments';
-import { getComments} from '../../actions/post_comments.actions';
+import { getComments} from '../../actions/comment.actions';
 import { getUserPosts } from '../../actions/user_posts.actions';
 import { convertTime } from '../../App';
 

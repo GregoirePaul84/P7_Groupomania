@@ -2,6 +2,8 @@ import axios from "axios";
 
 export const GET_COMMENTS = "GET_COMMENTS";
 export const SEND_COMMENT = "SEND_COMMENT";
+export const LIKE_COMMENT = "LIKE_COMMENT";
+export const CANCEL_LIKE_COMMENT = "CANCEL_LIKE_COMMENT";
 
 export const getComments = () => {
     
@@ -61,6 +63,60 @@ export const sendComment = (commentContent, postId) => {
                 payload: res2.data
             });
             
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+
+export const likeComment = (commentId) => {
+    console.log(commentId);
+    return async (dispatch) => {
+        try {
+            const data = JSON.stringify({
+                "like": "1"
+              });
+            
+            const res = await axios({
+                method: "post",
+                url: `${process.env.REACT_APP_API_URL}api/comment/${commentId}`,
+                withCredentials: true,
+                data: data,
+                headers: { "Content-Type": "application/json" },
+            });
+            dispatch({
+                type: LIKE_COMMENT,
+                payload: res.data
+            });
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+
+export const cancelLikeComment = (commentId) => {
+    return async (dispatch) => {
+        try {
+            const data = JSON.stringify({
+                "like": "0"
+            });
+            
+            const res = await axios({
+                method: "post",
+                url: `${process.env.REACT_APP_API_URL}api/comment/cancel/${commentId}`,
+                withCredentials: true,
+                data: data,
+                headers: { "Content-Type": "application/json" },
+            });
+
+            dispatch({
+                type: CANCEL_LIKE_COMMENT,
+                payload: res.data
+            });
+
         } catch (error) {
             console.log(error);
         }

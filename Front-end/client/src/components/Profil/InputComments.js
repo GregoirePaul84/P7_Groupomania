@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment} from '@fortawesome/free-solid-svg-icons'
-import { sendComment } from '../../actions/post_comments.actions';
+import { sendComment } from '../../actions/comment.actions';
 import { useDispatch } from 'react-redux';
 import { getUserPosts } from '../../actions/user_posts.actions';
 
@@ -27,7 +27,8 @@ const InputComments = (props) => {
         if (typeof commentContent === 'string' && commentContent !== '') {
             console.log(commentContent);
             dispatch(sendComment(commentContent, postId))
-                .then(() => dispatch(getUserPosts(userId)));
+                .then(() => dispatch(getUserPosts(userId)))
+                .then(() => document.querySelector('.input-send-comment').value = '');
         }
     }
      

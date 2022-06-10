@@ -211,7 +211,7 @@ export const dislikePost = (postId, userId) => {
     return async (dispatch) => {
         try {
             const data = JSON.stringify({
-                "like": "-1"
+                "dislike": "1"
               });
             
             const res = await axios({
