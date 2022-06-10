@@ -35,25 +35,25 @@ const Card = ({post}) => {
 
     function addLike() {
         console.log(`==> post liké : post_id ${postId}`);
-        dispatch(likePost(postId, userId))
+        dispatch(likePost(postId))
             .then(() => dispatch(getUserPosts(userId)));
     }
 
     function removeLike() {
         console.log(`==> like annulé : post_id ${postId}`);
-        dispatch(cancelLikePost(postId, userId))
+        dispatch(cancelLikePost(postId))
             .then(() => dispatch(getUserPosts(userId)));
     }
 
     function addDislike() {
         console.log(`==> post disliké : post_id ${postId}`);
-        dispatch(dislikePost(postId, userId))
+        dispatch(dislikePost(postId))
             .then(() => dispatch(getUserPosts(userId)));
     }
 
     function removeDislike() {
         console.log(`==> dislike annulé : post_id ${postId}`);
-        dispatch(cancelDislikePost(postId, userId))
+        dispatch(cancelDislikePost(postId))
             .then(() => dispatch(getUserPosts(userId)));
     }   
 
@@ -197,7 +197,8 @@ const Card = ({post}) => {
                                 commentDate={comment.created}
                                 commentText={comment.text}
                                 commentId={comment.comment_id}
-                                nbOfLikes={comment.like_number} 
+                                nbOfLikes={comment.like_number}
+                                nbOfDislikes={comment.dislike_number} 
                                 key={comment.comment_id} />
                         </div>
                     )

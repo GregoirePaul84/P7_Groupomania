@@ -21,8 +21,6 @@ const Posts = (props) => {
         dispatch(sendPost(postContent, userId))
             .then(() => document.querySelector('.input-send-post').value = '')
             .then(() => dispatch(getUserPosts(userId)));
-
-
     }
 
     return (

@@ -4,7 +4,7 @@ import { faPaperPlane, faThumbsUp, faThumbsDown, faTrashCan, faPen} from '@forta
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../../actions/user.actions';
 import { convertTime } from '../../App';
-import { cancelLikeComment, getComments, likeComment } from '../../actions/comment.actions';
+import { cancelDislikeComment, cancelLikeComment, dislikeComment, getComments, likeComment } from '../../actions/comment.actions';
 
 
 export function displayComments(postId) {
@@ -31,8 +31,10 @@ const Comments = (props) => {
     const comments = props.comments;
     const commentId = props.commentId;
     const likeNumber = props.nbOfLikes;
+    const dislikeNumber = props.nbOfDislikes;
     const commentText = props.commentText;
     const commentDate = props.commentDate;
+    
 
     const [greenActive, setGreenActive] = useState(true);
     const [redActive, setRedActive] = useState(true);
@@ -109,16 +111,28 @@ const Comments = (props) => {
         }
     };
 
+    function addDislike() {
+        console.log(`==> comment disliké : comment_id ${commentId}`);
+        dispatch(dislikeComment(commentId))
+            .then(() => dispatch(getComments()));
+    }
+
+    function removeDislike() {
+        console.log(`==> dislike annulé : comment_id ${commentId}`);
+        dispatch(cancelDislikeComment(commentId))
+            .then(() => dispatch(getComments()));
+    }   
+
     const toggleDislike = () => {
         setRedActive(!redActive);
 
         if (redActive === true) {
-            // addLike();
+            addDislike();
             const selectElt = document.querySelector(`.comment_id-red${commentId}`);
             selectElt.classList.add('active-red');
         }
         else if (redActive === false) {
-            // removeLike();
+            removeDislike();
             const selectElt = document.querySelector(`.comment_id-red${commentId}`);
             selectElt.classList.remove('active-red');
         }
@@ -153,7 +167,7 @@ const Comments = (props) => {
                         <span className="comment-like">{likeNumber} like</span>
                         {/* eslint-disable-next-line */}
                         <FontAwesomeIcon className={"thumbs-down"} icon={ faThumbsDown } onClick={toggleDislike}/>
-                        <span className="comment-dislike">{""} dislike</span>
+                        <span className="comment-dislike">{dislikeNumber} dislike</span>
                     </div>
                 </div>
             </div>
