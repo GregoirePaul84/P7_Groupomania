@@ -11,11 +11,10 @@ import { convertTime } from '../../App';
 
 
 const Card = ({post}) => {
-
     const postId = post.post_id;
     const userId = post.user_id;
     const isoDate = post.created;
-
+    
     const dispatch = useDispatch();
 
     const [greenActive, setGreenActive] = useState(true);
@@ -188,7 +187,7 @@ const Card = ({post}) => {
                     return (
                         // eslint-disable-next-line
                         <div className={"comments-container " + "post_id" + postId + " comment_id" + comment.comment_id} key={comment.comment_id}> 
-                            <Comments postId={postId} comment={commentsArray} key={comment.comment_id} />
+                            <Comments postId={postId} comments={commentsArray} commentId={comment.comment_id} key={comment.comment_id} />
                         </div>
                     )
                 }

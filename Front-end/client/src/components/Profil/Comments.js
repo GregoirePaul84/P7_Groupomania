@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faThumbsUp, faThumbsDown, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../../actions/user.actions';
+import { convertTime } from '../../App';
 
 
 export function displayComments(postId) {
@@ -24,10 +25,15 @@ export function hideComments(postId) {
 }
 
 const Comments = (props) => {
-    
+
     const dispatch = useDispatch();
     const postId = props.postId;
-    const comments = props.comment;
+    const comments = props.comments;
+    const commentId = props.commentId;
+    console.log(commentId);
+
+    const [greenActive, setGreenActive] = useState(true);
+    const [redActive, setRedActive] = useState(true);
     
     useEffect(() => {
 
@@ -37,7 +43,6 @@ const Comments = (props) => {
             if (postId === comments[i].post_id) {
                 
                 const textComment = comments[i].text; 
-                const commentId = comments[i].comment_id;
     
                 const selectComment = document.querySelector('.comment_id'+commentId);
                 const selectMessageBox = selectComment.querySelector('.message');
@@ -53,7 +58,7 @@ const Comments = (props) => {
     
     useEffect(() => {
         for (let j in comments) {
-            const commentId = comments[j].comment_id;
+
             if (usersResults !== undefined) {
                 const findUserById = usersResults.find(x => x.user_id === comments[j].user_id);
         
@@ -68,13 +73,50 @@ const Comments = (props) => {
                 selectEmail.textContent = findUserById.email;
 
                 const selectDate = selectComment.querySelector('.comment-date');
-                selectDate.textContent = findUserById.created;
+                const transformedDate = convertTime(findUserById.created);
+                selectDate.textContent = transformedDate;
+
+                const selectThumbUp = selectComment.querySelector('.thumbs-up');
+                selectThumbUp.classList.add('comment_id-green' + commentId);
+
+                const selectThumbDown = selectComment.querySelector('.thumbs-down');
+                selectThumbDown.classList.add('comment_id-red' + commentId);
             }
             
         }
     // eslint-disable-next-line
     }, [usersResults]);
 
+    const toggleLike = () => {
+        setGreenActive(!greenActive);
+
+        if (greenActive === true) {
+            // addLike();
+            const selectElt = document.querySelector(`.comment_id-green${commentId}`);
+            selectElt.classList.add('active-green');
+        }
+        else if (greenActive === false) {
+            // removeLike();
+            const selectElt = document.querySelector(`.comment_id-green${commentId}`);
+            selectElt.classList.remove('active-green');
+        }
+    };
+
+    const toggleDislike = () => {
+        setGreenActive(!greenActive);
+
+        if (greenActive === true) {
+            // addLike();
+            const selectElt = document.querySelector(`.comment_id-red${commentId}`);
+            selectElt.classList.add('active-red');
+        }
+        else if (greenActive === false) {
+            // removeLike();
+            const selectElt = document.querySelector(`.comment_id-red${commentId}`);
+            selectElt.classList.remove('active-red');
+        }
+    };
+        
     return (
         
             <div className="flex-container">
@@ -100,10 +142,10 @@ const Comments = (props) => {
                     </div>
                     <div className="comments-likes">
                         {/* eslint-disable-next-line */}
-                        <FontAwesomeIcon className={"thumbs-up " + "comment_id-green" + postId} icon={ faThumbsUp } />
+                        <FontAwesomeIcon className={"thumbs-up comment"} icon={ faThumbsUp }  onClick={toggleLike}/>
                         <span className="comment-like">{""} like</span>
                         {/* eslint-disable-next-line */}
-                        <FontAwesomeIcon className={"thumbs-down " + "comment_id-red" + postId} icon={ faThumbsDown } />
+                        <FontAwesomeIcon className={"thumbs-down"} icon={ faThumbsDown } onClick={toggleDislike}/>
                         <span className="comment-dislike">{""} dislike</span>
                     </div>
                 </div>

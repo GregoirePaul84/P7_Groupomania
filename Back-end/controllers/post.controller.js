@@ -221,7 +221,7 @@ module.exports.likeDislikePost = (req, res) => {
         });      
     }
 
-    else if (req.body.like == -1) {
+    else if (req.body.dislike == 1) {
 
         // Vérification si l'utilisateur a déjà disliké le post
         const sqlCheckDislike = `SELECT user_id FROM dislikes WHERE post_id = ?`;
@@ -336,49 +336,3 @@ module.exports.cancelLikeDislike = (req, res) => {
         });
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-// ********** Comptage de likes ********** //
-
-module.exports.countLike = (req, res) => {
-
-    const sqlCountLikes = `SELECT COUNT(*) FROM likes WHERE post_id = ?`;
-    const postId = req.body.post_id;
-
-    mySqlConnection.query(sqlCountLikes, postId, (error, results) => {
-        if (error) {
-            res.status(500).json( {error} );
-        }
-        else {
-            res.status(200).json( {results} );
-        }
-    });
-
-};
-
-// ********** Comptage de dislikes ********** //
-
-module.exports.countdisLike = (req, res) => {
-
-    const sqlCountDislikes = `SELECT COUNT(*) FROM dislikes WHERE post_id = ?`;
-
-    mySqlConnection.query(sqlCountDislikes, req.body.post_id, (error, results) => {
-        if (error) {
-            res.status(500).json( {error} );
-        }
-        else {
-            res.status(200).json( {results} );
-        }
-    });
-
-};

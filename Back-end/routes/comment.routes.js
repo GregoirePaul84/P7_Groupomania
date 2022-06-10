@@ -18,4 +18,11 @@ router.put('/:id', auth, commentCtlr.updateComment);
 // Supprimer un commentaire
 router.delete('/:id', auth, commentCtlr.deleteComment);
 
+// Like / Dislike d'un commentaire
+router.post('/:id', auth, commentCtlr.likeDislikeComment);
+
+// Like / Dislike d'un commentaire
+router.post('/cancel/:id', auth, commentCtlr.cancelLikeDislikeComment);
+
+
 module.exports = router;
