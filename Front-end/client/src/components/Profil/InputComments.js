@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faComment} from '@fortawesome/free-solid-svg-icons'
+import { faComment, faImage} from '@fortawesome/free-solid-svg-icons'
 import { sendComment } from '../../actions/comment.actions';
 import { useDispatch } from 'react-redux';
 import { getUserPosts } from '../../actions/user_posts.actions';
@@ -10,6 +10,8 @@ const InputComments = (props) => {
     const postId = props.postId;
     const objectUser = props.infoUser;
     const userId = objectUser.user_id;
+
+    const [file, setFile] = useState();
 
     const dispatch = useDispatch();
 
@@ -46,6 +48,12 @@ const InputComments = (props) => {
                     </div>
                     <div className="input-box">
                         <input type="text" placeholder={`Ecrivez un commentaire !`} className="input-send-comment" />
+                        <FontAwesomeIcon icon={ faImage } />
+                        <input type="file" 
+                            className='input-file-comment'
+                            name="comment_images"
+                            accept=".jpg, .jpeg, .png, .gif"
+                            onChange={(e) => setFile(e.target.files[0])} />
                         <FontAwesomeIcon icon={ faComment } onClick={writeComment} />
                     </div>
                 </div>

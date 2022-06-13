@@ -34,6 +34,7 @@ const Comments = (props) => {
     const likeNumber = props.nbOfLikes;
     const dislikeNumber = props.nbOfDislikes;
     const commentText = props.commentText;
+    const imgUrl = props.imgUrl;
     const commentDate = props.commentDate;
     const userId = props.userId;
     const postId = props.postId;
@@ -87,6 +88,9 @@ const Comments = (props) => {
                 const selectDate = selectComment.querySelector('.comment-date');
                 const transformedDate = convertTime(commentDate);
                 selectDate.textContent = transformedDate;
+
+                const selectPic = document.querySelector('.comment-picture');
+                selectPic.setAttribute('src', imgUrl);
 
                 const selectThumbUp = selectComment.querySelector('.thumbs-up');
                 selectThumbUp.classList.add('comment_id-green' + commentId);
@@ -184,7 +188,14 @@ const Comments = (props) => {
                         <FontAwesomeIcon icon={ faPaperPlane } />
                         <span className="comment-date">{""}</span>
                         <div className="comment-content">
-                        {isUpdated === false && <div className='message'>{commentText}</div>}
+                        {isUpdated === false && 
+                            <>
+                                <div className='message'>{commentText}</div>
+                                <div>
+                                    <img  className="comment-picture" src="" alt="" />
+                                </div>
+                            </>
+                            }
                         {isUpdated && (
                             <div className="update-comment">
                                 <textarea

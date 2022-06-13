@@ -90,7 +90,7 @@ module.exports.createComment = (req, res) => {
             // Si une image est présente, on met à jour l'URL de l'image dans la table "comments"
             if (req.file) {
 
-                const image_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+                const image_url = `${req.protocol}://${req.get('host')}/images/comment/${req.file.filename}`;
                 req.body.imgUrl = image_url;
                 
                 const sqlUpdateImgUrl = `UPDATE comments SET image_url= ? WHERE comment_id= LAST_INSERT_ID()`;

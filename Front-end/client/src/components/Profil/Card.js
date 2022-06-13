@@ -198,6 +198,7 @@ const Card = ({post}) => {
                                 commentDate={comment.created}
                                 commentText={comment.text}
                                 commentId={comment.comment_id}
+                                imgUrl={comment.image_url}
                                 nbOfLikes={comment.like_number}
                                 nbOfDislikes={comment.dislike_number} 
                                 key={comment.comment_id} />

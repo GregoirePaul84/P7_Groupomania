@@ -43,7 +43,7 @@ const User_description = (props) => {
                         <span className='info-key'>Date de naissance:</span>
                         {(objectUser.date_naissance) ?
                         <span className='info-value'>{objectUser.date_naissance}</span> 
-                        : <span className='info-value'>inconnue</span>}
+                        : <span className='info-value'>non précisée</span>}
                     </div>
                     <div className="info-box">
                         <FontAwesomeIcon icon={ faAt } />
@@ -55,14 +55,14 @@ const User_description = (props) => {
                         <span className='info-key'>Téléphone:</span>
                         {(objectUser.tel) ?
                         <span className='info-value'>{objectUser.tel}</span>
-                        : <span className='info-value'>inconnu</span>}
+                        : <span className='info-value'>non précisé</span>}
                     </div>
                     <div className="info-box">
                         <FontAwesomeIcon icon={ faLocationDot } />
                         <span className='info-key'>Adresse:</span>
                         {(objectUser.adresse) ?
                         <span className='info-value'>{objectUser.adresse}</span>
-                        : <span className='info-value'>inconnue</span>}
+                        : <span className='info-value'>non précisée</span>}
                     </div>
                 </div>
             </div>
