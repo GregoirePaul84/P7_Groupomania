@@ -146,20 +146,39 @@ module.exports.updateComment = (req, res) => {
     })         
 }
 
+// ********** Décrémentation d'un commentaire dans posts ********** //
+
+module.exports.updateNbOfComments = (req, res) => {
+
+    const postId = req.body.postId;
+
+    const sqlUpdateNumberPosts = `UPDATE posts SET comments_number = comments_number-1 where post_id = ?`;
+    mySqlConnection.query(sqlUpdateNumberPosts, postId, (error, results) => {
+        if (!error) {
+             res.status(200).json( {message : `comments-number -1`} ); 
+        }
+        else {
+            res.status(500).json( {error} ); 
+        }
+    })
+}
+
+
 // ********** Suppression d'un commentaire ********** //
 
 module.exports.deleteComment = (req, res) => {
     
     const commentId = req.params.id;
+
     const sqlDeleteComment = `DELETE FROM comments WHERE comments.comment_id = ?`;
     mySqlConnection.query (sqlDeleteComment, commentId, (error, results) => {
         if (!error) {
-            res.status(200).json( {message : `Suppression du commentaire (id: ${commentId}) réussie !`} );
+            res.status(200).json( {message : `Suppression du commentaire (id: ${commentId}) réussie !`} ); 
         }
         else {
             res.status(500).json( {error} );
         }
-    });    
+    })
 }
 
 // ********** Like / Dislike d'un post ********** //

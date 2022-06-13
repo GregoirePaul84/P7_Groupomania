@@ -194,6 +194,7 @@ const Card = ({post}) => {
                         <div className={"comments-container " + "post_id" + postId + " comment_id" + comment.comment_id} key={comment.comment_id}> 
                             <Comments postId={postId} 
                                 comments={commentsArray}
+                                userId={userId}
                                 commentDate={comment.created}
                                 commentText={comment.text}
                                 commentId={comment.comment_id}

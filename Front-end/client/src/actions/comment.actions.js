@@ -2,6 +2,9 @@ import axios from "axios";
 
 export const GET_COMMENTS = "GET_COMMENTS";
 export const SEND_COMMENT = "SEND_COMMENT";
+export const UPDATE_COMMENT = "UPDATE_COMMENT";
+export const UPDATE_NB_COMMENT = "UPDATE_NB_COMMENT";
+export const DELETE_COMMENT = "DELETE_COMMENT";
 export const LIKE_COMMENT = "LIKE_COMMENT";
 export const CANCEL_LIKE_COMMENT = "CANCEL_LIKE_COMMENT";
 export const DISLIKE_COMMENT = "LIKE_COMMENT";
@@ -63,6 +66,105 @@ export const sendComment = (commentContent, postId) => {
             dispatch({
                 type: GET_COMMENTS,
                 payload: res2.data
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+
+export const updateComment = (commentId, textUpdate) => {
+    return async (dispatch) => {
+
+        try {
+            // Transformation de la valeur de l'input en format JSON
+            const data = JSON.stringify({
+                "text": `${textUpdate}`
+              });
+
+            // Envoie des données au backend
+            const res = await axios({
+                method: "put",
+                url: `${process.env.REACT_APP_API_URL}api/comment/${commentId}`,
+                withCredentials: true,
+                data: data,
+                headers: { "Content-Type": "application/json" },
+            });
+
+            dispatch({
+                type: UPDATE_COMMENT,
+                payload: res.data.comment
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export const deleteComment = (commentId, postId) => {
+    return async (dispatch) => {
+
+        try {
+
+            const data = JSON.stringify({
+                "postId": `${postId}`
+              });
+
+            // Envoie des données au backend
+            const res = await axios({
+                method: "delete",
+                url: `${process.env.REACT_APP_API_URL}api/comment/${commentId}`,
+                withCredentials: true,
+                data: data
+            });
+
+            dispatch({
+                type: DELETE_COMMENT,
+                payload: res.commentId
+            });
+
+            const res2 = await axios({
+                method: "put",
+                url: `${process.env.REACT_APP_API_URL}api/comment/decrement/${postId}`,
+                withCredentials: true,
+                data: data,
+                headers: { "Content-Type": "application/json" },
+            });
+
+            dispatch({
+                type: UPDATE_COMMENT,
+                payload: res2.data.comment
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export const updateNbOfComments = (postId) => {
+    return async (dispatch) => {
+
+        try {
+
+            const data = JSON.stringify({
+                "postId": `${postId}`
+              });
+
+            const res = await axios({
+                method: "put",
+                url: `${process.env.REACT_APP_API_URL}api/comment/decrement/${postId}`,
+                withCredentials: true,
+                data: data,
+                headers: { "Content-Type": "application/json" },
+            });
+
+            dispatch({
+                type: UPDATE_COMMENT,
+                payload: res.data.comment
             });
             
         } catch (error) {

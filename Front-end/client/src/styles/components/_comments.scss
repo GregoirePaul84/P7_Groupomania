@@ -108,6 +108,39 @@
                     }
                 }
             }
+
+            .update-comment {
+                display: flex;
+                flex-basis: 100%;
+                flex-wrap: wrap;
+                justify-content: center;
+                textarea {
+                    flex-basis: 100%;
+                    margin: 10px 15px;
+                    background-color: hsl(251deg 34% 27%);
+                    border-radius: 10px;
+                    padding: 5px 10px;
+                    resize: vertical;
+                    min-height: 37px;
+                    max-height: 150px;
+                }
+                .update-button {
+                    margin-bottom: 10px;
+                    .btn {
+                        background-color: #2A2831;
+                        border: 2px solid #8D76FF;
+                        border-radius: 10px;
+                        padding: 4px;
+                        cursor: pointer;
+                        font-weight: bold;
+                        transition: transform 400ms;
+                        &:hover {
+                            transform: scale(1.15);
+                        }
+                    }
+                }
+
+            }
         }
 
         .comments-likes {

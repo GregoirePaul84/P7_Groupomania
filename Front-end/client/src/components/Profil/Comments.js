@@ -4,7 +4,8 @@ import { faPaperPlane, faThumbsUp, faThumbsDown, faTrashCan, faPen} from '@forta
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../../actions/user.actions';
 import { convertTime } from '../../App';
-import { cancelDislikeComment, cancelLikeComment, dislikeComment, getComments, likeComment } from '../../actions/comment.actions';
+import { cancelDislikeComment, cancelLikeComment, deleteComment, dislikeComment, getComments, likeComment, updateComment, updateNbOfComments } from '../../actions/comment.actions';
+import { getUserPosts } from '../../actions/user_posts.actions';
 
 
 export function displayComments(postId) {
@@ -34,10 +35,24 @@ const Comments = (props) => {
     const dislikeNumber = props.nbOfDislikes;
     const commentText = props.commentText;
     const commentDate = props.commentDate;
+    const userId = props.userId;
+    const postId = props.postId;
     
 
     const [greenActive, setGreenActive] = useState(true);
     const [redActive, setRedActive] = useState(true);
+    const [isUpdated, setIsUpdated] = useState(false);
+    const [textUpdate, setTextUpdate] = useState(null);
+
+
+    const updateItem = () => {
+        if(textUpdate) {
+            console.log(textUpdate);
+            dispatch(updateComment(commentId, textUpdate))
+                .then(() => setIsUpdated(false))
+                .then(() => dispatch(getComments()));
+        }
+    }
     
     useEffect(() => {
 
@@ -137,6 +152,13 @@ const Comments = (props) => {
             selectElt.classList.remove('active-red');
         }
     };
+
+    const deleteCom = () => {
+        dispatch(deleteComment(commentId, postId))
+            .then(() => dispatch(updateNbOfComments(postId)))
+            .then(() => dispatch(getComments()))
+            .then(() => dispatch(getUserPosts(userId)));
+    }
         
     return (
         
@@ -150,15 +172,31 @@ const Comments = (props) => {
                         <p>{"email"}</p>
                     </div>
                     <div className="modify-delete">
-                        <FontAwesomeIcon className="pen" icon={faPen}/>
-                        <FontAwesomeIcon className="garbage" icon={faTrashCan} />
+                        <FontAwesomeIcon className="pen" icon={faPen} 
+                        onClick={() => setIsUpdated(!isUpdated)}/>
+                        <FontAwesomeIcon className="garbage" icon={faTrashCan} 
+                        onClick={() => {
+                        if (window.confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?'))
+                            { deleteCom() }
+                        }} />
                     </div>
                     <div className="comment-message">
                         <FontAwesomeIcon icon={ faPaperPlane } />
                         <span className="comment-date">{""}</span>
                         <div className="comment-content">
-                            <div className='message'>
+                        {isUpdated === false && <div className='message'>{commentText}</div>}
+                        {isUpdated && (
+                            <div className="update-comment">
+                                <textarea
+                                    className="update-content"
+                                    defaultValue={commentText}
+                                    onChange={ (e) => setTextUpdate(e.target.value)}
+                                />
+                                <div className="update-button">
+                                    <button className='btn' onClick={updateItem}>Modifier</button>
+                                </div>
                             </div>
+                        )}
                         </div>
                     </div>
                     <div className="comments-likes">
