@@ -125,19 +125,6 @@ export const deleteComment = (commentId, postId) => {
                 type: DELETE_COMMENT,
                 payload: res.commentId
             });
-
-            const res2 = await axios({
-                method: "put",
-                url: `${process.env.REACT_APP_API_URL}api/comment/decrement/${postId}`,
-                withCredentials: true,
-                data: data,
-                headers: { "Content-Type": "application/json" },
-            });
-
-            dispatch({
-                type: UPDATE_COMMENT,
-                payload: res2.data.comment
-            });
             
         } catch (error) {
             console.log(error);

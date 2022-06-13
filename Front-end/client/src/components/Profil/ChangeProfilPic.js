@@ -7,7 +7,9 @@ import { faCamera } from '@fortawesome/free-solid-svg-icons';
 const ChangeProfilPic = () => {
 
     const [file, setFile] = useState();
+
     const dispatch = useDispatch();
+
     let userData = useSelector((state) => state.userReducer);
     userData = userData.results;
 
@@ -21,7 +23,7 @@ const ChangeProfilPic = () => {
         e.preventDefault();
         const data = new FormData();
         data.append('profil_image', file);
-        console.log(data.get("file"));
+        console.log(data.get('profil_image'));
 
         dispatch(uploadPicture(data, userId));
         setFile(false);

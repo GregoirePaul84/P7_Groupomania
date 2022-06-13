@@ -12,7 +12,10 @@ export default function postReducer(state= initialState, action) {
             }
 
         case DELETE_POST:
-            return state.filter((post) => post.post_id !== action.payload.postId);
+            return {
+                ...state,
+                post: action.payload,
+            }
 
         case UPDATE_POST:
             return {

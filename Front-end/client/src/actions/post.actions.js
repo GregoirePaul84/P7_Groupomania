@@ -8,22 +8,19 @@ export const CANCEL_LIKE_POST = "CANCEL_LIKE_POST";
 export const DISLIKE_POST = "DISLIKE_POST";
 export const CANCEL_DISLIKE_POST = "CANCEL_DISLIKE_POST";
 
-export const sendPost = (postContent) => {
+export const sendPost = (data) => {
+
     return async (dispatch) => {
 
         try {
-            // Transformation de la valeur de l'input en format JSON
-            const data = JSON.stringify({
-                "text": `${postContent}`
-              });
-
+        
             // Envoie des données au backend
             const res = await axios({
                 method: "post",
                 url: `${process.env.REACT_APP_API_URL}api/post`,
                 withCredentials: true,
                 data: data,
-                headers: { "Content-Type": "application/json" },
+                headers: { 'Content-Type': 'multipart/form-data' },
             });
 
             dispatch({

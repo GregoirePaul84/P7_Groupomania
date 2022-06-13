@@ -59,6 +59,7 @@ export const getUser = (userId) => {
 }
 
 export const uploadPicture = (data, userId) => {
+    
     return async (dispatch) => {
         try {
             
