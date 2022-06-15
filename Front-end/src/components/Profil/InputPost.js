@@ -27,7 +27,7 @@ const Posts = (props) => {
         console.log(text);
 
         if (text.length === 0 && file === false) {
-            alert("Merci d'écrire quelque chose ou d'envoyer une image");
+            alert("Veuillez écrire quelque chose ou envoyez une image");
             return;
         }
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment, faImage} from '@fortawesome/free-solid-svg-icons'
-import { sendComment } from '../../actions/comment.actions';
+import { getComments, increaseNbOfComments, sendComment } from '../../actions/comment.actions';
 import { useDispatch } from 'react-redux';
 import { getUserPosts } from '../../actions/user_posts.actions';
 
@@ -9,29 +9,36 @@ const InputComments = (props) => {
     
     const postId = props.postId;
     const objectUser = props.infoUser;
-    const userId = objectUser.user_id;
+    const userId = props.userId;
 
-    const [file, setFile] = useState();
+    const [file, setFile] = useState(false);
 
     const dispatch = useDispatch();
 
-    function writeComment() {
-        const selectInput = document.querySelectorAll('.input-send-comment');
-        let commentContent = undefined;
-        
-        for (let i in selectInput) {
+    async function writeComment() {
+        const selectInput = document.querySelector(`.input-text-post_id${postId}`);
+        console.log(selectInput);
             
-            if (typeof selectInput[i].value === 'string' & selectInput[i].value !== '') {
-                commentContent = selectInput[i].value;
-            }
+        const commentContent = selectInput.value;
+            
+        if (file === false && commentContent === "") {
+            alert("Veuillez écrire quelque chose ou envoyez une image");
+            return;
         }
+
+        const data = new FormData();
+        data.append('text', commentContent);
+        data.append('comment_image', file);
+        data.append('post_id', postId);
+        console.log(commentContent);
         
-        if (typeof commentContent === 'string' && commentContent !== '') {
-            console.log(commentContent);
-            dispatch(sendComment(commentContent, postId))
-                .then(() => dispatch(getUserPosts(userId)))
-                .then(() => document.querySelector('.input-send-comment').value = '');
-        }
+        await dispatch(sendComment(data))
+            .then(() => dispatch(increaseNbOfComments(postId)))
+            .then(() => dispatch(getUserPosts(userId)))
+            .then(() => dispatch(getComments()))
+            .then(() => selectInput.value = '');
+            setFile(false);
+        
     }
      
     return (
@@ -47,7 +54,8 @@ const InputComments = (props) => {
                         <p>{objectUser.email}</p>
                     </div>
                     <div className="input-box">
-                        <input type="text" placeholder={`Ecrivez un commentaire !`} className="input-send-comment" />
+                        {/* eslint-disable-next-line */}
+                        <input type="text" placeholder={`Ecrivez un commentaire !`} className={"input-text " + `input-text-post_id${postId}`} />
                         <FontAwesomeIcon icon={ faImage } />
                         <input type="file" 
                             className='input-file-comment'

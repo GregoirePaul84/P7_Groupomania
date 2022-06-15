@@ -184,7 +184,7 @@ const Card = ({post}) => {
         </div>
         {/* eslint-disable-next-line */}
         <div className={"input-comments-container " + "input-post_id" + postId}>
-            <InputComments postId={postId} infoUser={objectUser} />
+            <InputComments postId={postId} infoUser={objectUser} userId={userId}/>
             {/* eslint-disable-next-line */}
             {commentsArray.map((comment) => {
                 if (comment.post_id === postId) {

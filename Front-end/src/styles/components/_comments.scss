@@ -1,35 +1,27 @@
-.user-posts-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 365px;
-    border-radius: 0 0 20px 20px;
-    overflow: scroll;
-    &::-webkit-scrollbar {
-        width: 0px;
-        background: transparent; /* make scrollbar transparent */
+.comments-container {
+    max-width: 550px;
+    background-color: rgba(72, 57, 147, 0.13);
+    overflow: hidden;    
+    &:nth-last-child{
+        border-radius: 0 0 20px 20px;
     }
-}
 
-.card-container {
-    min-width: 620px;
-    background-color: #2A2831;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 1em 0;
-    border-radius: 20px;
-    
-    .card-smallContainer {
-        background-color: #383641;
+    .flex-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .comments-smallContainer {
+        background-color: hsl(251deg 34% 27%);
         display: flex;
         flex-wrap: wrap;
         width: 90%;
         border-radius: 20px;
-        margin: 2em 0;
+        margin: 1em 0;
 
-        .card-user-picture {
-            flex-grow: 1;
+        .comment-user-picture {
+            flex-grow: 2;
             max-width: 115px;
             height: 77px;
             display: flex;
@@ -44,7 +36,7 @@
             }
         }
 
-        .card-name-user {
+        .comment-name-user {
             height: 77px;
             flex-grow: 3;
             display: flex;
@@ -54,7 +46,7 @@
         }
 
         .modify-delete {
-            padding: 10px 20px 10px 10px;
+            padding: 10px 20px 10px 0;
             flex-grow: 1;
             border-bottom: 1px solid hsl(0deg 0% 49%);
             display: flex;
@@ -81,14 +73,11 @@
                         color: rgb(255, 30, 30);
                     }
                 }
-            }
+            }  
         }
 
-        .card-message {
-            height: 40%;
-            width: 100%;
-            border-bottom: 1px solid hsl(0deg 0% 49%);
-            border-radius: 0 0 20px 20px;
+        .comment-message-box {
+            flex-basis: 100%;
 
             svg {
                 margin: 5px 15px 0 15px;
@@ -99,19 +88,14 @@
             li {
                 margin-top: 1em;
             }
-            .post-content {
+            .comment-content {
                 display: flex;
                 flex-direction: column;
-                gap: 15px;
                 margin: 10px 15px;
-
-                .message {
-                    flex-basis: 100%;
-                }
-                .picture {
+                
+                .comment-picture {
                     max-width: 300px;
                     height: 175px;
-                    margin: 10px 0;
                     img {
                         height: 100%;
                         border: 2px solid;
@@ -119,7 +103,8 @@
                     }
                 }
             }
-            .update-post {
+
+            .update-comment {
                 display: flex;
                 flex-basis: 100%;
                 flex-wrap: wrap;
@@ -127,7 +112,7 @@
                 textarea {
                     flex-basis: 100%;
                     margin: 10px 15px;
-                    background-color: #383641;
+                    background-color: hsl(251deg 34% 27%);
                     border-radius: 10px;
                     padding: 5px 10px;
                     resize: vertical;
@@ -151,23 +136,16 @@
                 }
 
             }
-            
         }
 
-        .card-likes-comments {
+        .comments-likes {
             height: 39px;
             width: 100%;
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            margin-right: 25px;
             gap: 15px;
-
-            .fa-message path {
-                &:hover {
-                    color: #8D76FF;
-                }
-            }
+            border-top: 1px solid hsl(0deg 0% 49%);
 
             .thumbs-up path {
                 &:hover {
@@ -180,6 +158,7 @@
             }
             
             .thumbs-down path {
+                
                 &:hover {
                     color: rgb(255, 30, 30);
                 }
@@ -193,10 +172,11 @@
                 cursor: pointer;
             }
 
-            .post-like {
+            .comment-like {
                 color: rgb(0, 216, 0);
             }
-            .post-dislike {
+            .comment-dislike {
+                margin-right: 25px;
                 color: rgb(255, 30, 30);
             }
             

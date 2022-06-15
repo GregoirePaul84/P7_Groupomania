@@ -9,6 +9,7 @@ export const DISLIKE_POST = "DISLIKE_POST";
 export const CANCEL_DISLIKE_POST = "CANCEL_DISLIKE_POST";
 
 export const sendPost = (data) => {
+    console.log(...data);
 
     return async (dispatch) => {
 

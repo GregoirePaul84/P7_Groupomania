@@ -18,8 +18,11 @@ router.put('/:id', auth, commentCtlr.updateComment);
 // Supprimer un commentaire
 router.delete('/:id', auth, commentCtlr.deleteComment);
 
+// Incrémenter le nombre de commentaires dans post
+router.put('/increment/:id', auth, commentCtlr.increaseNbOfComments);
+
 // Décrémenter le nombre de commentaires dans post
-router.put('/decrement/:id', auth, commentCtlr.updateNbOfComments);
+router.put('/decrement/:id', auth, commentCtlr.decreaseNbOfComments);
 
 // Like / Dislike d'un commentaire
 router.post('/:id', auth, commentCtlr.likeDislikeComment);

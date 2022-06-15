@@ -4,7 +4,7 @@ import { faPaperPlane, faThumbsUp, faThumbsDown, faTrashCan, faPen} from '@forta
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../../actions/user.actions';
 import { convertTime } from '../../App';
-import { cancelDislikeComment, cancelLikeComment, deleteComment, dislikeComment, getComments, likeComment, updateComment, updateNbOfComments } from '../../actions/comment.actions';
+import { cancelDislikeComment, cancelLikeComment, decreaseNbOfComments, deleteComment, dislikeComment, getComments, likeComment, updateComment} from '../../actions/comment.actions';
 import { getUserPosts } from '../../actions/user_posts.actions';
 
 
@@ -58,10 +58,6 @@ const Comments = (props) => {
     useEffect(() => {
 
         dispatch(getAllUsers());
-        
-        const selectComment = document.querySelector('.comment_id'+commentId);
-        const selectMessageBox = selectComment.querySelector('.message');
-        selectMessageBox.textContent = `${commentText}`; 
 
     // eslint-disable-next-line    
     }, []);
@@ -89,8 +85,15 @@ const Comments = (props) => {
                 const transformedDate = convertTime(commentDate);
                 selectDate.textContent = transformedDate;
 
-                const selectPic = document.querySelector('.comment-picture');
-                selectPic.setAttribute('src', imgUrl);
+                if (commentText !== null) {
+                    const selectMessageBox = selectComment.querySelector('.message');
+                    selectMessageBox.textContent = `${commentText}`; 
+                }
+
+                if (imgUrl !== null) {
+                    const selectPic = selectComment.querySelector('.comment-img');
+                    selectPic.setAttribute('src', imgUrl);
+                }
 
                 const selectThumbUp = selectComment.querySelector('.thumbs-up');
                 selectThumbUp.classList.add('comment_id-green' + commentId);
@@ -159,10 +162,11 @@ const Comments = (props) => {
 
     const deleteCom = () => {
         dispatch(deleteComment(commentId, postId))
-            .then(() => dispatch(updateNbOfComments(postId)))
+            .then(() => dispatch(decreaseNbOfComments(postId)))
             .then(() => dispatch(getComments()))
             .then(() => dispatch(getUserPosts(userId)));
     }
+
         
     return (
         
@@ -184,30 +188,30 @@ const Comments = (props) => {
                             { deleteCom() }
                         }} />
                     </div>
-                    <div className="comment-message">
+                    <div className="comment-message-box">
                         <FontAwesomeIcon icon={ faPaperPlane } />
                         <span className="comment-date">{""}</span>
                         <div className="comment-content">
-                        {isUpdated === false && 
-                            <>
+                            {isUpdated === false && 
                                 <div className='message'>{commentText}</div>
-                                <div>
-                                    <img  className="comment-picture" src="" alt="" />
+                                }
+                            {isUpdated && (
+                                <div className="update-comment">
+                                    <textarea
+                                        className="update-content"
+                                        defaultValue={commentText}
+                                        onChange={ (e) => setTextUpdate(e.target.value)}
+                                    />
+                                    <div className="update-button">
+                                        <button className='btn' onClick={updateItem}>Modifier</button>
+                                    </div>
                                 </div>
-                            </>
-                            }
-                        {isUpdated && (
-                            <div className="update-comment">
-                                <textarea
-                                    className="update-content"
-                                    defaultValue={commentText}
-                                    onChange={ (e) => setTextUpdate(e.target.value)}
-                                />
-                                <div className="update-button">
-                                    <button className='btn' onClick={updateItem}>Modifier</button>
+                            )}
+                            { (imgUrl) ? 
+                                <div className='comment-picture'>
+                                    <img src="" alt="commentaire" className='comment-img'/>
                                 </div>
-                            </div>
-                        )}
+                                : <div></div>}
                         </div>
                     </div>
                     <div className="comments-likes">

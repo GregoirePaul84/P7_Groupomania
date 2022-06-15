@@ -63,9 +63,9 @@ module.exports.createPost = (req, res) => {
     const userId = decodedToken.userId;
 
     // Insertion du post dans la DB
-    const sqlCreateComment = `INSERT INTO posts(user_id) VALUES (?)`;
+    const sqlCreatePost = `INSERT INTO posts(user_id) VALUES (?)`;
 
-    mySqlConnection.query(sqlCreateComment, userId, (error, results) => {
+    mySqlConnection.query(sqlCreatePost, userId, (error, results) => {
         if (error) {
             res.status(500).json( {error} );
         }

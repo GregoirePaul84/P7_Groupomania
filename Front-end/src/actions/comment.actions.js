@@ -3,8 +3,9 @@ import axios from "axios";
 export const GET_COMMENTS = "GET_COMMENTS";
 export const SEND_COMMENT = "SEND_COMMENT";
 export const UPDATE_COMMENT = "UPDATE_COMMENT";
-export const UPDATE_NB_COMMENT = "UPDATE_NB_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
+export const INCREASE_NB_COMMENTS = "INCREASE_NB_COMMENTS";
+export const DECREASE_NB_COMMENTS = "DECREASE_NB_COMMENTS";
 export const LIKE_COMMENT = "LIKE_COMMENT";
 export const CANCEL_LIKE_COMMENT = "CANCEL_LIKE_COMMENT";
 export const DISLIKE_COMMENT = "LIKE_COMMENT";
@@ -32,15 +33,11 @@ export const getComments = () => {
     }
 }
 
-export const sendComment = (commentContent, postId) => {
+export const sendComment = (data) => {
+    console.log(...data);
+    
     return async (dispatch) => {
-
         try {
-            // Transformation de la valeur de l'input en format JSON
-            const data = JSON.stringify({
-                "text": `${commentContent}`,
-                "post_id": `${postId}`
-            });
 
             // Envoie des données au backend
             const res = await axios({
@@ -48,24 +45,12 @@ export const sendComment = (commentContent, postId) => {
                 url: `${process.env.REACT_APP_API_URL}api/comment`,
                 withCredentials: true,
                 data: data,
-                headers: { "Content-Type": "application/json" },
+                headers: { 'Content-Type': 'multipart/form-data' },
             });
 
             dispatch({
                 type: SEND_COMMENT,
                 payload: res.data.comment
-            });
-
-            // Récupération de tous les commentaires pour actualiser après envoi
-            const res2 = await axios({
-                method: "get",
-                url: `${process.env.REACT_APP_API_URL}api/comment`,
-                withCredentials: true,
-            });
-
-            dispatch({
-                type: GET_COMMENTS,
-                payload: res2.data
             });
             
         } catch (error) {
@@ -132,7 +117,35 @@ export const deleteComment = (commentId, postId) => {
     }
 }
 
-export const updateNbOfComments = (postId) => {
+export const increaseNbOfComments = (postId) => {
+    return async (dispatch) => {
+
+        try {
+
+            const data = JSON.stringify({
+                "postId": `${postId}`
+              });
+
+            const res = await axios({
+                method: "put",
+                url: `${process.env.REACT_APP_API_URL}api/comment/increment/${postId}`,
+                withCredentials: true,
+                data: data,
+                headers: { "Content-Type": "application/json" },
+            });
+
+            dispatch({
+                type: INCREASE_NB_COMMENTS,
+                payload: res.data.comment
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export const decreaseNbOfComments = (postId) => {
     return async (dispatch) => {
 
         try {
@@ -150,7 +163,7 @@ export const updateNbOfComments = (postId) => {
             });
 
             dispatch({
-                type: UPDATE_COMMENT,
+                type: DECREASE_NB_COMMENTS,
                 payload: res.data.comment
             });
             

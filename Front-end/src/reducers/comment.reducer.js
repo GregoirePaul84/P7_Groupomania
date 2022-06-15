@@ -1,4 +1,4 @@
-import { GET_COMMENTS, SEND_COMMENT, UPDATE_COMMENT, LIKE_COMMENT, CANCEL_LIKE_COMMENT, DELETE_COMMENT, UPDATE_NB_COMMENT} from "../actions/comment.actions";
+import { GET_COMMENTS, SEND_COMMENT, UPDATE_COMMENT, LIKE_COMMENT, CANCEL_LIKE_COMMENT, DELETE_COMMENT, DECREASE_NB_COMMENTS, INCREASE_NB_COMMENTS} from "../actions/comment.actions";
 
 const initialState = {};
 
@@ -26,7 +26,13 @@ export default function commentsReducer (state = initialState, action) {
                 post: action.payload,
             }
 
-        case UPDATE_NB_COMMENT:
+        case INCREASE_NB_COMMENTS:
+            return {
+                ...state,
+                comment: action.payload,
+            }
+
+        case DECREASE_NB_COMMENTS:
             return {
                 ...state,
                 comment: action.payload,
