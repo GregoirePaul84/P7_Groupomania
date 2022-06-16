@@ -96,10 +96,17 @@
                 .comment-picture {
                     max-width: 300px;
                     height: 175px;
+                    margin: 15px 0 10px 0;
+
                     img {
                         height: 100%;
                         border: 2px solid;
                         border-radius: 20px;
+                        transition: transform 400ms;
+                        cursor: pointer;
+                        &:hover {
+                            transform: scale(1.15);
+                        }
                     }
                 }
             }

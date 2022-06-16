@@ -14,8 +14,21 @@ const Posts = (props) => {
     const objectUser = props.user_info;
     const userId = objectUser.user_id;
 
-    const [file, setFile] = useState();
+    const [file, setFile] = useState(false);
     console.log(file);
+
+    if(file !== false) {
+        const selectIcon = document.querySelector('.fa-image path');
+        console.log(selectIcon);
+        selectIcon.style.color = '#8D76FF';
+        
+    }
+
+    function removeColorIcon() {
+        const selectIcon = document.querySelector('.fa-image path');
+        console.log(selectIcon);
+        selectIcon.style.color = 'inherit';
+    }
     
     const dispatch = useDispatch();
 
@@ -42,6 +55,7 @@ const Posts = (props) => {
             .then(() => document.querySelector('.input-file').value = '')
             .then(() => dispatch(getUserPosts(userId)));
             setFile(false);
+            removeColorIcon();
     }
 
     return (

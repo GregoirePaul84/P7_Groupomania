@@ -17,8 +17,8 @@ const Card = ({post}) => {
     
     const dispatch = useDispatch();
 
-    const [greenActive, setGreenActive] = useState(true);
-    const [redActive, setRedActive] = useState(true);
+    const [greenActive, setGreenActive] = useState(false);
+    const [redActive, setRedActive] = useState(false);
     const [visibility, setVisibility] = useState(true);
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
@@ -57,21 +57,40 @@ const Card = ({post}) => {
             .then(() => dispatch(getUserPosts(userId)));
     }   
 
+    // eslint-disable-next-line
     const toggleLike = () => {
         setGreenActive(!greenActive);
         
         if (greenActive === true) {
             addLike();
+            console.log(greenActive);
             const selectElt = document.querySelector(`.post_id-green${postId}`);
             selectElt.classList.add('active-green');
+
+            // Ajout de l'id du post liké dans le local storage
+            const likesArray = JSON.parse(localStorage.getItem('greenActive') || '[]');
+            likesArray.push(`.post_id-green${postId}`);
+            localStorage.setItem('greenActive', JSON.stringify(likesArray));
         }
+
         else if (greenActive === false) {
             removeLike();
+            console.log(greenActive);
             const selectElt = document.querySelector(`.post_id-green${postId}`);
             selectElt.classList.remove('active-green');
+
+            // Suppression de l'id du post liké dans le local storage
+            const likesArray = JSON.parse(localStorage.getItem('greenActive'));
+            const index = likesArray.indexOf(`.post_id-green${postId}`);
+            if (index >= 0) {
+            likesArray.splice( index, 1 );
+            }
+            localStorage.setItem('greenActive', JSON.stringify(likesArray));
         }
+        
     };
 
+    // eslint-disable-next-line
     const toggleDislike = () => {
         setRedActive(!redActive);
         
@@ -79,13 +98,27 @@ const Card = ({post}) => {
             addDislike();
             const selectElt = document.querySelector(`.post_id-red${postId}`);
             selectElt.classList.add('active-red');
+
+            // Ajout de l'id du post disliké dans le local storage
+            const dislikesArray = JSON.parse(localStorage.getItem('redActive') || '[]');
+            dislikesArray.push(`.post_id-red${postId}`);
+            localStorage.setItem('redActive', JSON.stringify(dislikesArray));
         }
         else if (redActive === false) {
             removeDislike();
             const selectElt = document.querySelector(`.post_id-red${postId}`);
             selectElt.classList.remove('active-red');
+
+            // Suppression de l'id du post disliké dans le local storage
+            const dislikesArray = JSON.parse(localStorage.getItem('redActive'));
+            const index = dislikesArray.indexOf(`.post_id-red${postId}`);
+            if (index >= 0) {
+            dislikesArray.splice( index, 1 );
+            }
+            localStorage.setItem('redActive', JSON.stringify(dislikesArray));
         }
     };
+
 
     const toggleVisibility = () => {
         
@@ -103,6 +136,30 @@ const Card = ({post}) => {
         dispatch(deletePost(postId))
             .then(() => dispatch(getUserPosts(userId)))
     }
+
+    useEffect(() => {
+        
+        const likesArray = JSON.parse(localStorage.getItem('greenActive'));
+        
+        for (let i in likesArray) {
+            const selectElt = document.querySelector(likesArray[i]);
+    
+            if (selectElt !== null) {
+                selectElt.classList.add('active-green');
+            }
+        }
+
+        const dislikesArray = JSON.parse(localStorage.getItem('redActive'));
+        
+        for (let j in dislikesArray) {
+            const selectElt = document.querySelector(dislikesArray[j]);
+    
+            if (selectElt !== null) {
+                selectElt.classList.add('active-red');
+            }
+        }
+    
+    }, [toggleLike, toggleDislike])
     
 
     useEffect(() => {
@@ -178,7 +235,7 @@ const Card = ({post}) => {
                 { (numberOfLikes > 1) ? <span className="post-like">{numberOfLikes} likes</span> : <span className="post-like">{numberOfLikes} like</span> }
                 {/* eslint-disable-next-line */}
                 <FontAwesomeIcon className={"thumbs-down " + "post_id-red" + postId} icon={ faThumbsDown } onClick={toggleDislike} />
-                { (numberOfDislikes > 1) ? <span className="post-dislike">{numberOfDislikes} likes</span> : <span className="post-dislike">{numberOfDislikes} like</span> }
+                { (numberOfDislikes > 1) ? <span className="post-dislike">{numberOfDislikes} dislikes</span> : <span className="post-dislike">{numberOfDislikes} dislike</span> }
                 </div>
             </div>
         </div>

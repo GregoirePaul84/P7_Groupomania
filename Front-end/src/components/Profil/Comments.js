@@ -40,8 +40,8 @@ const Comments = (props) => {
     const postId = props.postId;
     
 
-    const [greenActive, setGreenActive] = useState(true);
-    const [redActive, setRedActive] = useState(true);
+    const [greenActive, setGreenActive] = useState(false);
+    const [redActive, setRedActive] = useState(false);
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
 
@@ -118,6 +118,7 @@ const Comments = (props) => {
             .then(() => dispatch(getComments()));
     }
 
+    // eslint-disable-next-line
     const toggleLike = () => {
         setGreenActive(!greenActive);
 
@@ -125,11 +126,24 @@ const Comments = (props) => {
             addLike();
             const selectElt = document.querySelector(`.comment_id-green${commentId}`);
             selectElt.classList.add('active-green');
+
+            // Ajout de l'id du commentaire liké dans le local storage
+            const likesArray = JSON.parse(localStorage.getItem('commentGreenActive') || '[]');
+            likesArray.push(`.comment_id-green${commentId}`);
+            localStorage.setItem('commentGreenActive', JSON.stringify(likesArray));
         }
         else if (greenActive === false) {
             removeLike();
             const selectElt = document.querySelector(`.comment_id-green${commentId}`);
             selectElt.classList.remove('active-green');
+
+            // Suppression de l'id du commentaire liké dans le local storage
+            const likesArray = JSON.parse(localStorage.getItem('commentGreenActive'));
+            const index = likesArray.indexOf(`.comment_id-green${commentId}`);
+            if (index >= 0) {
+            likesArray.splice( index, 1 );
+            }
+            localStorage.setItem('commentGreenActive', JSON.stringify(likesArray));
         }
     };
 
@@ -145,6 +159,7 @@ const Comments = (props) => {
             .then(() => dispatch(getComments()));
     }   
 
+    // eslint-disable-next-line
     const toggleDislike = () => {
         setRedActive(!redActive);
 
@@ -152,11 +167,24 @@ const Comments = (props) => {
             addDislike();
             const selectElt = document.querySelector(`.comment_id-red${commentId}`);
             selectElt.classList.add('active-red');
+
+            // Ajout de l'id du commentaire liké dans le local storage
+            const dislikesArray = JSON.parse(localStorage.getItem('commentRedActive') || '[]');
+            dislikesArray.push(`.comment_id-red${commentId}`);
+            localStorage.setItem('commentRedActive', JSON.stringify(dislikesArray));
         }
         else if (redActive === false) {
             removeDislike();
             const selectElt = document.querySelector(`.comment_id-red${commentId}`);
             selectElt.classList.remove('active-red');
+
+            // Suppression de l'id du commentaire liké dans le local storage
+            const dislikesArray = JSON.parse(localStorage.getItem('commentRedActive'));
+            const index = dislikesArray.indexOf(`.comment_id-red${commentId}`);
+            if (index >= 0) {
+            dislikesArray.splice( index, 1 );
+            }
+            localStorage.setItem('commentRedActive', JSON.stringify(dislikesArray));
         }
     };
 
@@ -166,6 +194,30 @@ const Comments = (props) => {
             .then(() => dispatch(getComments()))
             .then(() => dispatch(getUserPosts(userId)));
     }
+
+    useEffect(() => {
+        
+        const likesArray = JSON.parse(localStorage.getItem('commentGreenActive'));
+        
+        for (let i in likesArray) {
+            const selectElt = document.querySelector(likesArray[i]);
+    
+            if (selectElt !== null) {
+                selectElt.classList.add('active-green');
+            }
+        }
+
+        const dislikesArray = JSON.parse(localStorage.getItem('commentRedActive'));
+        
+        for (let j in dislikesArray) {
+            const selectElt = document.querySelector(dislikesArray[j]);
+    
+            if (selectElt !== null) {
+                selectElt.classList.add('active-red');
+            }
+        }
+    
+    }, [toggleLike, toggleDislike])
 
         
     return (
@@ -217,10 +269,10 @@ const Comments = (props) => {
                     <div className="comments-likes">
                         {/* eslint-disable-next-line */}
                         <FontAwesomeIcon className={"thumbs-up comment"} icon={ faThumbsUp }  onClick={toggleLike}/>
-                        <span className="comment-like">{likeNumber} like</span>
+                        { (likeNumber > 1) ? <span className="comment-like">{likeNumber} likes</span> : <span className="comment-like">{likeNumber} like</span> }
                         {/* eslint-disable-next-line */}
                         <FontAwesomeIcon className={"thumbs-down"} icon={ faThumbsDown } onClick={toggleDislike}/>
-                        <span className="comment-dislike">{dislikeNumber} dislike</span>
+                        { (dislikeNumber > 1) ? <span className="comment-dislike">{likeNumber} dislikes</span> : <span className="comment-dislike">{dislikeNumber} dislike</span> }
                     </div>
                 </div>
             </div>
