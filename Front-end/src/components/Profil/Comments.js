@@ -4,7 +4,7 @@ import { faPaperPlane, faThumbsUp, faThumbsDown, faTrashCan, faPen} from '@forta
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../../actions/user.actions';
 import { convertTime } from '../../App';
-import { cancelDislikeComment, cancelLikeComment, decreaseNbOfComments, deleteComment, dislikeComment, getComments, likeComment, updateComment} from '../../actions/comment.actions';
+import { cancelDislikeComment, cancelLikeComment, decreaseNbOfComments, deleteComment, deleteDislikeComment, deleteLikeComment, deletePictureComment, dislikeComment, getComments, likeComment, updateComment} from '../../actions/comment.actions';
 import { getUserPosts } from '../../actions/user_posts.actions';
 
 
@@ -204,6 +204,9 @@ const Comments = (props) => {
     const deleteCom = () => {
         dispatch(deleteComment(commentId, postId))
             .then(() => dispatch(decreaseNbOfComments(postId)))
+            .then(() => dispatch(deletePictureComment(commentId)))
+            .then(() => dispatch(deleteLikeComment(commentId)))
+            .then(() => dispatch(deleteDislikeComment(commentId)))
             .then(() => dispatch(getComments()))
             .then(() => dispatch(getUserPosts(userId)));
     }

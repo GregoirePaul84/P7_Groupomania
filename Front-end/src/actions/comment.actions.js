@@ -4,6 +4,9 @@ export const GET_COMMENTS = "GET_COMMENTS";
 export const SEND_COMMENT = "SEND_COMMENT";
 export const UPDATE_COMMENT = "UPDATE_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
+export const DELETE_PICTURE_COMMENT = "DELETE_PICTURE_COMMENT";
+export const DELETE_LIKE_COMMENT = "DELETE_LIKE_COMMENT";
+export const DELETE_DISLIKE_COMMENT = "DELETE_DISLIKE_COMMENT";
 export const INCREASE_NB_COMMENTS = "INCREASE_NB_COMMENTS";
 export const DECREASE_NB_COMMENTS = "DECREASE_NB_COMMENTS";
 export const LIKE_COMMENT = "LIKE_COMMENT";
@@ -109,6 +112,77 @@ export const deleteComment = (commentId, postId) => {
             dispatch({
                 type: DELETE_COMMENT,
                 payload: res.commentId
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export const deletePictureComment = (commentId) => {
+    return async (dispatch) => {
+
+        try {
+
+            // Envoie des données au backend
+            const res = await axios({
+                method: "delete",
+                url: `${process.env.REACT_APP_API_URL}api/comment/image/${commentId}`,
+                withCredentials: true,
+            });
+
+            dispatch({
+                type: DELETE_PICTURE_COMMENT,
+                payload: res.postId
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+
+export const deleteLikeComment = (commentId) => {
+    return async (dispatch) => {
+
+        try {
+
+            // Envoie des données au backend
+            const res = await axios({
+                method: "delete",
+                url: `${process.env.REACT_APP_API_URL}api/comment/like/${commentId}`,
+                withCredentials: true,
+            });
+
+            dispatch({
+                type: DELETE_LIKE_COMMENT,
+                payload: res.postId
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+
+export const deleteDislikeComment = (commentId) => {
+    return async (dispatch) => {
+
+        try {
+
+            // Envoie des données au backend
+            const res = await axios({
+                method: "delete",
+                url: `${process.env.REACT_APP_API_URL}api/comment/dislike/${commentId}`,
+                withCredentials: true,
+            });
+
+            dispatch({
+                type: DELETE_DISLIKE_COMMENT,
+                payload: res.postId
             });
             
         } catch (error) {

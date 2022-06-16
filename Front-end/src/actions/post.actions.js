@@ -3,6 +3,9 @@ import axios from "axios";
 export const SEND_POST = "SEND_POST";
 export const UPDATE_POST = "UPDATE_POST";
 export const DELETE_POST = "DELETE_POST";
+export const DELETE_PICTURE_POST = "DELETE_PICTURE_POST";
+export const DELETE_LIKE_POST = "DELETE_LIKE_POST";
+export const DELETE_DISLIKE_POST = "DELETE_DISLIKE_POST";
 export const LIKE_POST = "LIKE_POST";
 export const CANCEL_LIKE_POST = "CANCEL_LIKE_POST";
 export const DISLIKE_POST = "DISLIKE_POST";
@@ -78,6 +81,75 @@ export const deletePost = (postId) => {
 
             dispatch({
                 type: DELETE_POST,
+                payload: res.postId
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export const deletePicturePost = (postId) => {
+    return async (dispatch) => {
+
+        try {
+
+            // Envoie des données au backend
+            const res = await axios({
+                method: "delete",
+                url: `${process.env.REACT_APP_API_URL}api/post/image/${postId}`,
+                withCredentials: true,
+            });
+
+            dispatch({
+                type: DELETE_PICTURE_POST,
+                payload: res.postId
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export const deleteLikePost = (postId) => {
+    return async (dispatch) => {
+
+        try {
+
+            // Envoie des données au backend
+            const res = await axios({
+                method: "delete",
+                url: `${process.env.REACT_APP_API_URL}api/post/like/${postId}`,
+                withCredentials: true,
+            });
+
+            dispatch({
+                type: DELETE_LIKE_POST,
+                payload: res.postId
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export const deleteDislikePost = (postId) => {
+    return async (dispatch) => {
+
+        try {
+
+            // Envoie des données au backend
+            const res = await axios({
+                method: "delete",
+                url: `${process.env.REACT_APP_API_URL}api/post/dislike/${postId}`,
+                withCredentials: true,
+            });
+
+            dispatch({
+                type: DELETE_DISLIKE_POST,
                 payload: res.postId
             });
             

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faThumbsUp, faMessage, faThumbsDown, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
-import { likePost, cancelLikePost, dislikePost, cancelDislikePost, deletePost, updatePost } from '../../actions/post.actions';
+import { likePost, cancelLikePost, dislikePost, cancelDislikePost, deletePost, updatePost, deletePicturePost, deleteLikePost, deleteDislikePost } from '../../actions/post.actions';
 import Comments, {displayComments, hideComments} from './Comments';
 import InputComments from './InputComments';
 import { getComments} from '../../actions/comment.actions';
@@ -147,7 +147,10 @@ const Card = ({post}) => {
 
     const deleteArticle = () => {
         dispatch(deletePost(postId))
-            .then(() => dispatch(getUserPosts(userId)))
+            .then(() => dispatch(deletePicturePost(postId)))
+            .then(() => dispatch(deleteLikePost(postId)))
+            .then(() => dispatch(deleteDislikePost(postId)))
+            .then(() => dispatch(getUserPosts(userId)));
     }
 
     useEffect(() => {
