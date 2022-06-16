@@ -27,5 +27,13 @@ router.post('/cancel/:id', auth, postCtlr.cancelLikeDislike);
 // Supprimer un post
 router.delete('/:id', auth, postCtlr.deletePost);
 
+// Supprimer l'image d'un post
+router.delete('/image/:id', auth, postCtlr.deletePicturePost);
+
+// Supprimer les likes d'un post
+router.delete('/like/:id', auth, postCtlr.deleteLikesPost);
+
+// Supprimer les dislikes d'un post
+router.delete('/dislike/:id', auth, postCtlr.deleteDislikesPost);
 
 module.exports = router;

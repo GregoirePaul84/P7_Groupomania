@@ -353,3 +353,55 @@ module.exports.cancelLikeDislikeComment = (req, res) => {
         });
     }
 }
+
+// ********** Suppression d'une image d'un commentaire ********** //
+
+module.exports.deletePictureComment = (req, res) => {
+    
+    const commentId = req.params.id;
+    const sqlDeletePictureComment = `DELETE FROM comment_image WHERE comment_id = ?`;
+
+    mySqlConnection.query(sqlDeletePictureComment, commentId, (error, results) => {
+        
+        if (!error) {
+            res.status(200).json( {message : "Suppression de l'image réussie !"} ); 
+        }
+        else {
+            res.status(500).json( {error} ); 
+        }
+    })            
+}
+
+// ********** Suppression des likes d'un commentaire ********** //
+
+module.exports.deleteLikesComment = (req, res) => {
+    
+    const commentId = req.params.id;
+    const sqlDeleteLikesComment = `DELETE FROM likes WHERE comment_id = ?`;
+    mySqlConnection.query(sqlDeleteLikesComment, commentId, (error, results) => {
+        
+        if (!error) {
+            res.status(200).json( {message : "Suppression de likes réussie !"} ); 
+        }
+        else {
+            res.status(500).json( {error} ); 
+        }
+    })            
+}
+
+// ********** Suppression des dislikes d'un commentaire ********** //
+
+module.exports.deleteDislikesComment = (req, res) => {
+    
+    const commentId = req.params.id;
+    const sqlDeleteDislikesComment = `DELETE FROM dislikes WHERE comment_id = ?`;
+    mySqlConnection.query(sqlDeleteDislikesComment, commentId, (error, results) => {
+        
+        if (!error) {
+            res.status(200).json( {message : "Suppression de dislikes réussie !"} ); 
+        }
+        else {
+            res.status(500).json( {error} ); 
+        }
+    })            
+}

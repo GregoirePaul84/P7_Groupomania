@@ -171,6 +171,57 @@ module.exports.deletePost = (req, res) => {
     })         
 }
 
+// ********** Suppression d'une image d'un post ********** //
+
+module.exports.deletePicturePost = (req, res) => {
+    
+    const postId = req.params.id;
+    const sqlDeletePicturePost = `DELETE FROM post_image WHERE post_id = ?`;
+    mySqlConnection.query (sqlDeletePicturePost, postId, (error, results) => {
+        
+        if (!error) {
+            res.status(200).json( {message : "Suppression de l'image réussie !"} ); 
+        }
+        else {
+            res.status(500).json( {error} ); 
+        }
+    })            
+}
+
+// ********** Suppression des likes d'un post ********** //
+
+module.exports.deleteLikesPost = (req, res) => {
+    
+    const postId = req.params.id;
+    const sqlDeleteLikesPost = `DELETE FROM likes WHERE post_id = ?`;
+    mySqlConnection.query (sqlDeleteLikesPost, postId, (error, results) => {
+        
+        if (!error) {
+            res.status(200).json( {message : "Suppression de likes réussie !"} ); 
+        }
+        else {
+            res.status(500).json( {error} ); 
+        }
+    })            
+}
+
+// ********** Suppression des dislikes d'un post ********** //
+
+module.exports.deleteDislikesPost = (req, res) => {
+    
+    const postId = req.params.id;
+    const sqlDeleteDislikesPost = `DELETE FROM dislikes WHERE post_id = ?`;
+    mySqlConnection.query (sqlDeleteDislikesPost, postId, (error, results) => {
+        
+        if (!error) {
+            res.status(200).json( {message : "Suppression de dislikes réussie !"} ); 
+        }
+        else {
+            res.status(500).json( {error} ); 
+        }
+    })            
+}
+
 // ********** Like / Dislike d'un post ********** //
 
 module.exports.likeDislikePost = (req, res) => {

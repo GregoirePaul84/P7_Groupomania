@@ -30,5 +30,14 @@ router.post('/:id', auth, commentCtlr.likeDislikeComment);
 // Like / Dislike d'un commentaire
 router.post('/cancel/:id', auth, commentCtlr.cancelLikeDislikeComment);
 
+// Supprimer l'image d'un post
+router.delete('/image/:id', auth, commentCtlr.deletePictureComment);
+
+// Supprimer les likes d'un post
+router.delete('/like/:id', auth, commentCtlr.deleteLikesComment);
+
+// Supprimer les dislikes d'un post
+router.delete('/dislike/:id', auth, commentCtlr.deleteDislikesComment);
+
 
 module.exports = router;
