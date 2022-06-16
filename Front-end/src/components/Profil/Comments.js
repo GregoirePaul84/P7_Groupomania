@@ -40,8 +40,8 @@ const Comments = (props) => {
     const postId = props.postId;
     
 
-    const [greenActive, setGreenActive] = useState(false);
-    const [redActive, setRedActive] = useState(false);
+    const [greenActive, setGreenActive] = useState(true);
+    const [redActive, setRedActive] = useState(true);
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
 
@@ -121,6 +121,7 @@ const Comments = (props) => {
     // eslint-disable-next-line
     const toggleLike = () => {
         setGreenActive(!greenActive);
+        console.log(greenActive);
 
         if (greenActive === true) {
             addLike();
@@ -131,6 +132,12 @@ const Comments = (props) => {
             const likesArray = JSON.parse(localStorage.getItem('commentGreenActive') || '[]');
             likesArray.push(`.comment_id-green${commentId}`);
             localStorage.setItem('commentGreenActive', JSON.stringify(likesArray));
+
+            // Vérification si l'utilisateur a déjà disliké le commentaire: si oui, on annule le dislike
+            const selectContainer = document.querySelector(`.comment_id-red${commentId}`);
+            if (selectContainer.classList.contains('active-red')) {
+                toggleDislike();
+            }
         }
         else if (greenActive === false) {
             removeLike();
@@ -172,6 +179,12 @@ const Comments = (props) => {
             const dislikesArray = JSON.parse(localStorage.getItem('commentRedActive') || '[]');
             dislikesArray.push(`.comment_id-red${commentId}`);
             localStorage.setItem('commentRedActive', JSON.stringify(dislikesArray));
+
+            // Vérification si l'utilisateur a déjà liké le commentaire: si oui, on annule le like
+            const selectContainer = document.querySelector(`.comment_id-green${commentId}`);
+            if (selectContainer.classList.contains('active-green')) {
+                toggleLike();
+            }
         }
         else if (redActive === false) {
             removeDislike();

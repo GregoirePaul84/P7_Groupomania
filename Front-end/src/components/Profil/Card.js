@@ -17,8 +17,8 @@ const Card = ({post}) => {
     
     const dispatch = useDispatch();
 
-    const [greenActive, setGreenActive] = useState(false);
-    const [redActive, setRedActive] = useState(false);
+    const [greenActive, setGreenActive] = useState(true);
+    const [redActive, setRedActive] = useState(true);
     const [visibility, setVisibility] = useState(true);
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
@@ -71,6 +71,13 @@ const Card = ({post}) => {
             const likesArray = JSON.parse(localStorage.getItem('greenActive') || '[]');
             likesArray.push(`.post_id-green${postId}`);
             localStorage.setItem('greenActive', JSON.stringify(likesArray));
+
+            // Vérification si l'utilisateur a déjà disliké le post: si oui, on annule le dislike
+            const selectContainer = document.querySelector(`.post_id-red${postId}`);
+            if (selectContainer.classList.contains('active-red')) {
+                toggleDislike();
+            }
+
         }
 
         else if (greenActive === false) {
@@ -103,6 +110,12 @@ const Card = ({post}) => {
             const dislikesArray = JSON.parse(localStorage.getItem('redActive') || '[]');
             dislikesArray.push(`.post_id-red${postId}`);
             localStorage.setItem('redActive', JSON.stringify(dislikesArray));
+
+            // Vérification si l'utilisateur a déjà liké le post: si oui, on annule le like
+            const selectContainer = document.querySelector(`.post_id-green${postId}`);
+            if (selectContainer.classList.contains('active-green')) {
+                toggleLike();
+            }
         }
         else if (redActive === false) {
             removeDislike();
@@ -227,7 +240,7 @@ const Card = ({post}) => {
                             : <div></div>}
                     </div>
                 </div>
-                <div className="card-likes-comments">
+                <div className="card-likes-posts">
                 <FontAwesomeIcon icon={ faMessage } onClick={toggleVisibility}/>
                 { (numberOfComments > 1) ? <span>{numberOfComments} commentaires</span> : <span>{numberOfComments} commentaire</span> }
                 {/* eslint-disable-next-line */}

@@ -159,7 +159,7 @@
             
         }
 
-        .card-likes-comments {
+        .card-likes-posts {
             height: 39px;
             width: 100%;
             display: flex;
@@ -175,6 +175,8 @@
             }
 
             .thumbs-up path {
+                width: 18px;
+                height: 18px;
                 &:hover {
                     color:rgb(0, 216, 0);
                 }
@@ -185,6 +187,8 @@
             }
             
             .thumbs-down path {
+                width: 18px;
+                height: 18px;
                 &:hover {
                     color: rgb(255, 30, 30);
                 }
