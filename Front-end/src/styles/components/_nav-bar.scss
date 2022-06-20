@@ -38,6 +38,7 @@ header {
 
         .picture-logout {
             position: relative;
+            cursor: pointer;
             img {
                 border-radius: 50%;
                 width: 55px;
@@ -51,7 +52,7 @@ header {
                 visibility: hidden;
 
                 path {
-                    color: black;
+                    color: hsl(253deg 12% 14%);
                 }
             }
             &:hover {
