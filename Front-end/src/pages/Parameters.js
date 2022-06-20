@@ -16,6 +16,8 @@ const Settings = () => {
         objectUser = userData.results[0];
     }
 
+    console.log(objectUser);
+
     return (
         
         <div className="settings-page">
@@ -39,21 +41,38 @@ const Settings = () => {
                                 <div className="purple-line"></div>
                             </div>
                         </div>
-                        <form action="" className='settings-form'>
-                            <h4>Changer votre photo de profil</h4>
-                            <input type="file" />
-                            <h4>Modifiez votre biographie</h4>
-                            <textarea name="" id="" cols="30" rows="10"></textarea>
-                            <h4>Nom</h4>
-                            <input type="text" />
-                            <h4>Prénom</h4>
-                            <input type="text" />
-                            <h4>Date de naissance</h4>
-                            <input type="date" />
-                            <h4>Adresse</h4>
-                            <input type="text" />
-                            <h4>Modifiez votre mot de passe</h4>
-                            <input type="text" />
+                        <form action="" method='post' className='settings-form'>
+                            <label htmlFor="profilPic">Changez votre photo de profil :</label>
+                            <input type="file" id='profilPic'/>
+                            <label htmlFor="biography">Biographie :</label>
+                            <textarea name="" id="biography" cols="30" rows="10" defaultValue={objectUser.bio}></textarea>
+                            <div className="input-container">
+                                <div className="info-container">
+                                    <label htmlFor="lastName">Nom :</label>
+                                    <input type="text" id='lastName' defaultValue={objectUser.last_name}/>
+                                </div>
+                                <div className="info-container">
+                                    <label htmlFor="firstName">Prénom :</label>
+                                    <input type="text" id='firstName' defaultValue={objectUser.first_name}/>
+                                </div>
+                                <div className="info-container">
+                                    <label htmlFor="birthday">Date de naissance :</label>
+                                    <input type="date" id='birthday' defaultValue={objectUser.date_naissance}/>
+                                </div>
+                                <div className="info-container">
+                                    <label htmlFor="address">Adresse :</label>
+                                    <input type="text" id='address' defaultValue={objectUser.adresse}/>
+                                </div>
+                                <div className="info-container">
+                                    <label htmlFor="password">Changez votre mot de passe :</label>
+                                    <input type="text" id='password'/>
+                                </div>
+                                <div className="info-container">
+                                    <label htmlFor="confirmPassword">Confirmez votre mot de passe :</label>
+                                    <input type="text" id='confirmPassword'/>
+                                </div>
+                            </div>
+                            <input type="submit" value="Modifiez votre profil" id='submit-form'/>
                         </form>
                     </section>
                 </div>

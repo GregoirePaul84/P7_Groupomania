@@ -17,7 +17,6 @@
     width: 70%;
     height: 80%;
     padding: 3% 3% 0 3%;
-    align-self: flex-end;
     background-color: hsl(253deg 12% 14%);
     border-radius: 0 0 33px 0;
     display: flex;
@@ -57,8 +56,7 @@
     }
 
     .settings {
-        margin-top: 2em;
-        overflow: hidden;
+        margin-top: 1em;
 
         .settings-title-box {
             display: flex;
@@ -69,6 +67,67 @@
             .purple-line {
                 width: 70%;
             }
+        }
+    }
+
+    .settings-form {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        textarea {
+            width: 100%;
+            resize: none;
+            height: 50px;
+            color: #2A2831;
+        }
+
+        label {
+            margin: 5px 0;
+        }
+
+        #profilPic {
+            width: 118px;
+            margin-bottom: 5px;
+        }
+
+        #lastName, #firstName, #birthday, #address, #password, #confirmPassword {
+            width: 50%;
+            color: #2A2831;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: center;
+            height: 40%;
+            margin-top: 5px;
+
+            .info-container {
+                height: 33%;
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+        #submit-form {
+            background-color: #2A2831;
+            border: 2px solid #8D76FF;
+            border-radius: 10px;
+            padding: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 400ms;
+            width: 150px;
+            height: 40px;
+            align-self: center;
+            margin-top: 20px;
+            &:hover {
+                transform: scale(1.15);
+            }
+            
         }
     }
 }
