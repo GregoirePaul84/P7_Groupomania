@@ -1,0 +1,74 @@
+.settings-page {
+    background-image: url("../../images/cities-city-singapore-naght.jpg");
+    height: 100vh;
+
+    .settings-container {
+        position: relative;
+        height: 90vh;
+        min-height: 678px;
+        width: 80vw;
+        min-width: 981px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+.main-section-settings {
+    width: 70%;
+    height: 80%;
+    padding: 3% 3% 0 3%;
+    align-self: flex-end;
+    background-color: hsl(253deg 12% 14%);
+    border-radius: 0 0 33px 0;
+    display: flex;
+    flex-direction: column;
+
+    .flex-container {
+        display: flex;
+        justify-content: space-between;
+
+        .user-name {
+            align-self: center;
+        }
+        .pictures-contact-box {
+            display: flex;
+            align-items: center;
+
+            li {
+                cursor: pointer;
+                background-color: #2A2831;
+                padding: 0.6em 1.5em;
+                border-radius: 25px;
+                &:hover, &:hover path{
+                    color: #8D76FF;
+                
+                }
+                &:first-child {
+                    margin-right: 1.5em;
+                }
+
+                svg {
+                    height: 18px;
+                    margin-right: 10px;
+                    
+                }
+            }
+        }
+    }
+
+    .settings {
+        margin-top: 2em;
+        overflow: hidden;
+
+        .settings-title-box {
+            display: flex;
+            margin-bottom: 1em;
+            .user-titles {
+                width: 20%;
+            }
+            .purple-line {
+                width: 70%;
+            }
+        }
+    }
+}

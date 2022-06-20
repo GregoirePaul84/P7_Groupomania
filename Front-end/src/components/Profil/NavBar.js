@@ -23,8 +23,13 @@ const NavBar = (props) => {
             <nav className="profil-nav-bar">
                 <div className="home-settings-links">
                     <div className="home">
-                        <NavLink to="/">
+                        <NavLink to="/home">
                             Accueil
+                        </NavLink>
+                    </div>
+                    <div className="profil">
+                        <NavLink to="/profil/:id">
+                            Profil
                         </NavLink>
                     </div>
                     <div className="settings">

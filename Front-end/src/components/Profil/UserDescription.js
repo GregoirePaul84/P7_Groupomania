@@ -8,7 +8,7 @@ const User_description = (props) => {
     const objectUser = props.user_info;
         
     return (
-        <section className='user-description-box'>
+        <aside className='user-description-box'>
             <div className="profil-pic-name_box">
                 <div className="profil-pic">
                     <ChangeProfilPic />
@@ -66,7 +66,7 @@ const User_description = (props) => {
                     </div>
                 </div>
             </div>
-        </section>
+        </aside>
     );
 };
 
