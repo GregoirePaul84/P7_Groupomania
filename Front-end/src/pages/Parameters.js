@@ -82,13 +82,6 @@ const Settings = () => {
                             </div>
                         </div>
                         <form action="" className='settings-form' onSubmit={handleInfos}>
-                            <label htmlFor="file">Changez votre photo de profil :</label>
-                            <input type="file" 
-                                   id="file"
-                                   name="profil_image"
-                                   className='select_image'
-                                   accept=".jpg, .jpeg, .png" 
-                                   onChange={(e) => setFile(e.target.files[0])}/>
                             <label htmlFor="biography">Biographie :</label>
                             <textarea name="bio" 
                                       id="biography" 
@@ -97,6 +90,15 @@ const Settings = () => {
                                       defaultValue={objectUser.bio} 
                                       onChange={(e) => setBio(e.target.value)}></textarea>
                             <div className="input-container">
+                                <div className="info-container">
+                                    <label htmlFor="file">Photo de profil :</label>
+                                    <input type="file"
+                                        id="file"
+                                        name="profil_image"
+                                        className='select_image'
+                                        accept=".jpg, .jpeg, .png"
+                                        onChange={(e) => setFile(e.target.files[0])}/>
+                                </div>
                                 <div className="info-container">
                                     <label htmlFor="lastName">Nom :</label>
                                     <input type="text" 
@@ -126,11 +128,18 @@ const Settings = () => {
                                            onChange={(e) => setAddress(e.target.value)}/>
                                 </div>
                                 <div className="info-container">
+                                    <label htmlFor="tel">Téléphone :</label>
+                                    <input type="text" 
+                                           id='tel' 
+                                           defaultValue={objectUser.tel} 
+                                           onChange={(e) => setAddress(e.target.value)}/>
+                                </div>
+                                <div className="info-container">
                                     <label htmlFor="password">Changez votre mot de passe :</label>
                                     <input type="text" id='password'/>
                                 </div>
                                 <div className="info-container">
-                                    <label htmlFor="confirmPassword">Confirmez le nouveau mot de passe :</label>
+                                    <label htmlFor="confirmPassword">Confirmez le mot de passe :</label>
                                     <input type="text" id='confirmPassword'/>
                                 </div>
                             </div>

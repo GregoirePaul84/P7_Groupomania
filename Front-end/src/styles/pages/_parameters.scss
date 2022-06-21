@@ -84,39 +84,42 @@
         }
 
         label {
-            margin: 5px 0;
+            margin-top: 10px;
+            margin-bottom: 2px;
         }
 
-        #profilPic {
+        #file {
             width: 114px;
             cursor: pointer;
             border-radius: 20px;
-            margin-bottom: 10px;
         }
 
-        #lastName, #firstName, #birthday, #address, #password, #confirmPassword {
+        #lastName, #firstName, #birthday, #address, #tel, #password, #confirmPassword {
             width: 50%;
             color: #2A2831;
         }
+
+        
 
         .input-container {
             display: flex;
             flex-direction: column;
             flex-wrap: wrap;
-            justify-content: center;
-            height: 40%;
-            margin-top: 5px;
+            justify-content: space-between;
+            align-items: center;
+            height: 50%;
+            width: 100%;
+            margin-top: 1.3em;
 
             .info-container {
-                height: 33%;
-                width: 50%;
+                width: 40%;
                 display: flex;
                 flex-direction: column;
             }
         }
 
         .submit-container {
-            margin-top: 1.5em;
+            margin-top: 1.8em;
             display: flex;
             align-items: center;
             justify-content: center;
