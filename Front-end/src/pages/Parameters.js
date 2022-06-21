@@ -4,7 +4,7 @@ import NavBar from '../components/Profil/NavBar';
 import UserDescription from '../components/Profil/UserDescription';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAddressBook, faCamera, faUserXmark } from '@fortawesome/free-solid-svg-icons';
-import { getUser, uploadProfil } from '../actions/user.actions';
+import { deleteUser, getUser, uploadProfil } from '../actions/user.actions';
 
 
 
@@ -52,7 +52,11 @@ const Settings = () => {
         setFile(false);
     }
 
-    // console.log(document.querySelector('#lastName').value);
+    function deleteAccount() {
+        console.log("compte supprimé");
+        dispatch(deleteUser(userId))
+            .then(() => window.location = "/register");
+    }
 
     return (
         
@@ -134,7 +138,12 @@ const Settings = () => {
                                 <input type="submit" value="Modifiez votre profil" id='submit-form' />
                             </div>
                             <div className="delete-account-container">
-                                <span><FontAwesomeIcon icon={ faUserXmark } />Supprimer le compte</span>
+                                <span onClick={() => { if (window.confirm('Êtes-vous sûr de vouloir supprimer votre compte ?'))
+                                                        { deleteAccount() }
+                                                    }}>
+                                    <FontAwesomeIcon icon={ faUserXmark } />
+                                    Supprimer le compte
+                                </span>
                             </div>
                         </form>
                     </section>

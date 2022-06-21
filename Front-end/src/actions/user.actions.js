@@ -4,6 +4,7 @@ export const GET_ALL_USERS = "GET_ALL_USERS";
 export const GET_USER = "GET_USER";
 export const GET_USER_POSTS = "GET_USER_POSTS";
 export const UPLOAD_PROFIL = "UPLOAD_PROFIL";
+export const DELETE_USER = "DELETE_USER";
 
 export const getAllUsers = () => {
 
@@ -59,7 +60,6 @@ export const getUser = (userId) => {
 }
 
 export const uploadProfil = (data, userId) => {
-    console.log(...data);
     
     return async (dispatch) => {
         try {
@@ -76,6 +76,31 @@ export const uploadProfil = (data, userId) => {
             dispatch({
                 type: UPLOAD_PROFIL,
                 payload: res.data.profil
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+
+export const deleteUser = (userId) => {
+
+    // Envoi au reducer pour stocker dans le store de Redux
+    return async (dispatch) => {
+
+        try {
+
+            const res = await axios({
+                method: "delete",
+                url: `${process.env.REACT_APP_API_URL}api/user/${userId}`,
+                withCredentials: true,
+            });
+
+            dispatch({
+                type: DELETE_USER,
+                payload: res.data
             });
             
         } catch (error) {
