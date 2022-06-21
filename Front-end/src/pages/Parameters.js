@@ -1,9 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import NavBar from '../components/Profil/NavBar';
 import UserDescription from '../components/Profil/UserDescription';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAddressBook, faCamera } from '@fortawesome/free-solid-svg-icons';
+import { faAddressBook, faCamera, faUserXmark } from '@fortawesome/free-solid-svg-icons';
+import { getUser, uploadProfil } from '../actions/user.actions';
 
 
 
@@ -16,7 +17,42 @@ const Settings = () => {
         objectUser = userData.results[0];
     }
 
-    console.log(objectUser);
+    const userId = objectUser.user_id;
+    const userBio = objectUser.bio;
+    const userLastName = objectUser.last_name;
+    const userFirstName = objectUser.first_name;
+    const userBirthday = objectUser.date_naissance;
+    const userAddress = objectUser.adresse;
+
+    
+    const [file, setFile] = useState();
+    const [bio, setBio] = useState(userBio);
+    const [lastName, setLastname] = useState(userLastName);
+    const [firstName, setFirstname] = useState(userFirstName);
+    const [birthday, setBirthday] = useState(userBirthday);
+    const [address, setAddress] = useState(userAddress);
+    const [password, setPassword] = useState();
+
+    const dispatch = useDispatch();
+
+    function handleInfos(e) {
+        e.preventDefault();
+        const data = new FormData();
+        data.append('profil_image', file);
+        data.append('bio', bio);
+        data.append('last_name', lastName);
+        data.append('first_name', firstName);
+        data.append('date_naissance', birthday);
+        data.append('adresse', address);
+        console.log(data.get('profil_image'));
+        console.log(data.get('last_name'));
+
+        dispatch(uploadProfil(data, userId))
+            .then(() => dispatch(getUser(userId)));
+        setFile(false);
+    }
+
+    // console.log(document.querySelector('#lastName').value);
 
     return (
         
@@ -41,38 +77,65 @@ const Settings = () => {
                                 <div className="purple-line"></div>
                             </div>
                         </div>
-                        <form action="" method='post' className='settings-form'>
-                            <label htmlFor="profilPic">Changez votre photo de profil :</label>
-                            <input type="file" id='profilPic'/>
+                        <form action="" className='settings-form' onSubmit={handleInfos}>
+                            <label htmlFor="file">Changez votre photo de profil :</label>
+                            <input type="file" 
+                                   id="file"
+                                   name="profil_image"
+                                   className='select_image'
+                                   accept=".jpg, .jpeg, .png" 
+                                   onChange={(e) => setFile(e.target.files[0])}/>
                             <label htmlFor="biography">Biographie :</label>
-                            <textarea name="" id="biography" cols="30" rows="10" defaultValue={objectUser.bio}></textarea>
+                            <textarea name="bio" 
+                                      id="biography" 
+                                      cols="30" 
+                                      rows="10" 
+                                      defaultValue={objectUser.bio} 
+                                      onChange={(e) => setBio(e.target.value)}></textarea>
                             <div className="input-container">
                                 <div className="info-container">
                                     <label htmlFor="lastName">Nom :</label>
-                                    <input type="text" id='lastName' defaultValue={objectUser.last_name}/>
+                                    <input type="text" 
+                                           id='lastName' 
+                                           defaultValue={objectUser.last_name} 
+                                           onChange={(e) => setLastname(e.target.value)}/>
                                 </div>
                                 <div className="info-container">
                                     <label htmlFor="firstName">Prénom :</label>
-                                    <input type="text" id='firstName' defaultValue={objectUser.first_name}/>
+                                    <input type="text" 
+                                           id='firstName' 
+                                           defaultValue={objectUser.first_name} 
+                                           onChange={(e) => setFirstname(e.target.value)}/>
                                 </div>
                                 <div className="info-container">
                                     <label htmlFor="birthday">Date de naissance :</label>
-                                    <input type="date" id='birthday' defaultValue={objectUser.date_naissance}/>
+                                    <input type="date" 
+                                           id='birthday' 
+                                           defaultValue={objectUser.date_naissance} 
+                                           onChange={(e) => setBirthday(e.target.value)}/>
                                 </div>
                                 <div className="info-container">
                                     <label htmlFor="address">Adresse :</label>
-                                    <input type="text" id='address' defaultValue={objectUser.adresse}/>
+                                    <input type="text" 
+                                           id='address' 
+                                           defaultValue={objectUser.adresse} 
+                                           onChange={(e) => setAddress(e.target.value)}/>
                                 </div>
                                 <div className="info-container">
                                     <label htmlFor="password">Changez votre mot de passe :</label>
                                     <input type="text" id='password'/>
                                 </div>
                                 <div className="info-container">
-                                    <label htmlFor="confirmPassword">Confirmez votre mot de passe :</label>
+                                    <label htmlFor="confirmPassword">Confirmez le nouveau mot de passe :</label>
                                     <input type="text" id='confirmPassword'/>
                                 </div>
                             </div>
-                            <input type="submit" value="Modifiez votre profil" id='submit-form'/>
+                            <div className="submit-container">
+                                <input type="submit" value="Modifiez votre profil" id='submit-form' />
+                            </div>
+                            <div className="delete-account-container">
+                                <span><FontAwesomeIcon icon={ faUserXmark } />Supprimer le compte</span>
+                            </div>
                         </form>
                     </section>
                 </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import { uploadPicture } from '../../actions/user.actions';
+import { getUser, uploadProfil } from '../../actions/user.actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
@@ -25,7 +25,8 @@ const ChangeProfilPic = () => {
         data.append('profil_image', file);
         console.log(data.get('profil_image'));
 
-        dispatch(uploadPicture(data, userId));
+        dispatch(uploadProfil(data, userId))
+            .then(() => dispatch(getUser(userId)));
         setFile(false);
     }
 

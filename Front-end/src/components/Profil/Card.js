@@ -210,15 +210,16 @@ const Card = ({post}) => {
             // Création de la modale image de post
             const createDiv = document.createElement("div");
             createDiv.className = "picture-modal";
+            
             const selectRoot = document.getElementById('root');
             selectRoot.appendChild(createDiv);
+            
             const createImg = document.createElement("img");
             createImg.setAttribute("src", `${imgUrl}`);
+            
             const selectPictureModal = document.querySelector('.picture-modal');
             selectPictureModal.appendChild(createImg);
-            // const selectAllPictures = document.querySelectorAll('.picture');
-            // console.log(selectAllPictures);
-            // const selectImg = document.querySelector('.picture-modal img')
+            
             const createCrossSpan = document.createElement("span");
             createCrossSpan.className = "cross-span";
             createCrossSpan.textContent = "x";

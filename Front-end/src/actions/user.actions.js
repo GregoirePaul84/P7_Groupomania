@@ -3,7 +3,7 @@ import axios from "axios";
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const GET_USER = "GET_USER";
 export const GET_USER_POSTS = "GET_USER_POSTS";
-export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
+export const UPLOAD_PROFIL = "UPLOAD_PROFIL";
 
 export const getAllUsers = () => {
 
@@ -58,7 +58,8 @@ export const getUser = (userId) => {
     }
 }
 
-export const uploadPicture = (data, userId) => {
+export const uploadProfil = (data, userId) => {
+    console.log(...data);
     
     return async (dispatch) => {
         try {
@@ -73,19 +74,8 @@ export const uploadPicture = (data, userId) => {
             });
 
             dispatch({
-                type: UPLOAD_PICTURE,
-                payload: res.data.picture
-            });
-
-            const res2 = await axios({
-                method: "get",
-                url: `${process.env.REACT_APP_API_URL}api/user/${userId}`,
-                withCredentials: true,
-            });
-
-            dispatch({
-                type: GET_USER,
-                payload: res2.data
+                type: UPLOAD_PROFIL,
+                payload: res.data.profil
             });
             
         } catch (error) {

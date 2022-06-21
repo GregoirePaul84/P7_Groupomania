@@ -75,9 +75,9 @@ module.exports.updateUser = (req, res) => {
     }
 
     // Si l'utilisateur ne change que ses données personnelles
-    if (req.body.first_name || req.body.last_name || req.body.date_naissance || req.body.bio) {
-        const SqlUpdateUser = `UPDATE user SET first_name= ?, last_name= ?, date_naissance= ?, bio= ? WHERE user_id= ?`;
-        const bodyInfos = [req.body.first_name, req.body.last_name, req.body.date_naissance, req.body.bio, req.params.id];
+    if (req.body.first_name || req.body.last_name || req.body.date_naissance || req.body.bio || req.body.adresse) {
+        const SqlUpdateUser = `UPDATE user SET first_name= ?, last_name= ?, date_naissance= ?, bio= ?, adresse= ? WHERE user_id= ?`;
+        const bodyInfos = [req.body.first_name, req.body.last_name, req.body.date_naissance, req.body.bio, req.body.adresse, req.params.id];
 
         mySqlConnection.query(SqlUpdateUser, bodyInfos, function (error, results) {
             if (!error) {

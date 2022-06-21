@@ -21,7 +21,7 @@ const index = () => {
                 <Route path="/settings" element={<Parameters/>} />
 
                 {/* Redirection vers /home si paramètres inconnus */}
-                <Route path="*" element={<Navigate to="/register"/>} />
+                <Route path="*" element={<Navigate to="/home"/>} />
 
             </Routes>
         </Router>
