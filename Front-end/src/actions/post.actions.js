@@ -45,7 +45,7 @@ export const updatePost = (postId, textUpdate) => {
             // Transformation de la valeur de l'input en format JSON
             const data = JSON.stringify({
                 "text": `${textUpdate}`
-              });
+            });
 
             // Envoie des données au backend
             const res = await axios({

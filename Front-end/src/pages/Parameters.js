@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import NavBar from '../components/Profil/NavBar';
 import UserDescription from '../components/Profil/UserDescription';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAddressBook, faCamera, faUserXmark } from '@fortawesome/free-solid-svg-icons';
-import { deleteUser, getUser, uploadProfil } from '../actions/user.actions';
+import { changePassword, deleteUser, getUser, uploadProfil } from '../actions/user.actions';
 
 
 
@@ -31,12 +31,15 @@ const Settings = () => {
     const [firstName, setFirstname] = useState(userFirstName);
     const [birthday, setBirthday] = useState(userBirthday);
     const [address, setAddress] = useState(userAddress);
-    const [password, setPassword] = useState();
+    const [phoneNumber, setPhoneNumber] = useState(userAddress);
+    const [password, setPassword] = useState('');
+    const [ctrlPassword, setCtrlPassword] = useState('');
 
     const dispatch = useDispatch();
 
     function handleInfos(e) {
         e.preventDefault();
+
         const data = new FormData();
         data.append('profil_image', file);
         data.append('bio', bio);
@@ -44,8 +47,18 @@ const Settings = () => {
         data.append('first_name', firstName);
         data.append('date_naissance', birthday);
         data.append('adresse', address);
-        console.log(data.get('profil_image'));
-        console.log(data.get('last_name'));
+        data.append('tel', phoneNumber);
+        console.log(password.length);
+               
+        if (password !== ctrlPassword) {
+            console.log(password.length);
+            alert('Les mots de passe ne correspondent pas');
+        }
+        else if (password.length !== 0) {
+            
+            dispatch(changePassword(password, userId))
+                .then(() => dispatch(getUser(userId)));
+        }
 
         dispatch(uploadProfil(data, userId))
             .then(() => dispatch(getUser(userId)));
@@ -91,9 +104,9 @@ const Settings = () => {
                                       onChange={(e) => setBio(e.target.value)}></textarea>
                             <div className="input-container">
                                 <div className="info-container">
-                                    <label htmlFor="file">Photo de profil :</label>
+                                    <label htmlFor="profil-pic">Photo de profil :</label>
                                     <input type="file"
-                                        id="file"
+                                        id="profil-pic"
                                         name="profil_image"
                                         className='select_image'
                                         accept=".jpg, .jpeg, .png"
@@ -132,15 +145,19 @@ const Settings = () => {
                                     <input type="text" 
                                            id='tel' 
                                            defaultValue={objectUser.tel} 
-                                           onChange={(e) => setAddress(e.target.value)}/>
+                                           onChange={(e) => setPhoneNumber(e.target.value)}/>
                                 </div>
                                 <div className="info-container">
                                     <label htmlFor="password">Changez votre mot de passe :</label>
-                                    <input type="text" id='password'/>
+                                    <input type="password" 
+                                           id='password'
+                                           onChange={(e) => setPassword(e.target.value)}/>
                                 </div>
                                 <div className="info-container">
                                     <label htmlFor="confirmPassword">Confirmez le mot de passe :</label>
-                                    <input type="text" id='confirmPassword'/>
+                                    <input type="password" 
+                                           id='confirmPassword'
+                                           onChange={(event) => setCtrlPassword(event.target.value)}/>
                                 </div>
                             </div>
                             <div className="submit-container">

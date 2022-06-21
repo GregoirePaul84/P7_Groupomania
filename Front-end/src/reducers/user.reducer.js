@@ -1,4 +1,4 @@
-import { DELETE_USER, GET_USER, UPLOAD_PROFIL } from "../actions/user.actions";
+import { CHANGE_PASSWORD, DELETE_USER, GET_USER, UPLOAD_PROFIL } from "../actions/user.actions";
 
 const initialState = {};
 
@@ -19,6 +19,12 @@ export default function userReducer(state= initialState, action) {
                 ...state,
                 profil: action.payload,
             }; 
+
+        case CHANGE_PASSWORD:
+            return {
+                ...state,
+                profil: action.payload,
+            };
 
         default:
             return state;

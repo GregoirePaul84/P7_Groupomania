@@ -88,14 +88,16 @@
             margin-bottom: 2px;
         }
 
-        #file {
+
+        #profil-pic {
             width: 114px;
             cursor: pointer;
             border-radius: 20px;
         }
 
         #lastName, #firstName, #birthday, #address, #tel, #password, #confirmPassword {
-            width: 50%;
+            width: 70%;
+            height: 20px;
             color: #2A2831;
         }
 

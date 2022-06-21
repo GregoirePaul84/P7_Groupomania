@@ -201,9 +201,6 @@ const Card = ({post}) => {
 
     }, [dispatch, userId])
 
-    console.log(document.querySelector('.picture-modal'));
-    console.log(showPicture);
-
     useEffect(() => {
         if(showPicture) {
 

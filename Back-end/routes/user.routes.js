@@ -2,6 +2,7 @@ const router = require('express').Router();
 const userCtlr = require('../controllers/user.controller');
 const auth = require('../middlewares/auth.middleware');
 const upload = require('../middlewares/multer-config');
+const password = require('../middlewares/password.middleware');
 
 
 // Récupérer tous les utilisateurs
@@ -18,6 +19,9 @@ router.get("/image/:id", auth, userCtlr.readProfilImage);
 
 // Modifier les infos ou la photo utilisateur
 router.put('/:id', auth, upload.single('profil_image'), userCtlr.updateUser);
+
+// Modifier le mot de passe
+router.put('/password/:id', auth, password, userCtlr.changePassword);
 
 // Supprimer un utilisateur
 router.delete('/:id', auth, userCtlr.deleteUser);

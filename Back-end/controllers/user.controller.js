@@ -2,6 +2,9 @@ const mySqlConnection = require('../config/db');
 
 const jwt = require('jsonwebtoken');
 
+const bcrypt = require('bcrypt');
+
+
 require('dotenv').config({path: './config/.env'})
 
 // ********** Récupération de tous les utilisateurs ********** //
@@ -75,9 +78,9 @@ module.exports.updateUser = (req, res) => {
     }
 
     // Si l'utilisateur ne change que ses données personnelles
-    if (req.body.first_name || req.body.last_name || req.body.date_naissance || req.body.bio || req.body.adresse) {
-        const SqlUpdateUser = `UPDATE user SET first_name= ?, last_name= ?, date_naissance= ?, bio= ?, adresse= ? WHERE user_id= ?`;
-        const bodyInfos = [req.body.first_name, req.body.last_name, req.body.date_naissance, req.body.bio, req.body.adresse, req.params.id];
+    if (req.body.first_name || req.body.last_name || req.body.date_naissance || req.body.bio || req.body.adresse || req.body.tel) {
+        const SqlUpdateUser = `UPDATE user SET first_name= ?, last_name= ?, date_naissance= ?, bio= ?, adresse= ?, tel= ? WHERE user_id= ?`;
+        const bodyInfos = [req.body.first_name, req.body.last_name, req.body.date_naissance, req.body.bio, req.body.adresse, req.body.tel, req.params.id];
 
         mySqlConnection.query(SqlUpdateUser, bodyInfos, function (error, results) {
             if (!error) {
@@ -91,7 +94,6 @@ module.exports.updateUser = (req, res) => {
 }
 
 // ********** Suppression d'un utilisateur de la DB ********** //
-
 
 module.exports.deleteUser = (req, res) => {
     
@@ -116,6 +118,7 @@ module.exports.deleteUser = (req, res) => {
         }
     });
 }
+
 
 // ********** Récupérer une photo de profil ********** //
 
@@ -153,3 +156,20 @@ module.exports.postPicUser = (req, res) => {
         }
     });
 };
+
+
+// ********** Changer le mot de passe ********** //
+
+module.exports.changePassword = async (req, res) => {
+    const sqlChangePassword = `UPDATE user SET password= ? WHERE user_id= ?`;
+    const passwordHash = await bcrypt.hash(req.body.password, 10);
+
+    mySqlConnection.query(sqlChangePassword, [passwordHash, req.params.id], (error, results) => {
+        if (error) {
+            res.status(500).json( {error} ); 
+        }
+        else {
+            res.status(200).json({message: "Mot de passe modifié !"});
+        }
+    });
+}

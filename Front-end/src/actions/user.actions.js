@@ -5,6 +5,7 @@ export const GET_USER = "GET_USER";
 export const GET_USER_POSTS = "GET_USER_POSTS";
 export const UPLOAD_PROFIL = "UPLOAD_PROFIL";
 export const DELETE_USER = "DELETE_USER";
+export const CHANGE_PASSWORD = "CHANGE_PASSWORD";
 
 export const getAllUsers = () => {
 
@@ -101,6 +102,34 @@ export const deleteUser = (userId) => {
             dispatch({
                 type: DELETE_USER,
                 payload: res.data
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export const changePassword = (password, userId) => {
+    
+    return async (dispatch) => {
+        try {
+            const data = JSON.stringify({
+                "password": password
+            });
+            
+            const res = await axios({
+                method: "put",
+                url: `${process.env.REACT_APP_API_URL}api/user/password/${userId}`,
+                withCredentials: true,
+                data: data,
+                headers: { "Content-Type": "application/json" },
+                
+            });
+
+            dispatch({
+                type: CHANGE_PASSWORD,
+                payload: res.data.password
             });
             
         } catch (error) {
