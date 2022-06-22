@@ -82,6 +82,20 @@ const Settings = () => {
 
     }, [userBio, userFirstName, userLastName, userBirthday, userAddress, userPhone]);
 
+    useEffect(() => {
+        if (file) {
+            const selectInput = document.getElementById('profil-pic');
+            selectInput.style.color = '#8D76FF';
+            selectInput.classList.add('change-color');
+        }
+        else if (file === false) {
+            const selectInput = document.getElementById('profil-pic');
+            selectInput.style.color = 'inherit';
+            selectInput.classList.remove('change-color');
+        }
+        
+    }, [file])
+
     return (
         
         <div className="settings-page">
@@ -115,7 +129,7 @@ const Settings = () => {
                                       onChange={(e) => setBio(e.target.value)}></textarea>
                             <div className="input-container">
                                 <div className="info-container">
-                                    <label htmlFor="profil-pic">Photo de profil :</label>
+                                    <label>Photo de profil :</label>
                                     <input type="file"
                                         id="profil-pic"
                                         name="profil_image"

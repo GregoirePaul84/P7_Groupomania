@@ -89,10 +89,14 @@
         }
 
 
-        #profil-pic {
+        #profil-pic[type=file]::file-selector-button {
             width: 114px;
             cursor: pointer;
             border-radius: 20px;
+        }
+
+        .change-color[type=file]::file-selector-button {
+            background-color: #8D76FF;
         }
 
         #lastName, #firstName, #birthday, #address, #tel, #password, #confirmPassword {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faComment, faImage} from '@fortawesome/free-solid-svg-icons'
 import { getComments, increaseNbOfComments, sendComment } from '../../actions/comment.actions';
@@ -41,6 +41,19 @@ const InputComments = (props) => {
         
     }
      
+    useEffect(() => {
+        if (file) {
+            const selectIcon = document.querySelector(`.input-post_id${postId} path`);
+            console.log(selectIcon);
+            selectIcon.style.color = 'hsl(317deg 24% 45%)';
+        }
+        else if (file === false) {
+            const selectIcon = document.querySelector(`.input-post_id${postId} path`);
+            selectIcon.style.color = 'inherit';
+        }
+    // eslint-disable-next-line
+    }, [file])
+
     return (
         // eslint-disable-next-line
         <div>

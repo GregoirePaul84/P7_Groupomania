@@ -68,8 +68,11 @@
                 bottom: 4px;
                 width: 25px;
                 height: 25px;
-                cursor: pointer;
                 opacity: 0;
+            }
+
+            .input-file-comment[type=file]::file-selector-button {
+                cursor: pointer;
             }
 
             svg {
