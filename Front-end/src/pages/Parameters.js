@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import NavBar from '../components/Profil/NavBar';
 import UserDescription from '../components/Profil/UserDescription';
@@ -23,15 +23,16 @@ const Settings = () => {
     const userFirstName = objectUser.first_name;
     const userBirthday = objectUser.date_naissance;
     const userAddress = objectUser.adresse;
+    const userPhone = objectUser.tel;
 
     
     const [file, setFile] = useState();
-    const [bio, setBio] = useState(userBio);
-    const [lastName, setLastname] = useState(userLastName);
-    const [firstName, setFirstname] = useState(userFirstName);
-    const [birthday, setBirthday] = useState(userBirthday);
-    const [address, setAddress] = useState(userAddress);
-    const [phoneNumber, setPhoneNumber] = useState(userAddress);
+    const [bio, setBio] = useState('');
+    const [lastName, setLastname] = useState('');
+    const [firstName, setFirstname] = useState('');
+    const [birthday, setBirthday] = useState('');
+    const [address, setAddress] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [ctrlPassword, setCtrlPassword] = useState('');
 
@@ -71,6 +72,16 @@ const Settings = () => {
             .then(() => window.location = "/register");
     }
 
+    useEffect(() => {
+        setBio(userBio);
+        setFirstname(userFirstName);
+        setLastname(userLastName);
+        setBirthday(userBirthday);
+        setAddress(userAddress);
+        setPhoneNumber(userPhone);
+
+    }, [userBio, userFirstName, userLastName, userBirthday, userAddress, userPhone]);
+
     return (
         
         <div className="settings-page">
@@ -81,7 +92,7 @@ const Settings = () => {
                     <section className="main-section-settings">
                         <div className="flex-container">
                             <div className="user-name">
-                                <h2>{objectUser.first_name}, {objectUser.last_name}</h2>
+                                <h2>{userFirstName}, {userLastName}</h2>
                             </div>
                             <ul className="pictures-contact-box">
                                 <li><FontAwesomeIcon icon={ faCamera } />Photos</li>
@@ -100,7 +111,7 @@ const Settings = () => {
                                       id="biography" 
                                       cols="30" 
                                       rows="10" 
-                                      defaultValue={objectUser.bio} 
+                                      defaultValue={userBio} 
                                       onChange={(e) => setBio(e.target.value)}></textarea>
                             <div className="input-container">
                                 <div className="info-container">
@@ -116,35 +127,35 @@ const Settings = () => {
                                     <label htmlFor="lastName">Nom :</label>
                                     <input type="text" 
                                            id='lastName' 
-                                           defaultValue={objectUser.last_name} 
+                                           defaultValue={userLastName} 
                                            onChange={(e) => setLastname(e.target.value)}/>
                                 </div>
                                 <div className="info-container">
                                     <label htmlFor="firstName">Prénom :</label>
                                     <input type="text" 
                                            id='firstName' 
-                                           defaultValue={objectUser.first_name} 
+                                           defaultValue={userFirstName} 
                                            onChange={(e) => setFirstname(e.target.value)}/>
                                 </div>
                                 <div className="info-container">
                                     <label htmlFor="birthday">Date de naissance :</label>
                                     <input type="date" 
                                            id='birthday' 
-                                           defaultValue={objectUser.date_naissance} 
+                                           defaultValue={userBirthday} 
                                            onChange={(e) => setBirthday(e.target.value)}/>
                                 </div>
                                 <div className="info-container">
                                     <label htmlFor="address">Adresse :</label>
                                     <input type="text" 
                                            id='address' 
-                                           defaultValue={objectUser.adresse} 
+                                           defaultValue={userAddress} 
                                            onChange={(e) => setAddress(e.target.value)}/>
                                 </div>
                                 <div className="info-container">
                                     <label htmlFor="tel">Téléphone :</label>
                                     <input type="text" 
                                            id='tel' 
-                                           defaultValue={objectUser.tel} 
+                                           defaultValue={userPhone} 
                                            onChange={(e) => setPhoneNumber(e.target.value)}/>
                                 </div>
                                 <div className="info-container">

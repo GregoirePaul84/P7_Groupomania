@@ -28,7 +28,7 @@ const NavBar = (props) => {
                         </NavLink>
                     </div>
                     <div className="profil">
-                        <NavLink to="/profil/:id">
+                        <NavLink to={`/profil/${objectUser.user_id}`}>
                             Profil
                         </NavLink>
                     </div>
