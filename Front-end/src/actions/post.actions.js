@@ -160,11 +160,12 @@ export const deleteDislikePost = (postId) => {
 }
 
 
-export const likePost = (postId) => {
+export const likePost = (postId, postText) => {
     return async (dispatch) => {
         try {
             const data = JSON.stringify({
-                "like": "1"
+                "like": "1",
+                "postText": `${postText}`
               });
             
             const res = await axios({

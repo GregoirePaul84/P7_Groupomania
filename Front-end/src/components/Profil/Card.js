@@ -14,6 +14,8 @@ const Card = ({post}) => {
     const postId = post.post_id;
     const userId = post.user_id;
     const isoDate = post.created;
+    const postText = post.text;
+    console.log(postText);
     
     const dispatch = useDispatch();
 
@@ -50,7 +52,7 @@ const Card = ({post}) => {
 
     function addLike() {
         console.log(`==> post liké : post_id ${postId}`);
-        dispatch(likePost(postId))
+        dispatch(likePost(postId, postText))
             .then(() => dispatch(getUserPosts(userId)));
     }
 

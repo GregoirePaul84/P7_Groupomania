@@ -231,7 +231,10 @@ module.exports.likeDislikePost = (req, res) => {
     const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
     const userId = decodedToken.userId;
     const postId = req.params.id;
+    const postText = req.body.postText;
+    const commentText = req.body.postText;
     const userPostId = [postId, userId];
+    const postInfos = [postId, userId, postText];
     
     if (req.body.like == 1) {
 
@@ -249,8 +252,8 @@ module.exports.likeDislikePost = (req, res) => {
             }
 
             // Si l'utilisateur n'a pas liké, insertion du post_id et user_id dans la table likes
-            const sqlLike = `INSERT INTO likes(post_id, user_id) VALUES (? , ?)`;
-            mySqlConnection.query( sqlLike, userPostId, (error, results) => {
+            const sqlLike = `INSERT INTO likes(post_id, user_id, text_post) VALUES (? , ? , ?)`;
+            mySqlConnection.query( sqlLike, postInfos, (error, results) => {
     
                 if (!error) {
 

@@ -173,3 +173,23 @@ module.exports.changePassword = async (req, res) => {
         }
     });
 }
+
+
+// ********** Récupération de tous les likes d'un utilisateur********** //
+
+module.exports.readAllLikes = (req, res) => {
+    
+    const sqlGetAllLikes = `SELECT * FROM likes WHERE user_id = ?`;
+    const userId = req.params.id;
+
+    mySqlConnection.query(sqlGetAllLikes, userId, (error, results) => {
+        
+        if (results) {
+            res.status(200).json( {message: "Likes récupérés !", results});
+        }
+
+        else {
+            res.status(500).json( {error} )
+        } 
+    });
+}
