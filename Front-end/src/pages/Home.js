@@ -1,63 +1,61 @@
 import React from 'react';
-import logo from '../images/icon-left-font-monochrome-white.svg';
+import { useSelector } from 'react-redux';
+import NavBar from '../components/Profil/NavBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+
 
 const Home = () => {
-    return (
+
+    const userData = useSelector((state) => state.userReducer);
+    let objectUser = {};
+
+    if (Object.keys(userData).length !== 0) {
+        objectUser = userData.results[0];
+    }
+
+    return(
         <div className="home-page">
-            <div className="home-container">
-                <nav>
-                    <div className="groupomania-logo">
-                        <img src={ logo } alt="Logo de groupomania" />
-                    </div>
-                    <div className="user-logout">
-                        <div className="logout-img-user">
-                            <img src="" alt="" />
-                        </div>
-                        <div className="logout-content">
-                            <h3>Zeus, dieu des dieux</h3>
-                            <i></i>
-                            <span>Se déconnecter</span>
-                        </div>
-                    </div>
-                </nav>
-                <main className="main-box">
-                    <section className="profil-likes-params">
-                        <div className="profil">
-                            <div className="profil-img">
-                                <img src="" alt="" />
+            <div className="background-transparent">
+                <div className="home-container">
+                    <NavBar user_info={objectUser} />
+                    <main>
+                        <section className="left-container">
+                            <div className="user-identity">
+                                <div className="user-picture">
+                                    <img src={objectUser.profil_pic} alt="" />
+                                </div>
+                                <div className="user-name-container">
+                                    <h4>{objectUser.first_name}, {objectUser.last_name}</h4>
+                                    <p>{objectUser.email}</p>
+                                </div>
                             </div>
-                            <div className="profil-content">
-                                <h2>Zeus, dieu des dieux</h2>
-                                <p>zeus@gmail.com</p>
+                            <div className="likes-container">
+                                <div className="likes-header">
+                                    <FontAwesomeIcon icon={ faHeart } />
+                                    <span>Vos derniers likes</span>
+                                </div>
+                                <div className="title-line">
+                                    <div className="purple-line"></div>
+                                </div>
+                                <ul className="likes-list">
+
+                                </ul>
                             </div>
-                        </div>
-                        <div className="params-box">
-                            
-                        </div>
-                        <div className="likes-box">
-                            <div className="likes-title">
-                                <i></i>
-                                <h3>Vos likes</h3>
-                            </div>
-                            <div className="messages-liked-box">
-                                <p className="messages-liked"></p>
-                                <p className="messages-liked"></p>
-                                <p className="messages-liked"></p>
-                            </div>
-                        </div>
-                    </section>
-                    <section className="stories-posts">
-                        <div className="stories"></div>
-                        <div className="new-post"></div>
-                        <div className="friends-posts"></div>
-                    </section>
-                    <section className="online-friends">
-                        <div className="connected-friends"></div>
-                    </section>
-                </main>
+                        </section>
+                        <section className="middle-container">
+                            <div className="last-pictures"></div>
+                            <div className="input-area"></div>
+                            <div className="news-feed"></div>
+                        </section>
+                        <section className="right-container">
+                            <div className="friends"></div>
+                        </section>
+                    </main>
+                </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default Home;
