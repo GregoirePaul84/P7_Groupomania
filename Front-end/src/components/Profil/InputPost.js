@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage, faPaperPlane} from '@fortawesome/free-solid-svg-icons'
 import { faCamera} from '@fortawesome/free-solid-svg-icons'
@@ -15,19 +15,6 @@ const Posts = (props) => {
 
     const [file, setFile] = useState(false);
     console.log(file);
-
-    if(file !== false) {
-        const selectIcon = document.querySelector('.fa-image path');
-        console.log(selectIcon);
-        selectIcon.style.color = '#8D76FF';
-        
-    }
-
-    function removeColorIcon() {
-        const selectIcon = document.querySelector('.fa-image path');
-        console.log(selectIcon);
-        selectIcon.style.color = 'inherit';
-    }
     
     const dispatch = useDispatch();
 
@@ -54,8 +41,21 @@ const Posts = (props) => {
             .then(() => document.querySelector('.input-file').value = '')
             .then(() => dispatch(getUserPosts(userId)));
             setFile(false);
-            removeColorIcon();
+            // removeColorIcon();
     }
+
+    useEffect(() => {
+        if (file) {
+            const selectIcon = document.querySelector('.input-box path');
+            selectIcon.style.color = '#8D76FF';
+        }
+        else if (file === false) {
+            const selectIcon = document.querySelector('.input-box path');
+            selectIcon.style.color = 'inherit';
+            document.querySelector('.input-file').value = '';
+        }
+
+    }, [file])
 
     return (
         <section className='main-section-profil'>
@@ -79,6 +79,7 @@ const Posts = (props) => {
                             onChange={(e) => setFile(e.target.files[0])} />
                     <FontAwesomeIcon icon={ faPaperPlane } onClick={writePost}/>
                 </form>
+                { (file) ? <button onClick={(e) => setFile(false)}>Annuler l'image</button> : null}
             </div>
             <div className="posts">
                 <div className="posts-title-box">

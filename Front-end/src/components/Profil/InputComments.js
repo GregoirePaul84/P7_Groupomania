@@ -50,6 +50,7 @@ const InputComments = (props) => {
         else if (file === false) {
             const selectIcon = document.querySelector(`.input-post_id${postId} path`);
             selectIcon.style.color = 'inherit';
+            document.querySelector(`.input-post_id${postId} .input-file-comment`).value = '';
         }
     // eslint-disable-next-line
     }, [file])
@@ -77,6 +78,7 @@ const InputComments = (props) => {
                             onChange={(e) => setFile(e.target.files[0])} />
                         <FontAwesomeIcon icon={ faComment } onClick={writeComment} />
                     </div>
+                    { (file) ? <button onClick={(e) => setFile(false)}>Annuler l'image</button> : null}
                 </div>
             </div>
         </div>

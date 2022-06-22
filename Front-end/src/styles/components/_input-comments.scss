@@ -85,5 +85,15 @@
                 }
             }
         }
+
+        button {
+            font-size: 0.9em;
+            background-color: hsl(251deg, 9%, 23%);
+            text-align: center;
+            padding: 4px 2px;
+            border: 1px solid hsl(250deg 100% 73%);
+            cursor: pointer;
+            border-radius: 20px;
+        }
     }
 }
