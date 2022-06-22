@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch } from 'react-redux';
+import { getAllLikes } from '../../actions/user.actions';
 
 const LeftSection = ({user_info}) => {
+    const userId = user_info.user_id;
+    console.log(userId);
 
-    console.log(user_info);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getAllLikes(userId));
+    }, [userId, dispatch]);
+
     return (
         <section className="left-container">
                             <div className="user-identity">

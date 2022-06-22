@@ -6,6 +6,7 @@ export const GET_USER_POSTS = "GET_USER_POSTS";
 export const UPLOAD_PROFIL = "UPLOAD_PROFIL";
 export const DELETE_USER = "DELETE_USER";
 export const CHANGE_PASSWORD = "CHANGE_PASSWORD";
+export const GET_ALL_LIKES = "GET_ALL_LIKES";
 
 export const getAllUsers = () => {
 
@@ -130,6 +131,34 @@ export const changePassword = (password, userId) => {
             dispatch({
                 type: CHANGE_PASSWORD,
                 payload: res.data.password
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export const getAllLikes = (userId) => {
+
+    // Envoi au reducer pour stocker dans le store de Redux
+    return async (dispatch) => {
+
+        try {
+            
+            if (isNaN(userId)) {
+                return;
+            }
+
+            const res = await axios({
+                method: "get",
+                url: `${process.env.REACT_APP_API_URL}api/user/likes/${userId}`,
+                withCredentials: true,
+            });
+
+            dispatch({
+                type: GET_ALL_LIKES,
+                payload: res.data
             });
             
         } catch (error) {
