@@ -1,8 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import NavBar from '../components/Profil/NavBar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import LeftSection from '../components/Home/LeftSection';
 
 
 const Home = () => {
@@ -14,35 +13,14 @@ const Home = () => {
         objectUser = userData.results[0];
     }
 
+
     return(
         <div className="home-page">
             <div className="background-transparent">
                 <div className="home-container">
                     <NavBar user_info={objectUser} />
                     <main>
-                        <section className="left-container">
-                            <div className="user-identity">
-                                <div className="user-picture">
-                                    <img src={objectUser.profil_pic} alt="" />
-                                </div>
-                                <div className="user-name-container">
-                                    <h4>{objectUser.first_name}, {objectUser.last_name}</h4>
-                                    <p>{objectUser.email}</p>
-                                </div>
-                            </div>
-                            <div className="likes-container">
-                                <div className="likes-header">
-                                    <FontAwesomeIcon icon={ faHeart } />
-                                    <span>Vos derniers likes</span>
-                                </div>
-                                <div className="title-line">
-                                    <div className="purple-line"></div>
-                                </div>
-                                <ul className="likes-list">
-
-                                </ul>
-                            </div>
-                        </section>
+                        <LeftSection user_info={objectUser}/>
                         <section className="middle-container">
                             <div className="last-pictures"></div>
                             <div className="input-area"></div>
