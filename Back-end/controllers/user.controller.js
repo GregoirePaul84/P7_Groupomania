@@ -193,3 +193,21 @@ module.exports.readAllLikes = (req, res) => {
         } 
     });
 }
+
+// ********** Récupération de toutes les images ********** //
+
+module.exports.readAllPictures = (req, res) => {
+    
+    const sqlGetAllPics = `SELECT * FROM post_image`; 
+
+    mySqlConnection.query(sqlGetAllPics, (error, results) => {
+        
+        if (results) {
+            res.status(200).json( {results} );
+        }
+
+        else {
+            res.status(404).json( {error} )
+        } 
+    });
+}

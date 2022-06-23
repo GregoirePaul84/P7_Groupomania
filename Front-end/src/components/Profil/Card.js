@@ -15,7 +15,6 @@ const Card = ({post}) => {
     const userId = post.user_id;
     const isoDate = post.created;
     const postText = post.text;
-    console.log(postText);
     
     const dispatch = useDispatch();
 
@@ -25,12 +24,10 @@ const Card = ({post}) => {
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
     const [showPicture, setShowPicture] = useState(false);
-
-
+    console.log(greenActive);
 
     const userData = useSelector((state) => state.userReducer);
     const commentsData = useSelector((state) => state.commentsReducer);
-    
 
     let objectUser = {};
     objectUser = userData.results[0];
@@ -39,7 +36,6 @@ const Card = ({post}) => {
     const numberOfComments = post.comments_number;
     const numberOfLikes = post.like_number;
     const numberOfDislikes = post.dislike_number;
-
 
     const updateItem = () => {
         if(textUpdate) {
@@ -76,9 +72,11 @@ const Card = ({post}) => {
 
     // eslint-disable-next-line
     const toggleLike = () => {
+
         setGreenActive(!greenActive);
         
         if (greenActive === true) {
+            
             addLike();
             console.log(greenActive);
             const selectElt = document.querySelector(`.post_id-green${postId}`);
@@ -94,10 +92,10 @@ const Card = ({post}) => {
             if (selectContainer.classList.contains('active-red')) {
                 toggleDislike();
             }
-
         }
 
         else if (greenActive === false) {
+
             removeLike();
             console.log(greenActive);
             const selectElt = document.querySelector(`.post_id-green${postId}`);
@@ -107,7 +105,7 @@ const Card = ({post}) => {
             const likesArray = JSON.parse(localStorage.getItem('greenActive'));
             const index = likesArray.indexOf(`.post_id-green${postId}`);
             if (index >= 0) {
-            likesArray.splice( index, 1 );
+                likesArray.splice( index, 1 );
             }
             localStorage.setItem('greenActive', JSON.stringify(likesArray));
         }
@@ -241,8 +239,7 @@ const Card = ({post}) => {
         }
 
     // eslint-disable-next-line
-    }, [showPicture])
-
+    }, [showPicture]);
 
     if (commentsArray === undefined) {
         return;
@@ -305,7 +302,6 @@ const Card = ({post}) => {
         {/* eslint-disable-next-line */}
         <div className={"input-comments-container " + "input-post_id" + postId}>
             <InputComments postId={postId} infoUser={objectUser} userId={userId}/>
-            {/* eslint-disable-next-line */}
             {commentsArray.map((comment) => {
                 if (comment.post_id === postId) {
                     
@@ -324,6 +320,9 @@ const Card = ({post}) => {
                                 key={comment.comment_id} />
                         </div>
                     )
+                }
+                else {
+                    return (null);
                 }
             })}
         </div>

@@ -29,4 +29,5 @@ router.delete('/:id', auth, userCtlr.deleteUser);
 // Récupérer tous les likes
 router.get('/likes/:id', auth, userCtlr.readAllLikes);
 
+
 module.exports = router;

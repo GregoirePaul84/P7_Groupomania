@@ -36,4 +36,7 @@ router.delete('/like/:id', auth, postCtlr.deleteLikesPost);
 // Supprimer les dislikes d'un post
 router.delete('/dislike/:id', auth, postCtlr.deleteDislikesPost);
 
+// Récupérer toutes les images post
+router.get('/pictures/all', auth, postCtlr.readAllPics);
+
 module.exports = router;

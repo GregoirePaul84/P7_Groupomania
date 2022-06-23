@@ -44,11 +44,10 @@ module.exports.readOnePost = (req, res) => {
 
     mySqlConnection.query( sqlGetOnePost, (error, results) => {
         if (!error) {
-            
-            res.status(200).json( {results} )
+            res.status(200).json( {results} );
         }
         else {
-            res.status(500).json( {error} )
+            res.status(500).json( {error} );
         }
     });
 };
@@ -390,3 +389,19 @@ module.exports.cancelLikeDislike = (req, res) => {
         });
     }
 }
+
+
+// ********** Récupération de toutes les images post ********** //
+
+module.exports.readAllPics = (req, res) => {
+    
+    const sqlGetAllPics = `SELECT * FROM post_image`;
+    mySqlConnection.query( sqlGetAllPics, (error, results) => {
+        if (!error) {
+            res.status(200).json( {results} )
+        }
+        else {
+            res.status(500).json( {error} )
+        }
+    });  
+};

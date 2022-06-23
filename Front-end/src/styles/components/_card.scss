@@ -178,12 +178,12 @@
                 width: 18px;
                 height: 18px;
                 &:hover {
-                    color:rgb(0, 216, 0);
+                    color:hsl(120deg 70% 50%);
                 }
             }
 
             .active-green path{
-                color:rgb(0, 216, 0);
+                color:hsl(120deg 70% 50%);
             }
             
             .thumbs-down path {
@@ -203,7 +203,7 @@
             }
 
             .post-like {
-                color: rgb(0, 216, 0);
+                color: hsl(120deg 70% 50%);
             }
             .post-dislike {
                 color: rgb(255, 30, 30);

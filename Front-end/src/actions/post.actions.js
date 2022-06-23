@@ -10,6 +10,7 @@ export const LIKE_POST = "LIKE_POST";
 export const CANCEL_LIKE_POST = "CANCEL_LIKE_POST";
 export const DISLIKE_POST = "DISLIKE_POST";
 export const CANCEL_DISLIKE_POST = "CANCEL_DISLIKE_POST";
+export const GET_PICTURES_POST = "GET_PICTURES_POST";
 
 export const sendPost = (data) => {
     console.log(...data);
@@ -264,6 +265,29 @@ export const cancelDislikePost = (postId) => {
                 payload: res.data
             });
 
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+
+export const getPicturesPost = () => {
+    
+    return async (dispatch) => {
+        try {
+           
+            const res = await axios({
+                method: "get",
+                url: `${process.env.REACT_APP_API_URL}api/post/pictures/all/`,
+                withCredentials: true,
+            });
+            
+            dispatch({
+                type: GET_PICTURES_POST,
+                payload: res.data
+            });
+            
         } catch (error) {
             console.log(error);
         }

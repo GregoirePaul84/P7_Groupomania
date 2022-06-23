@@ -14,7 +14,6 @@ const Posts = (props) => {
     const userId = objectUser.user_id;
 
     const [file, setFile] = useState(false);
-    console.log(file);
     
     const dispatch = useDispatch();
 

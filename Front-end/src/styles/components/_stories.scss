@@ -1,0 +1,19 @@
+.stories {
+    height: 25%;
+    width: 90%;
+    background-color: #222029;
+    border-radius: 20px;
+    display: flex;
+
+    .picture-container {
+        height: 100%;
+        width: 100px;
+
+        img {
+            height: 100%;
+            width: 100%;
+            border-radius: 20px;
+            padding: 5px;
+        }
+    }
+}

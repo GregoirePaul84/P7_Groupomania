@@ -1,7 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import NavBar from '../components/Profil/NavBar';
 import LeftSection from '../components/Home/LeftSection';
+import MiddleSection from '../components/Home/MiddleSection';
+import RightSection from '../components/Home/RightSection';
+import NavBarHome from '../components/Home/NavBarHome';
 
 
 const Home = () => {
@@ -18,17 +20,11 @@ const Home = () => {
         <div className="home-page">
             <div className="background-transparent">
                 <div className="home-container">
-                    <NavBar user_info={objectUser} />
+                    <NavBarHome user_info={objectUser} />
                     <main>
                         <LeftSection user_info={objectUser}/>
-                        <section className="middle-container">
-                            <div className="last-pictures"></div>
-                            <div className="input-area"></div>
-                            <div className="news-feed"></div>
-                        </section>
-                        <section className="right-container">
-                            <div className="friends"></div>
-                        </section>
+                        <MiddleSection />
+                        <RightSection />
                     </main>
                 </div>
             </div>
