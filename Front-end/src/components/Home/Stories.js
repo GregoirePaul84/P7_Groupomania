@@ -9,20 +9,17 @@ const Stories = () => {
     useEffect(() => {
 
         dispatch(getPicturesPost());
-    }, []);
+    }, [dispatch]);
 
     const picturesData = useSelector((state) => state.postReducer);
     let picturesObject = {};
 
     if (Object.keys(picturesData).length !== 0) {
         picturesObject = picturesData.results;
-        console.log(picturesObject);
     }
     else {
         return;
     }
-
-    console.log(picturesData);
 
     return (
         <div className="stories">
@@ -31,7 +28,7 @@ const Stories = () => {
                     picturesObject = picturesData.results;
                     return (
                         <div key={key.post_image_id} className="picture-container">
-                            <img src={key.image_url} alt="" />
+                            <img src={key.image_url} alt="dernières photos postées" />
                         </div>)   
                 }
                 else {

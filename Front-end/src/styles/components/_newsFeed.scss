@@ -1,0 +1,16 @@
+.news-feed {
+    height: 55%;
+    width: 90%;
+    background-color: #222029;
+    border-radius: 20px;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+        width: 0px;
+        background: transparent; 
+    }
+
+    .card-container {
+        min-width: auto;
+        margin: 1em;
+    }
+}

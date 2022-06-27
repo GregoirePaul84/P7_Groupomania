@@ -1,0 +1,45 @@
+.friends {
+    height: 100%;
+    width: 100%;
+    background-color: #222029;
+    border-radius: 20px;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+        width: 0px;
+        background: transparent; 
+    }
+
+    li {
+        padding: 1em;
+    }
+
+    .friends-line {
+        display: flex;
+        justify-content: center;
+        .purple-line {
+            margin: 0;
+            width: 90%;
+        }
+    }
+    
+}
+
+.user-description-container {
+    display: flex;
+
+    .user-picture {
+        width: 75px;
+        height: 75px;
+        margin-right: 15px;
+
+        img {
+            width: 75px;
+            height: 100%;
+            border-radius: 50%;
+        }
+    }
+
+    h4 {
+        margin-bottom: 15px;
+    }
+}

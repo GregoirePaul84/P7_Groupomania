@@ -1,16 +1,16 @@
 import React from 'react';
+import InputHome from './InputHome';
+import NewsFeed from './NewsFeed';
 import Stories from './Stories';
 
-const MiddleSection = () => {
+const MiddleSection = ({user_info}) => {
+    const objectUser = user_info;
+
     return (
         <section className="middle-container">
             <Stories />
-            <div className="input-area">
-
-            </div>
-            <div className="news-feed">
-                
-            </div>
+            <InputHome user_info={objectUser}/>
+            <NewsFeed />
         </section>
     );
 };

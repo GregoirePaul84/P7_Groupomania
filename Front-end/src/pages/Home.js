@@ -23,7 +23,7 @@ const Home = () => {
                     <NavBarHome user_info={objectUser} />
                     <main>
                         <LeftSection user_info={objectUser}/>
-                        <MiddleSection />
+                        <MiddleSection user_info={objectUser}/>
                         <RightSection />
                     </main>
                 </div>

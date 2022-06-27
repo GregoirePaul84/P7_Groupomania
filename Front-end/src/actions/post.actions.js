@@ -1,5 +1,6 @@
 import axios from "axios";
 
+export const GET_ALL_POSTS = "GET_ALL_POSTS";
 export const SEND_POST = "SEND_POST";
 export const UPDATE_POST = "UPDATE_POST";
 export const DELETE_POST = "DELETE_POST";
@@ -12,8 +13,30 @@ export const DISLIKE_POST = "DISLIKE_POST";
 export const CANCEL_DISLIKE_POST = "CANCEL_DISLIKE_POST";
 export const GET_PICTURES_POST = "GET_PICTURES_POST";
 
+
+export const getAllPosts = () => {
+    
+    return async (dispatch) => {
+        try {
+           
+            const res = await axios({
+                method: "get",
+                url: `${process.env.REACT_APP_API_URL}api/post`,
+                withCredentials: true,
+            });
+            
+            dispatch({
+                type: GET_ALL_POSTS,
+                payload: res.data
+            });
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
 export const sendPost = (data) => {
-    console.log(...data);
 
     return async (dispatch) => {
 

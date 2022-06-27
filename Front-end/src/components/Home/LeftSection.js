@@ -15,13 +15,12 @@ const LeftSection = ({user_info}) => {
         dispatch(getAllLikes(userId));
     }, [userId, dispatch]);
 
-    const dataResults = useSelector((state) => state.userAllReducer);
+    const dataResults = useSelector((state) => state.allLikesReducer);
 
     let likesObject = {};
 
     if (Object.keys(dataResults).length !== 0) {
-        likesObject = dataResults.likes.results;
-        console.log(likesObject);
+        likesObject = dataResults.results;
     }
     else {
         return;
@@ -50,23 +49,18 @@ const LeftSection = ({user_info}) => {
                                     {likesObject.map((key) => {
                                         if (Object.keys(likesObject).length !== 0) {
                                             
-                                            likesObject = dataResults.likes.results;
+                                            likesObject = dataResults.results;
                                         
                                             return (
                                                 
                                                 <li key={key.likes_id}>
-                                                    <div className="liked-post-user">
-                                                        <div className="user-picture">
-                                                            <img src={user_info.profil_pic} alt="" />
-                                                        </div>
-                                                        <div className="username">
-                                                            <h4>Nom, prénom</h4>
-                                                        </div>
-                                                    </div>
                                                     <div className="liked-post-text">
                                                         <div className="date-liked">
                                                             <FontAwesomeIcon icon={ faThumbsUp } />
                                                             <span>{convertTime(key.created)}</span>
+                                                        </div>
+                                                        <div className="title-line">
+                                                            <div className="purple-line"></div>
                                                         </div>
                                                         <div className="text-post">
                                                             "{key.text_post}"

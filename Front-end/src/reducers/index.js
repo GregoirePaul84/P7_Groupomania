@@ -4,6 +4,8 @@ import userAllReducer from "./user_all.reducer";
 import userPostReducer from "./user_posts.reducer";
 import postReducer from "./post.reducer";
 import commentsReducer from "./comment.reducer";
+import allPostsReducer from "./all_posts.reducer";
+import allLikesReducer from "./all_likes.reducer";
 
 // On combine tous les reducers et on les envoie vers le store
 export default combineReducers({
@@ -12,4 +14,6 @@ export default combineReducers({
     userPostReducer,
     postReducer,
     commentsReducer,
+    allPostsReducer,
+    allLikesReducer,
 })
