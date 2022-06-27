@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../../actions/user.actions';
+import { NavLink } from 'react-router-dom';
+
 
 const Friends = () => {
 
@@ -34,7 +36,9 @@ const Friends = () => {
                         <li key={key.user_id}>
                             <div className="user-description-container">
                                 <div className="user-picture">
-                                    <img src={key.profil_pic} alt="" />
+                                    <NavLink to={`/profil/${key.user_id}`}>
+                                        <img src={key.profil_pic} alt={`${key.first_name}`}/>
+                                    </NavLink>
                                 </div>
                                 <div className="user-name">
                                     <h4>{key.first_name}, {key.last_name}</h4>

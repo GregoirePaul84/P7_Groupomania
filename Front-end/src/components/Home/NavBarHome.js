@@ -14,6 +14,7 @@ const NavBarHome = (props) => {
     }
 
     const objectUser = props.user_info;
+    console.log(objectUser);
 
     return (
         <header className='home-header'>
