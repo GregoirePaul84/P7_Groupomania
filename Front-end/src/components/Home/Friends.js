@@ -30,26 +30,26 @@ const Friends = () => {
         <ul className="friends">
              {usersObject.map((key) => {
                 if (Object.keys(usersObject).length !== 0) {     
-                    
+
                     return (
-                        <>
-                        <li key={key.user_id}>
-                            <div className="user-description-container">
-                                <div className="user-picture">
-                                    <NavLink to={`/profil/${key.user_id}`}>
-                                        <img src={key.profil_pic} alt={`${key.first_name}`}/>
-                                    </NavLink>
+                        <React.Fragment key={key.user_id}>
+                            <li>
+                                <div className="user-description-container">
+                                    <div className="user-picture">
+                                        <NavLink to={`/profil/${key.user_id}`}>
+                                            <img src={key.profil_pic} alt={`${key.first_name}`}/>
+                                        </NavLink>
+                                    </div>
+                                    <div className="user-name">
+                                        <h4>{key.first_name}, {key.last_name}</h4>
+                                        <p>{key.email}</p>
+                                    </div>
                                 </div>
-                                <div className="user-name">
-                                    <h4>{key.first_name}, {key.last_name}</h4>
-                                    <p>{key.email}</p>
-                                </div>
+                            </li>
+                            <div className="friends-line" >
+                                <div className="purple-line"></div>
                             </div>
-                        </li>
-                        <div className="friends-line">
-                            <div className="purple-line"></div>
-                        </div>
-                        </>
+                        </ React.Fragment>
                     )   
                 }
                 else {

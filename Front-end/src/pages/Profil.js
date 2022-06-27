@@ -5,6 +5,7 @@ import InputPost from '../components/Profil/InputPost';
 import UserDescription from '../components/Profil/UserDescription';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../actions/user.actions';
+import InputFriend from '../components/Profil/FriendPosts';
 
 const Profil = () => {
 
@@ -25,7 +26,7 @@ const Profil = () => {
 
     useEffect(() => {
         dispatch(getUser(userId))
-    }, [])
+    }, [dispatch, userId])
 
     const userData = useSelector((state) => state.userReducer);
     let objectUser = {};
@@ -37,9 +38,8 @@ const Profil = () => {
     console.log(userId);
     console.log(userIdToken);
 
-    {if(userId === userIdToken) {
+    if(userId === userIdToken) {
         return (
-
             <div className="profil-page">
                 <div className="background-transparent">
                     <div className="profil-container">
@@ -48,9 +48,8 @@ const Profil = () => {
                         <InputPost user_info={objectUser}/>
                     </div>
                 </div>
-            </div>
-            
-        );    
+            </div>      
+        )  
     }
     else {
         return (
@@ -59,14 +58,12 @@ const Profil = () => {
                     <div className="profil-container">
                         <NavBar user_info={objectUser}/>
                         <UserDescription user_info={objectUser}/>
-                
+                        <InputFriend user_info={objectUser}/>
                     </div>
                 </div>
             </div>
-        );
-    }}
-    
-    
+        )
+    }
 };
 
 export default Profil;
