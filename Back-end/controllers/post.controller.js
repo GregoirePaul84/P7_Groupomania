@@ -257,7 +257,7 @@ module.exports.likeDislikePost = (req, res) => {
                 if (!error) {
 
                     // Incrémentation du like dans la table posts
-                    const sqlInsertPost = `UPDATE posts Set like_number=like_number+1 where post_id=?`;
+                    const sqlInsertPost = `UPDATE posts SET like_number=like_number+1, isLiked=1 WHERE post_id=?`;
                     mySqlConnection.query( sqlInsertPost, userPostId, (error, results) => {
                         if (!error) {
                             res.status(200).json( {message : "Like ajouté !"} );
@@ -296,7 +296,7 @@ module.exports.likeDislikePost = (req, res) => {
                 if (!error) {
 
                     // Incrémentation du dislike dans la table posts
-                    const sqlInsertPost = `UPDATE posts Set dislike_number=dislike_number+1 where post_id=?`;
+                    const sqlInsertPost = `UPDATE posts SET dislike_number=dislike_number+1, isDisliked=1 WHERE post_id=?`;
                     mySqlConnection.query( sqlInsertPost, userPostId, (error, results) => {
                         if (!error) {
                             res.status(200).json( {message : "Dislike ajouté !"} );
@@ -337,7 +337,7 @@ module.exports.cancelLikeDislike = (req, res) => {
                     mySqlConnection.query( sqlCancelLike, postId, (error, results) => {
 
                         if (!error) {
-                            const sqlUpdatePost = `UPDATE posts Set like_number=like_number-1 where post_id=?`;
+                            const sqlUpdatePost = `UPDATE posts SET like_number=like_number-1, isLiked=0 WHERE post_id=?`;
                             mySqlConnection.query( sqlUpdatePost, postId, (error, results) => {
                                 if (!error) {
                                     res.status(200).json( {message : "Like annulé !"} );
@@ -370,7 +370,7 @@ module.exports.cancelLikeDislike = (req, res) => {
                     mySqlConnection.query( sqlCancelLike, postId, (error, results) => {
 
                         if (!error) {
-                            const sqlUpdatePost = `UPDATE posts Set dislike_number=dislike_number-1 where post_id=?`;
+                            const sqlUpdatePost = `UPDATE posts Set dislike_number=dislike_number-1, isDisliked=0 where post_id=?`;
                             mySqlConnection.query( sqlUpdatePost, postId, (error, results) => {
                                 if (!error) {
                                     res.status(200).json( {message : "Dislike annulé !"} );

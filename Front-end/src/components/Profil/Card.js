@@ -15,11 +15,29 @@ const Card = ({post}) => {
     const userId = post.user_id;
     const isoDate = post.created;
     const postText = post.text;
+    let isLiked = post.isLiked;
+    let isDisliked = post.isDisliked;
+
+    if (isLiked === 0) {
+        isLiked = true;
+    }
+    else if (isLiked === 1) {
+        isLiked = false;
+        console.log(isLiked);
+    }
+
+    if (isDisliked === 0) {
+        isDisliked = true;
+    }
+    else if (isDisliked === 1) {
+        isDisliked = false;
+        console.log(isLiked);
+    }
     
     const dispatch = useDispatch();
 
-    const [greenActive, setGreenActive] = useState(true);
-    const [redActive, setRedActive] = useState(true);
+    const [greenActive, setGreenActive] = useState(isLiked);
+    const [redActive, setRedActive] = useState(isDisliked);
     const [visibility, setVisibility] = useState(true);
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
