@@ -4,8 +4,8 @@ import NavBar from '../components/Profil/NavBar';
 import InputPost from '../components/Profil/InputPost';
 import UserDescription from '../components/Profil/UserDescription';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from '../actions/user.actions';
 import InputFriend from '../components/Profil/FriendPosts';
+import { getProfil } from '../actions/profil.actions';
 
 const Profil = () => {
 
@@ -25,10 +25,10 @@ const Profil = () => {
     }
 
     useEffect(() => {
-        dispatch(getUser(userId))
+        dispatch(getProfil(userId))
     }, [dispatch, userId])
 
-    const userData = useSelector((state) => state.userReducer);
+    const userData = useSelector((state) => state.profilReducer);
     let objectUser = {};
 
     if (Object.keys(userData).length !== 0) {

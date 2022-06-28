@@ -6,6 +6,7 @@ import postReducer from "./post.reducer";
 import commentsReducer from "./comment.reducer";
 import allPostsReducer from "./all_posts.reducer";
 import allLikesReducer from "./all_likes.reducer";
+import profilReducer from "./profil.reducer";
 
 // On combine tous les reducers et on les envoie vers le store
 export default combineReducers({
@@ -16,4 +17,5 @@ export default combineReducers({
     commentsReducer,
     allPostsReducer,
     allLikesReducer,
+    profilReducer,
 })

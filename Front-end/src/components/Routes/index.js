@@ -12,6 +12,8 @@ import Profil from '../../pages/Profil';
 import Parameters from '../../pages/Parameters';
 
 const index = () => {
+
+
     return (
         <Router>
             <Routes>
@@ -22,7 +24,7 @@ const index = () => {
                 <Route path="/logout" element={<Register/>} />
 
                 {/* Redirection vers /home si paramètres inconnus */}
-                <Route path="*" element={<Navigate to="/home"/>} />
+                <Route path="*" element={<Navigate to="/register"/>} />
 
             </Routes>
         </Router>
