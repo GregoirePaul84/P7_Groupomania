@@ -20,23 +20,34 @@ const Stories = () => {
     else {
         return;
     }
+    console.log(picturesObject);
 
-    return (
-        <div className="stories">
-            {picturesObject.map((key) => {
-                if (Object.keys(picturesObject).length !== 0) {     
-                    picturesObject = picturesData.results;
-                    return (
-                        <div key={key.post_image_id} className="picture-container">
-                            <img src={key.image_url} alt="dernières photos postées" />
-                        </div>)   
-                }
-                else {
-                    return (null)
-                }
-            })}
-        </div>
-    );
+    if (picturesObject.length !== 0) {
+        return (
+            <div className="stories">
+                {picturesObject.map((key) => {
+                    if (Object.keys(picturesObject).length !== 0) {     
+                        picturesObject = picturesData.results;
+                        return (
+                            <div key={key.post_image_id} className="picture-container">
+                                <img src={key.image_url} alt="dernières photos postées" />
+                            </div>)   
+                    }
+                    else {
+                        return (null)
+                    }
+                })}
+            </div>
+        );
+    }
+    else {
+        return (
+            <div className="no-stories">
+                Aucune image n'a encore été ajoutée !
+            </div>
+        )
+    }
+    
 };
 
 export default Stories;

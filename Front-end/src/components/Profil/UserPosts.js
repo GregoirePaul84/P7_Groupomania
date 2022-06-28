@@ -15,7 +15,6 @@ const UserPosts = (props) => {
   let posts = {};
   posts = useSelector((state) => state.userPostReducer);
   const postsArray = posts.results;
-  console.log(postsArray);
 
   if (loadPostsUser && userId !== undefined) {
     dispatch(getUserPosts(userId));

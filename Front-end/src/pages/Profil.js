@@ -35,15 +35,13 @@ const Profil = () => {
         objectUser = userData.results[0];
     }
 
-    console.log(userId);
-    console.log(userIdToken);
 
     if(userId === userIdToken) {
         return (
             <div className="profil-page">
                 <div className="background-transparent">
                     <div className="profil-container">
-                        <NavBar user_info={objectUser}/>
+                        <NavBar user_info={objectUser} userId={userIdToken}/>
                         <UserDescription user_info={objectUser}/>
                         <InputPost user_info={objectUser}/>
                     </div>
@@ -56,7 +54,7 @@ const Profil = () => {
             <div className="profil-page">
                 <div className="background-transparent">
                     <div className="profil-container">
-                        <NavBar user_info={objectUser}/>
+                        <NavBar user_info={objectUser} userId={userIdToken}/>
                         <UserDescription user_info={objectUser}/>
                         <InputFriend user_info={objectUser}/>
                     </div>

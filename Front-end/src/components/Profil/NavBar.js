@@ -12,8 +12,9 @@ const NavBar = (props) => {
             document.querySelector('.logout-action').style.visibility = "hidden";
           }, 5000);   
     }
-
+    console.log(props.userId);
     const objectUser = props.user_info;
+    const userIdToken = props.userId;
 
     return (
         <header>
@@ -28,7 +29,7 @@ const NavBar = (props) => {
                         </NavLink>
                     </div>
                     <div className="profil">
-                        <NavLink to={`/profil/${objectUser.user_id}`}>
+                        <NavLink to={`/profil/${userIdToken}`}>
                             Profil
                         </NavLink>
                     </div>

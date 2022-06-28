@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faHeartCrack, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllLikes } from '../../actions/user.actions';
 import { convertTime } from '../../App';
@@ -25,7 +25,7 @@ const LeftSection = ({user_info}) => {
     else {
         return;
     }
-
+    console.log(likesObject);
     return (
         <section className="left-container">
                             <div className="user-identity">
@@ -45,14 +45,10 @@ const LeftSection = ({user_info}) => {
                                 <div className="title-line">
                                     <div className="purple-line"></div>
                                 </div>
-                                <ul className="likes-list">
-                                    {likesObject.map((key) => {
-                                        if (Object.keys(likesObject).length !== 0) {
-                                            
-                                            likesObject = dataResults.results;
-                                        
-                                            return (
-                                                
+                                { (likesObject.length !== 0) ?
+                                    <ul className="likes-list">
+                                        {likesObject.map((key) => {                                    
+                                            return (  
                                                 <li key={key.likes_id}>
                                                     <div className="liked-post-text">
                                                         <div className="date-liked">
@@ -66,15 +62,14 @@ const LeftSection = ({user_info}) => {
                                                             "{key.text_post}"
                                                         </div>
                                                     </div>     
-                                                </li>
-                                                
-                                            )   
-                                        }
-                                        else {
-                                            return (null)
-                                        }
-                                    })}
-                                </ul>
+                                                </li> 
+                                            )                         
+                                        })}
+                                    </ul>
+                                : <div className='no-like'>
+                                    <FontAwesomeIcon icon={ faHeartCrack } />
+                                    Vous n'avez encore liké aucun message...
+                                  </div> }
                             </div>
                         </section>
     );

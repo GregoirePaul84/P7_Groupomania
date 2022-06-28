@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useJwt } from "react-jwt";
 import { useDispatch, useSelector } from 'react-redux';
 import NavBar from '../components/Profil/NavBar';
 import UserDescription from '../components/Profil/UserDescription';
@@ -15,6 +16,16 @@ const Settings = () => {
 
     if (Object.keys(userData).length !== 0) {
         objectUser = userData.results[0];
+    }
+
+    // Récupération du cookie et décodage du token pour récupérer l'user Id 
+    const readCookie = document.cookie;
+    const token = readCookie.split('jwt=')[1];
+    const { decodedToken } = useJwt(token);
+    let userIdToken = {};
+
+    if (decodedToken !== null) {
+        userIdToken = decodedToken.userId
     }
 
     const userId = objectUser.user_id;
@@ -101,7 +112,7 @@ const Settings = () => {
         <div className="settings-page">
             <div className="background-transparent">
                 <div className="settings-container">
-                    <NavBar user_info={objectUser} />
+                    <NavBar user_info={objectUser} userId={userIdToken}/>
                     <UserDescription user_info={objectUser} />
                     <section className="main-section-settings">
                         <div className="flex-container">
@@ -169,6 +180,7 @@ const Settings = () => {
                                     <label htmlFor="tel">Téléphone :</label>
                                     <input type="text" 
                                            id='tel' 
+                                           autoComplete='on'
                                            defaultValue={userPhone} 
                                            onChange={(e) => setPhoneNumber(e.target.value)}/>
                                 </div>
@@ -176,12 +188,14 @@ const Settings = () => {
                                     <label htmlFor="password">Changez votre mot de passe :</label>
                                     <input type="password" 
                                            id='password'
+                                           autoComplete="current-password"
                                            onChange={(e) => setPassword(e.target.value)}/>
                                 </div>
                                 <div className="info-container">
                                     <label htmlFor="confirmPassword">Confirmez le mot de passe :</label>
                                     <input type="password" 
                                            id='confirmPassword'
+                                           autoComplete="current-password"
                                            onChange={(event) => setCtrlPassword(event.target.value)}/>
                                 </div>
                             </div>

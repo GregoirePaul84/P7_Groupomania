@@ -23,7 +23,6 @@ const Card = ({post}) => {
     }
     else if (isLiked === 1) {
         isLiked = false;
-        console.log(isLiked);
     }
 
     if (isDisliked === 0) {
@@ -31,7 +30,6 @@ const Card = ({post}) => {
     }
     else if (isDisliked === 1) {
         isDisliked = false;
-        console.log(isLiked);
     }
     
     const dispatch = useDispatch();
@@ -42,7 +40,6 @@ const Card = ({post}) => {
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
     const [showPicture, setShowPicture] = useState(false);
-    console.log(greenActive);
 
     const userData = useSelector((state) => state.userReducer);
     const commentsData = useSelector((state) => state.commentsReducer);
@@ -57,7 +54,6 @@ const Card = ({post}) => {
 
     const updateItem = () => {
         if(textUpdate) {
-            console.log(textUpdate);
             dispatch(updatePost(postId, textUpdate, userId))
                 .then(() => setIsUpdated(false))
                 .then(() => dispatch(getUserPosts(userId)));
@@ -96,7 +92,6 @@ const Card = ({post}) => {
         if (greenActive === true) {
             
             addLike();
-            console.log(greenActive);
             const selectElt = document.querySelector(`.post_id-green${postId}`);
             selectElt.classList.add('active-green');
 
@@ -115,7 +110,6 @@ const Card = ({post}) => {
         else if (greenActive === false) {
 
             removeLike();
-            console.log(greenActive);
             const selectElt = document.querySelector(`.post_id-green${postId}`);
             selectElt.classList.remove('active-green');
 
@@ -169,7 +163,6 @@ const Card = ({post}) => {
     const toggleVisibility = () => {
         
         setVisibility(!visibility);
-        console.log(visibility);
         if (visibility) {
             displayComments(postId);
         }
