@@ -25,7 +25,7 @@ const LeftSection = ({user_info}) => {
     else {
         return;
     }
-    console.log(likesObject);
+    
     return (
         <section className="left-container">
                             <div className="user-identity">

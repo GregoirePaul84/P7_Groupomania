@@ -13,4 +13,21 @@
         min-width: auto;
         margin: 1em;
     }
+
+    .no-post {
+        font-size: 1.2em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2em;
+
+        svg {
+            font-size: 2em;
+            margin-right: 15px;
+            
+            path {
+               color:hsl(0deg 60% 53%);
+            }
+        }
+    }
 }

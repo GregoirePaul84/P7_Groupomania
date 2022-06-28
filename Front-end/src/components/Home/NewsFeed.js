@@ -17,7 +17,9 @@ const NewsFeed = () => {
 
     const allPostsData = useSelector((state) => state.allPostsReducer);
 
-    // const allUsersData = useSelector((state) => state.userAllReducer);
+    const allUsersData = useSelector((state) => state.userAllReducer);
+    const allUsersResults = allUsersData.results;
+    console.log(allUsersResults);
 
     // const [greenActive, setGreenActive] = useState(true);
     // const [redActive, setRedActive] = useState(true);
@@ -37,11 +39,10 @@ const NewsFeed = () => {
 
     return (
         <div className='news-feed'>
-            {postsObject.map((key) => {
-                if (Object.keys(postsObject).length !== 0) {     
-                    
+            { (postsObject.length !== 0) ?
+                postsObject.map((key) => {  
                     return (
-                        <div className="card-container" key={key.post_id}>
+                        <div className="card-container" key={key.post_id}> 
                             <div className="card-smallContainer">
                                 <div className="card-user-picture">
                                     <img alt="utilisateur" />
@@ -59,43 +60,23 @@ const NewsFeed = () => {
                                     <span className="post-date">{convertTime(key.created)}</span>
                                     <div className="post-content">
                                         {isUpdated === false && <div className='message'>{key.text}</div>}
-                                        {/* {isUpdated && (
-                                            <div className="update-post">
-                                                <textarea
-                                                    className="update-content"
-                                                    defaultValue={""}
-                                                    onChange={ (e) => setTextUpdate(e.target.value)}
-                                                />
-                                                <div className="update-button">
-                                                    <button className='btn' onClick={""}>Modifier</button>
-                                                </div>
-                                            </div>
-                                        )} */}
-                                        {/* { (imgUrl) ?  */}
-                                            {/* <div className='picture' onClick={ (e) => setShowPicture(!showPicture)}> */}
-                                                {/* <img src={imgUrl} alt="post utilisateur" /> */}
-                                            {/* </div> */}
-                                            {/* : <div></div>} */}
                                     </div>
                                 </div>
                                 <div className="card-likes-posts">
-                                <FontAwesomeIcon icon={ faMessage } />
-                                {/* { (numberOfComments > 1) ? <span>{numberOfComments} commentaires</span> : <span>{numberOfComments} commentaire</span> } */}
-                                {/* eslint-disable-next-line */}
-                                <FontAwesomeIcon icon={ faThumbsUp } />
-                                {/* { (numberOfLikes > 1) ? <span className="post-like">{numberOfLikes} likes</span> : <span className="post-like">{numberOfLikes} like</span> } */}
-                                {/* eslint-disable-next-line */}
-                                <FontAwesomeIcon icon={ faThumbsDown } />
-                                {/* { (numberOfDislikes > 1) ? <span className="post-dislike">{numberOfDislikes} dislikes</span> : <span className="post-dislike">{numberOfDislikes} dislike</span> } */}
+                                    <FontAwesomeIcon icon={ faMessage } />
+                                    <FontAwesomeIcon icon={ faThumbsUp } />
+                                    <FontAwesomeIcon icon={ faThumbsDown } />
                                 </div>
                             </div>
                         </div>
-                    )   
-                }
-                else {
-                    return (null)
-                }
-            })}
+                    ) 
+                })
+                : <div className='no-post'>
+                    <FontAwesomeIcon icon={ faMessage } />
+                    Aucun utilisateur n'a encore posté...
+                  </div> }
+               
+           
         </div>
     );
 };

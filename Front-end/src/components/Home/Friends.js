@@ -14,12 +14,10 @@ const Friends = () => {
 
     const allUsersData = useSelector((state) => state.userAllReducer);
 
-    console.log(allUsersData);
     let usersObject = {};
 
     if (Object.keys(allUsersData).length !== 0) {
         usersObject = allUsersData.results;
-        console.log(usersObject);
     }
     else {
         return;
