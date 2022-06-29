@@ -3,10 +3,10 @@
 Dernier projet de la formation Openclassrooms, qui consiste à créer un MVP d'un réseau social d'entreprise. Ceci est mon premier projet basé en partie sur React.
 
 *** Back-end ***
-SQL, NodeJS
+- SQL, NodeJS
 
 *** Front-end ***
-React, Redux, VanillaJS, Sass
+- React, Redux, VanillaJS, Sass
 
 ## Installation ##
 
