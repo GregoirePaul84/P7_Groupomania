@@ -104,21 +104,21 @@ const RegisterForm = () => {
       </div>
       <div>
         <label htmlFor="email">Email</label>
-        <input type="text" name="email" id="email" onChange={(event) => setEmail(event.target.value)}/>
+        <input type="text" name="email" id="email" autoComplete='on' onChange={(event) => setEmail(event.target.value)}/>
       </div>
       <div className="email_error">
         
       </div>
       <div>
         <label htmlFor="password">Mot de passe</label>
-        <input type="password" name="password" id="password" onChange={(event) => setPassword(event.target.value)}/>
+        <input type="password" name="password" id="password" autoComplete='new-password' onChange={(event) => setPassword(event.target.value)}/>
       </div>
       <div className="password_error">
        
       </div>
       <div>
         <label htmlFor="password-confirm">Confirmer le mot de passe</label>
-        <input type="password" name="password-confirm" id="password-confirm" onChange={(event) => setCtrlPassword(event.target.value)}/>
+        <input type="password" name="password-confirm" id="password-confirm" autoComplete='new-password' onChange={(event) => setCtrlPassword(event.target.value)}/>
       </div>
       <div className="password_confirm_error">
 

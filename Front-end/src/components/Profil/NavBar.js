@@ -12,7 +12,7 @@ const NavBar = (props) => {
             document.querySelector('.logout-action').style.visibility = "hidden";
           }, 5000);   
     }
-    console.log(props.userId);
+    
     const objectUser = props.user_info;
     const userIdToken = props.userId;
 

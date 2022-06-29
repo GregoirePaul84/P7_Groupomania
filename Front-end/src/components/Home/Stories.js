@@ -39,7 +39,7 @@ const Stories = () => {
         return (
             <div className="no-stories">
                 <FontAwesomeIcon icon={ faImages} />
-                Aucune utilisateur n'a encore posté d'image...
+                Aucun utilisateur n'a encore posté d'image...
             </div>
         )
     }

@@ -61,12 +61,12 @@ const LoginForm = () => {
     return (
         <form action="" onSubmit={handleLogin} id="login-form">
             <label htmlFor="email">Email</label>
-            <input type="text" name="email" id="email" onChange={(event) => setEmail(event.target.value)} />
+            <input type="text" name="email" id="email" autoComplete='on' onChange={(event) => setEmail(event.target.value)} />
             <div className="email_error">
               {/* Merci d'inquer votre email */}
             </div>
             <label htmlFor="password">Mot de passe</label>
-            <input type="password" name="password" id="password" onChange={(event) => setPassword(event.target.value)} />
+            <input type="password" name="password" id="password" autoComplete='current-password' onChange={(event) => setPassword(event.target.value)} />
             <div className="password_error">
               {/* Merci d'indiquer votre mot de passe || Mot de passe incorrect */}
             </div>

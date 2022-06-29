@@ -22,8 +22,6 @@ const Posts = (props) => {
         const text = document.querySelector('.input-send-post').value;
         const data = new FormData();
 
-        console.log(text);
-
         if (text.length === 0 && file === false) {
             alert("Veuillez écrire quelque chose ou envoyez une image");
             return;

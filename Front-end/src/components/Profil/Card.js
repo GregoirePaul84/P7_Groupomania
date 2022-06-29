@@ -209,8 +209,8 @@ const Card = ({post}) => {
     useEffect(() => {
         dispatch(getUserPosts(userId));
         dispatch(getComments());
-
-    }, [dispatch, userId])
+    // eslint-disable-next-line
+    }, [])
 
     useEffect(() => {
         if(showPicture) {

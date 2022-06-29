@@ -6,8 +6,6 @@ import { faAddressBook} from '@fortawesome/free-solid-svg-icons'
 const FriendPosts = (props) => {
 
     const objectUser = props.user_info;
-    console.log(objectUser);
-    // const userId = objectUser.user_id;
 
     return (
         <section className='main-section-profil'>
