@@ -25,12 +25,10 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
 
     // Arrêt de la fonction si les props n'ont pas été reçues
     if (postsObject === undefined || allUsersResults === undefined || elt === undefined) return;
-    
-    let imgUrl = null;
+
+    console.log(postsObject);
 
     for (let i in postsObject) {
-
-        imgUrl = postsObject[i].image_url;
 
         // On récupère les infos utilisateurs dont l'userID est présente dans les posts
         const filterUsersPosts = (allUsersResults.filter((elt) => elt.user_id === postsObject[i].user_id));
@@ -49,11 +47,11 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     }
     
     const updateItem = () => {
-        if(textUpdate) {
-            // dispatch(updatePost(postId, textUpdate, userId))
-            //     .then(() => setIsUpdated(false))
-            //     .then(() => dispatch(getUserPosts(userId)));
-        }
+        // if(textUpdate) {
+        //     dispatch(updatePost(postId, textUpdate, userId))
+        //         .then(() => setIsUpdated(false))
+        //         .then(() => dispatch(getUserPosts(userId)));
+        // }
     }
 
     return (
@@ -92,11 +90,11 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                         </div>
                         )}
                     </div>
-                    {/* { (imgUrl) ? 
+                    { (elt.image_url !== null) ? 
                     <div className='picture'>
-                        <img src={imgUrl} alt="post utilisateur" />
+                        <img src={elt.image_url} alt="post utilisateur" />
                     </div>
-                    : <div></div>} */}
+                    : <div></div>}
                 </div>
                 <div className="card-likes-posts">
                     <FontAwesomeIcon icon={ faMessage } />
