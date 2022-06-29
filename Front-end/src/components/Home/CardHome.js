@@ -15,27 +15,30 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     console.log(allUsersResults);
     console.log(elt);
 
-        let imgUrl = null;
+    // Arrêt de la fonction si les props n'ont pas été reçues
+    if (postsObject === undefined || allUsersResults === undefined || elt === undefined) return;
+    
+    let imgUrl = null;
 
-        for (let i in postsObject) {
+    for (let i in postsObject) {
 
-            imgUrl = postsObject[i].image_url;
+        imgUrl = postsObject[i].image_url;
 
-            // On récupère les infos utilisateurs dont l'userID est présente dans les posts
-            const filterUsersPosts = (allUsersResults.filter((elt) => elt.user_id === postsObject[i].user_id));
-            const postId = postsObject[i].post_id;
-            const selectCards = document.querySelector(`.post_id${postId}`);
-            if (selectCards !== null) {
-                const selectImg = selectCards.querySelector('.profil-pic');
-                selectImg.setAttribute('src', `${filterUsersPosts[0].profil_pic}`);
+        // On récupère les infos utilisateurs dont l'userID est présente dans les posts
+        const filterUsersPosts = (allUsersResults.filter((elt) => elt.user_id === postsObject[i].user_id));
+        const postId = postsObject[i].post_id;
+        const selectCards = document.querySelector(`.post_id${postId}`);
+        if (selectCards !== null) {
+            const selectImg = selectCards.querySelector('.profil-pic');
+            selectImg.setAttribute('src', `${filterUsersPosts[0].profil_pic}`);
 
-                const selectH3 = selectCards.querySelector('.user-name');
-                selectH3.textContent = `${filterUsersPosts[0].first_name}, ${filterUsersPosts[0].last_name}`;
+            const selectH3 = selectCards.querySelector('.user-name');
+            selectH3.textContent = `${filterUsersPosts[0].first_name}, ${filterUsersPosts[0].last_name}`;
 
-                const selectEmail = selectCards.querySelector('.email');
-                selectEmail.textContent = `${filterUsersPosts[0].email}`;
-            }
+            const selectEmail = selectCards.querySelector('.email');
+            selectEmail.textContent = `${filterUsersPosts[0].email}`;
         }
+    }
     
 
     const updateItem = () => {
