@@ -33,7 +33,7 @@ const NewsFeed = () => {
             { (postsObject.length !== 0) ?
                 postsObject.map((elt) => {
                     return (
-                        <CardHome postsObject={postsObject} allUsersResults={allUsersResults} key={elt.post_id} elt={elt}/>
+                        <CardHome postsObject={postsObject} allUsersResults={allUsersResults} key={elt.post_id} elt={elt} />
                     )
                 })
                 : <div className='no-post'>

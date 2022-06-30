@@ -10,6 +10,7 @@ const Friends = () => {
 
     useEffect(() => {
         dispatch(getAllUsers());
+    // eslint-disable-next-line
     }, []);
 
     const allUsersData = useSelector((state) => state.userAllReducer);

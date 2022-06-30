@@ -4,14 +4,32 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faThumbsUp, faMessage, faThumbsDown, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
 import { convertTime } from '../../App';
 import { getAllPosts, updatePost } from '../../actions/post.actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import InputComments from '../Profil/InputComments';
+
 
 const CardHome = ({postsObject, allUsersResults, elt}) => {
 
     const dispatch = useDispatch;
 
+    const [visibility, setVisibility] = useState(true);
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
+
+    // const toggleVisibility = (elt) => {
+        
+    //     const postId = elt.post_id;
+
+    //     setVisibility(!visibility);
+    //     if (visibility) {
+    //         console.log(visibility);
+    //         // displayComments(postId);
+    //     }
+    //     else {
+    //         console.log(visibility);
+    //         // hideComments(postId);
+    //     }
+    // }
 
     const updateItem = (elt) => {
         console.log(elt.post_id);
@@ -34,6 +52,11 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     if (decodedToken !== null) {
         userId = decodedToken.userId
     }
+
+    const userData = useSelector((state) => state.userReducer);
+    const userDataResults = userData.results;
+    if(userDataResults === undefined) return;
+    const objectUser = userDataResults[0];
 
     // Arrêt de la fonction si les props n'ont pas été reçues
     if (postsObject === undefined || allUsersResults === undefined || elt === undefined) return;
@@ -59,57 +82,85 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
 
     
     return (
-        <div className={`card-container post_id${elt.post_id}`} key={elt.post_id}> 
-            <div className="card-smallContainer">
-                <div className="card-user-picture">
-                    <img alt="utilisateur" src={""} className="profil-pic"/>
-                </div>
-                <div className="card-name-user">
-                    <h3 className='user-name'>{"userName"}</h3>
-                    <p className='email'></p>
-                </div>
-                {/* Si le token décodé est égal à l'userId du post, on permet la modification / suppression */}
-                { (userId === elt.user_id) ? 
-                <div className="modify-delete">
-                    <FontAwesomeIcon icon={faPen} onClick={() => setIsUpdated(!isUpdated)}/>
-                    <FontAwesomeIcon icon={faTrashCan} />
-                </div>
-                : null
-                }
-                <div className="card-message">
-                    <FontAwesomeIcon icon={ faPaperPlane } />
-                    <span className="post-date">{convertTime(elt.created)}</span>
-                    <div className="post-content">
-                        {isUpdated === false && <div className='message'>{elt.text}</div>}
-                        {isUpdated && (
-                        <div className="update-post">
-                            <textarea
-                                className="update-content"
-                                defaultValue={elt.text}
-                                onChange={ (e) => setTextUpdate(e.target.value)}
-                            />
-                            <div className="update-button">
-                                <button className='btn' onClick={updateItem(elt)}>Modifier</button>
+        <>
+            <div className={`card-container post_id${elt.post_id}`} key={elt.post_id}> 
+                <div className="card-smallContainer">
+                    <div className="card-user-picture">
+                        <img alt="utilisateur" src={""} className="profil-pic"/>
+                    </div>
+                    <div className="card-name-user">
+                        <h3 className='user-name'>{"userName"}</h3>
+                        <p className='email'></p>
+                    </div>
+                    {/* Si le token décodé est égal à l'userId du post, on permet la modification / suppression */}
+                    { (userId === elt.user_id) ? 
+                    <div className="modify-delete">
+                        <FontAwesomeIcon icon={faPen} onClick={() => setIsUpdated(!isUpdated)}/>
+                        <FontAwesomeIcon icon={faTrashCan} />
+                    </div>
+                    : null
+                    }
+                    <div className="card-message">
+                        <FontAwesomeIcon icon={ faPaperPlane } />
+                        <span className="post-date">{convertTime(elt.created)}</span>
+                        <div className="post-content">
+                            {isUpdated === false && <div className='message'>{elt.text}</div>}
+                            {isUpdated && (
+                            <div className="update-post">
+                                <textarea
+                                    className="update-content"
+                                    defaultValue={elt.text}
+                                    onChange={ (e) => setTextUpdate(e.target.value)}
+                                />
+                                <div className="update-button">
+                                    <button className='btn' onClick={updateItem(elt)}>Modifier</button>
+                                </div>
                             </div>
+                            )}
                         </div>
-                        )}
+                        { (elt.image_url !== null) ? 
+                        <div className='picture'>
+                            <img src={elt.image_url} alt="post utilisateur" />
+                        </div>
+                        : <div></div>}
                     </div>
-                    { (elt.image_url !== null) ? 
-                    <div className='picture'>
-                        <img src={elt.image_url} alt="post utilisateur" />
+                    <div className="card-likes-posts">   
+                        <FontAwesomeIcon icon={ faMessage } />
+                        { (elt.comments_number > 1) ? <span>{elt.comments_number} commentaires</span> : <span>{elt.comments_number} commentaire</span> }
+                        <FontAwesomeIcon icon={ faThumbsUp } className={`thumbs-up post_id${elt.post_id}`} />
+                        { (elt.like_number > 1) ? <span>{elt.like_number} likes</span> : <span>{elt.like_number} like</span> }
+                        <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down post_id${elt.post_id}`} />
+                        { (elt.dislike_number > 1) ? <span>{elt.dislike_number} dislikes</span> : <span>{elt.dislike_number} dislike</span> }
                     </div>
-                    : <div></div>}
-                </div>
-                <div className="card-likes-posts">   
-                    <FontAwesomeIcon icon={ faMessage } />
-                    { (elt.comments_number > 1) ? <span>{elt.comments_number} commentaires</span> : <span>{elt.comments_number} commentaire</span> }
-                    <FontAwesomeIcon icon={ faThumbsUp } />
-                    { (elt.like_number > 1) ? <span>{elt.like_number} likes</span> : <span>{elt.like_number} like</span> }
-                    <FontAwesomeIcon icon={ faThumbsDown } />
-                    { (elt.dislike_number > 1) ? <span>{elt.dislike_number} dislikes</span> : <span>{elt.dislike_number} dislike</span> }
                 </div>
             </div>
-        </div>
+            <div className={`input-comments-container input-post_id${elt.post_id}`}>
+            <InputComments postId={elt.post_id} infoUser={objectUser} userId={elt.user_id}/>
+            {/* {commentsArray.map((comment) => {
+                if (comment.post_id === postId) {
+                    
+                    return (
+                        // eslint-disable-next-line
+                        <div className={"comments-container " + "post_id" + postId + " comment_id" + comment.comment_id} key={comment.comment_id}> 
+                            <Comments postId={postId} 
+                                comments={commentsArray}
+                                userId={userId}
+                                commentDate={comment.created}
+                                commentText={comment.text}
+                                commentId={comment.comment_id}
+                                imgUrl={comment.image_url}
+                                nbOfLikes={comment.like_number}
+                                nbOfDislikes={comment.dislike_number} 
+                                key={comment.comment_id} />
+                        </div>
+                    )
+                }
+                else {
+                    return (null);
+                }
+            })} */}
+            </div>
+        </>
     );
 };
 
