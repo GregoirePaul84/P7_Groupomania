@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProfil } from '../actions/profil.actions';
 import FriendPosts from '../components/Profil/FriendPosts';
 import { getAllPosts } from '../actions/post.actions';
+import { getUser } from '../actions/user.actions';
+import { getUserPosts } from '../actions/user_posts.actions';
 
 const Profil = () => {
 
@@ -26,9 +28,16 @@ const Profil = () => {
     }
 
     useEffect(() => {
-        dispatch(getProfil(userId))
-        dispatch(getAllPosts());
-    }, [dispatch, userId])
+        if(userId === userIdToken) {
+            console.log('égal');
+            dispatch(getUser(userIdToken));
+            dispatch(getUserPosts(userIdToken));
+        }
+        else {
+            dispatch(getProfil(userId));
+            dispatch(getAllPosts());
+        }
+    }, [dispatch, userId, userIdToken])
 
     const userData = useSelector((state) => state.profilReducer);
 
