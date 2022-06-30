@@ -3,30 +3,40 @@ import { useJwt } from "react-jwt";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faThumbsUp, faMessage, faThumbsDown, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
 import { convertTime } from '../../App';
+import { getAllPosts, updatePost } from '../../actions/post.actions';
+import { useDispatch } from 'react-redux';
 
 const CardHome = ({postsObject, allUsersResults, elt}) => {
 
-    // const [greenActive, setGreenActive] = useState(true);
-    // const [redActive, setRedActive] = useState(true);
-    // const [visibility, setVisibility] = useState(true);
+    const dispatch = useDispatch;
+
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
-    // const [showPicture, setShowPicture] = useState(false);
+
+    const updateItem = (elt) => {
+        console.log(elt.post_id);
+        const postId = elt.post_id;
+        
+        console.log(textUpdate);
+        if(textUpdate) {
+            dispatch(updatePost(postId, textUpdate))
+                .then(() => setIsUpdated(false))
+                .then(() => dispatch(getAllPosts()));
+        }
+    }
     
-    // Récupération du cookie et décodage du token pour récupérer l'user Id 
+    // Récupération du cookie et décodage du token pour récupérer l'userId 
     const readCookie = document.cookie;
     const token = readCookie.split('jwt=')[1];
     const { decodedToken } = useJwt(token);
-    let userIdToken = {};
+    let userId = {};
 
     if (decodedToken !== null) {
-        userIdToken = decodedToken.userId
+        userId = decodedToken.userId
     }
 
     // Arrêt de la fonction si les props n'ont pas été reçues
     if (postsObject === undefined || allUsersResults === undefined || elt === undefined) return;
-
-    console.log(postsObject);
 
     for (let i in postsObject) {
 
@@ -34,6 +44,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
         const filterUsersPosts = (allUsersResults.filter((elt) => elt.user_id === postsObject[i].user_id));
         const postId = postsObject[i].post_id;
         const selectCards = document.querySelector(`.post_id${postId}`);
+        
         if (selectCards !== null) {
             const selectImg = selectCards.querySelector('.profil-pic');
             selectImg.setAttribute('src', `${filterUsersPosts[0].profil_pic}`);
@@ -45,15 +56,8 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             selectEmail.textContent = `${filterUsersPosts[0].email}`;
         }
     }
-    
-    const updateItem = () => {
-        // if(textUpdate) {
-        //     dispatch(updatePost(postId, textUpdate, userId))
-        //         .then(() => setIsUpdated(false))
-        //         .then(() => dispatch(getUserPosts(userId)));
-        // }
-    }
 
+    
     return (
         <div className={`card-container post_id${elt.post_id}`} key={elt.post_id}> 
             <div className="card-smallContainer">
@@ -61,11 +65,11 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                     <img alt="utilisateur" src={""} className="profil-pic"/>
                 </div>
                 <div className="card-name-user">
-                    <h3 className='user-name'></h3>
+                    <h3 className='user-name'>{"userName"}</h3>
                     <p className='email'></p>
                 </div>
                 {/* Si le token décodé est égal à l'userId du post, on permet la modification / suppression */}
-                { (userIdToken === elt.user_id) ? 
+                { (userId === elt.user_id) ? 
                 <div className="modify-delete">
                     <FontAwesomeIcon icon={faPen} onClick={() => setIsUpdated(!isUpdated)}/>
                     <FontAwesomeIcon icon={faTrashCan} />
@@ -85,7 +89,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                                 onChange={ (e) => setTextUpdate(e.target.value)}
                             />
                             <div className="update-button">
-                                <button className='btn' onClick={updateItem}>Modifier</button>
+                                <button className='btn' onClick={updateItem(elt)}>Modifier</button>
                             </div>
                         </div>
                         )}
@@ -96,10 +100,13 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                     </div>
                     : <div></div>}
                 </div>
-                <div className="card-likes-posts">
+                <div className="card-likes-posts">   
                     <FontAwesomeIcon icon={ faMessage } />
+                    { (elt.comments_number > 1) ? <span>{elt.comments_number} commentaires</span> : <span>{elt.comments_number} commentaire</span> }
                     <FontAwesomeIcon icon={ faThumbsUp } />
+                    { (elt.like_number > 1) ? <span>{elt.like_number} likes</span> : <span>{elt.like_number} like</span> }
                     <FontAwesomeIcon icon={ faThumbsDown } />
+                    { (elt.dislike_number > 1) ? <span>{elt.dislike_number} dislikes</span> : <span>{elt.dislike_number} dislike</span> }
                 </div>
             </div>
         </div>

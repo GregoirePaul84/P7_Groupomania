@@ -4,6 +4,9 @@
     background-color: #222029;
     border-radius: 20px;
     display: flex;
+    position: relative;
+    overflow: hidden;
+    padding: 0 5px;
 
     .picture-container {
         height: 100%;
@@ -11,9 +14,23 @@
 
         img {
             height: 100%;
-            width: 100%;
+            width: 125px;
             border-radius: 20px;
             padding: 5px;
+        }
+    }
+
+    .arrow-right {
+        position: fixed;
+        top: 30.5%;
+        right: 31%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        svg {
+            font-size: 3em;
+            path {
+                color: #222029;
+            }
         }
     }
 }

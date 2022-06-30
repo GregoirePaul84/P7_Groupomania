@@ -1,9 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import LeftSection from '../components/Home/LeftSection';
 import MiddleSection from '../components/Home/MiddleSection';
 import RightSection from '../components/Home/RightSection';
 import NavBarHome from '../components/Home/NavBarHome';
+import { getUserPosts } from '../actions/user_posts.actions';
 
 
 const Home = () => {
@@ -15,6 +16,13 @@ const Home = () => {
         objectUser = userData.results[0];
     }
 
+    const userId = objectUser.user_id;
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getUserPosts(userId));
+    }, [dispatch, userId]);
 
     return(
         <div className="home-page">

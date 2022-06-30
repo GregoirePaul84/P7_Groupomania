@@ -10,7 +10,7 @@ const Friends = () => {
 
     useEffect(() => {
         dispatch(getAllUsers());
-    }, [dispatch]);
+    }, []);
 
     const allUsersData = useSelector((state) => state.userAllReducer);
 

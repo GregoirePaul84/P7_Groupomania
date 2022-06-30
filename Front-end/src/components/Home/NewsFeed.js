@@ -12,7 +12,7 @@ const NewsFeed = () => {
 
     useEffect(() => {
         dispatch(getAllPosts());
-        dispatch(getAllUsers());
+        // dispatch(getAllUsers());
     }, [dispatch]);
 
     const allPostsData = useSelector((state) => state.allPostsReducer);

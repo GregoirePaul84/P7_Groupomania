@@ -54,7 +54,7 @@ const Card = ({post}) => {
 
     const updateItem = () => {
         if(textUpdate) {
-            dispatch(updatePost(postId, textUpdate, userId))
+            dispatch(updatePost(postId, textUpdate))
                 .then(() => setIsUpdated(false))
                 .then(() => dispatch(getUserPosts(userId)));
         }

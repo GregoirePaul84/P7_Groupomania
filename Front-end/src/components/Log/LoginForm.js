@@ -41,7 +41,7 @@ const LoginForm = () => {
           else {
             emailError.innerHTML = ``;
             passwordError.innerHTML = ``;
-            window.location = `/profil/${res.data.userId}`;
+            window.location = `/home`;
           }  
         })
 

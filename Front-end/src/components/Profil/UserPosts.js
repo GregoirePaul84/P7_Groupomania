@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUserPosts } from '../../actions/user_posts.actions';
+import { useSelector } from 'react-redux';
 import Card from './Card';
 
 const UserPosts = (props) => {
@@ -10,14 +9,11 @@ const UserPosts = (props) => {
   
   const [loadPostsUser, setLoadPostUser] = useState(true);
 
-  const dispatch = useDispatch();
-
   let posts = {};
   posts = useSelector((state) => state.userPostReducer);
   const postsArray = posts.results;
 
   if (loadPostsUser && userId !== undefined) {
-    dispatch(getUserPosts(userId));
     setLoadPostUser(false);
   }
 

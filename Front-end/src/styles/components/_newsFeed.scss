@@ -1,7 +1,6 @@
 .news-feed {
     height: 55%;
     width: 90%;
-    min-width: 490px;
     background-color: #222029;
     border-radius: 20px;
     overflow-y: scroll;
@@ -16,11 +15,7 @@
     .card-container {
         min-width: auto;
         margin: 1em;
-        min-width: 470px;
 
-        .card-smallContainer {
-            min-width: 440px;
-        }
 
         .card-name-user {
             flex-grow: 2;
