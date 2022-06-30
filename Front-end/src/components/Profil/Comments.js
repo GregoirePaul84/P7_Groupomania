@@ -11,7 +11,7 @@ import { getUserPosts } from '../../actions/user_posts.actions';
 export function displayComments(postId) {
     const selectInput = document.querySelector(`.input-post_id${postId}`);
     selectInput.style.display = "block";
-    const selectContainer = document.querySelectorAll(`.post_id${postId}`);
+    const selectContainer = document.querySelectorAll(`.input-post_id${postId}`);
     for (let i=0; i<selectContainer.length; i+=1) {
         selectContainer[i].style.display = "block";
     }
@@ -20,7 +20,7 @@ export function displayComments(postId) {
 export function hideComments(postId) {
     const selectInput = document.querySelector(`.input-post_id${postId}`);
     selectInput.style.display = "none";
-    const selectContainer = document.querySelectorAll(`.post_id${postId}`);
+    const selectContainer = document.querySelectorAll(`.input-post_id${postId}`);
     for (let i=0; i<selectContainer.length; i+=1) {
         selectContainer[i].style.display = "none";
     }

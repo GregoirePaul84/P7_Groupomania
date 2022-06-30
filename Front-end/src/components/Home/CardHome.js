@@ -6,6 +6,7 @@ import { convertTime } from '../../App';
 import { getAllPosts, updatePost } from '../../actions/post.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import InputComments from '../Profil/InputComments';
+import { displayComments, hideComments } from '../Profil/Comments';
 
 
 const CardHome = ({postsObject, allUsersResults, elt}) => {
@@ -16,23 +17,23 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
 
-    // const toggleVisibility = (elt) => {
+    const toggleVisibility = () => {
         
-    //     const postId = elt.post_id;
+        const postId = elt.post_id;
+        
+        setVisibility(!visibility);
+        if (visibility) {
+            console.log(visibility);
+            displayComments(postId);
+        }
+        else {
+            console.log(visibility);
+            hideComments(postId);
+        }
+    }
 
-    //     setVisibility(!visibility);
-    //     if (visibility) {
-    //         console.log(visibility);
-    //         // displayComments(postId);
-    //     }
-    //     else {
-    //         console.log(visibility);
-    //         // hideComments(postId);
-    //     }
-    // }
-
-    const updateItem = (elt) => {
-        console.log(elt.post_id);
+    const updateItem = () => {
+        
         const postId = elt.post_id;
         
         console.log(textUpdate);
@@ -113,7 +114,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                                     onChange={ (e) => setTextUpdate(e.target.value)}
                                 />
                                 <div className="update-button">
-                                    <button className='btn' onClick={updateItem(elt)}>Modifier</button>
+                                    <button className='btn' onClick={updateItem}>Modifier</button>
                                 </div>
                             </div>
                             )}
@@ -125,7 +126,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                         : <div></div>}
                     </div>
                     <div className="card-likes-posts">   
-                        <FontAwesomeIcon icon={ faMessage } />
+                        <FontAwesomeIcon icon={ faMessage } onClick={toggleVisibility}/>
                         { (elt.comments_number > 1) ? <span>{elt.comments_number} commentaires</span> : <span>{elt.comments_number} commentaire</span> }
                         <FontAwesomeIcon icon={ faThumbsUp } className={`thumbs-up post_id${elt.post_id}`} />
                         { (elt.like_number > 1) ? <span>{elt.like_number} likes</span> : <span>{elt.like_number} like</span> }
