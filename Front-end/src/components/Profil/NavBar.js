@@ -21,8 +21,6 @@ const NavBar = (props) => {
 
     if (userDataResults === undefined) return;
 
-    console.log(userDataResults.profil_pic);
-
     return (
         <header>
             <div className="groupomania-logo">

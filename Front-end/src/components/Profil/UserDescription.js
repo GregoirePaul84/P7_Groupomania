@@ -1,4 +1,5 @@
 import React from 'react';
+import { useJwt } from "react-jwt";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAt, faCakeCandles, faLocationDot, faPhone} from '@fortawesome/free-solid-svg-icons';
 import ChangeProfilPic from './ChangeProfilPic';
@@ -6,14 +7,29 @@ import ChangeProfilPic from './ChangeProfilPic';
 const User_description = (props) => {
 
     const objectUser = props.user_info;
+    const userId = objectUser.user_id;
+
+    // Récupération du cookie et décodage du token pour récupérer l'user Id 
+    const readCookie = document.cookie;
+    const token = readCookie.split('jwt=')[1];
+    const { decodedToken } = useJwt(token);
+    let userIdToken = {};
+
+    if (decodedToken !== null) {
+        userIdToken = decodedToken.userId
+    }
         
     return (
         <aside className='user-description-box'>
             <div className="profil-pic-name_box">
+                {(userId === userIdToken) ?
                 <div className="profil-pic">
                     <ChangeProfilPic />
                     <img src={objectUser.profil_pic} alt="Utilisateur" />
                 </div>
+                : <div className="profil-pic">
+                    <img src={objectUser.profil_pic} alt="Utilisateur" />
+                  </div> }
             </div>
             <div className="biography">
                 <div className="title-line">
