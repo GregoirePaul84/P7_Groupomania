@@ -21,6 +21,7 @@ const Profil = () => {
     const readCookie = document.cookie;
     const token = readCookie.split('jwt=')[1];
     const { decodedToken } = useJwt(token);
+    // eslint-disable-next-line
     let userIdToken = {};
 
     if (decodedToken !== null) {
@@ -29,7 +30,6 @@ const Profil = () => {
 
     useEffect(() => {
         if(userId === userIdToken) {
-            console.log('égal');
             dispatch(getUser(userIdToken));
             dispatch(getUserPosts(userIdToken));
         }

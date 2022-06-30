@@ -9,7 +9,7 @@ require('dotenv').config({path: './config/.env'})
 
 module.exports.readAllPosts = (req, res) => {
     
-    const sqlGetAllPosts = `SELECT * FROM posts`;
+    const sqlGetAllPosts = `SELECT * FROM posts ORDER BY created DESC`;
     mySqlConnection.query( sqlGetAllPosts, (error, results) => {
         if (!error) {
             res.status(200).json( {results} )
