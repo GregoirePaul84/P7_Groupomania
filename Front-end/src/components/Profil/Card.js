@@ -121,7 +121,6 @@ const Card = ({post}) => {
             }
             localStorage.setItem('greenActive', JSON.stringify(likesArray));
         }
-        
     };
 
     // eslint-disable-next-line

@@ -3,7 +3,7 @@ import { useJwt } from "react-jwt";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faThumbsUp, faMessage, faThumbsDown, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
 import { convertTime } from '../../App';
-import { getAllPosts, likePost, updatePost } from '../../actions/post.actions';
+import { cancelLikePost, getAllPosts, likePost, updatePost } from '../../actions/post.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import InputComments from '../Profil/InputComments';
 import { displayComments, hideComments } from '../Profil/Comments';
@@ -14,7 +14,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     const dispatch = useDispatch();
 
     let isLiked = elt.isLiked;
-    // let isDisliked = elt.isDisliked;
+    let isDisliked = elt.isDisliked;
 
     if (isLiked === 0) {
         isLiked = true;
@@ -23,17 +23,18 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
         isLiked = false;
     }
 
-    // if (isDisliked === 0) {
-    //     isDisliked = true;
-    // }
-    // else if (isDisliked === 1) {
-    //     isDisliked = false;
-    // }
+    if (isDisliked === 0) {
+        isDisliked = true;
+    }
+    else if (isDisliked === 1) {
+        isDisliked = false;
+    }
 
     // console.log(isLiked);
     // console.log(isDisliked);
 
     const [greenActive, setGreenActive] = useState(isLiked);
+    const [redActive, setRedActive] = useState(isDisliked);
     const [visibility, setVisibility] = useState(true);
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
@@ -76,6 +77,14 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             .then(() => dispatch(getAllPosts()));
     }
 
+    function removeLike() {
+        const postId = elt.post_id;
+
+        console.log(`==> like annulé : post_id ${postId}`);
+        dispatch(cancelLikePost(postId))
+            .then(() => dispatch(getAllPosts()));
+    }
+
     const toggleLike = () => {
 
         console.log(greenActive);
@@ -101,7 +110,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
 
         else if (greenActive === false) {
 
-            // removeLike();
+            removeLike();
             const selectElt = document.querySelector(`.post_id-green${elt.post_id}`);
             selectElt.classList.remove('active-green');
 
@@ -114,6 +123,41 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             localStorage.setItem('greenActiveHome', JSON.stringify(likesArray));
         }
     };
+
+
+    // const toggleDislike = () => {
+    //     setRedActive(!redActive);
+        
+    //     if (redActive === true) {
+    //         addDislike();
+    //         const selectElt = document.querySelector(`.post_id-red${postId}`);
+    //         selectElt.classList.add('active-red');
+
+    //         // Ajout de l'id du post disliké dans le local storage
+    //         const dislikesArray = JSON.parse(localStorage.getItem('redActive') || '[]');
+    //         dislikesArray.push(`.post_id-red${postId}`);
+    //         localStorage.setItem('redActive', JSON.stringify(dislikesArray));
+
+    //         // Vérification si l'utilisateur a déjà liké le post: si oui, on annule le like
+    //         const selectContainer = document.querySelector(`.post_id-green${postId}`);
+    //         if (selectContainer.classList.contains('active-green')) {
+    //             toggleLike();
+    //         }
+    //     }
+    //     else if (redActive === false) {
+    //         removeDislike();
+    //         const selectElt = document.querySelector(`.post_id-red${postId}`);
+    //         selectElt.classList.remove('active-red');
+
+    //         // Suppression de l'id du post disliké dans le local storage
+    //         const dislikesArray = JSON.parse(localStorage.getItem('redActive'));
+    //         const index = dislikesArray.indexOf(`.post_id-red${postId}`);
+    //         if (index >= 0) {
+    //         dislikesArray.splice( index, 1 );
+    //         }
+    //         localStorage.setItem('redActive', JSON.stringify(dislikesArray));
+    //     }
+    // };
     
     // Récupération du cookie et décodage du token pour récupérer l'userId 
     const readCookie = document.cookie;
