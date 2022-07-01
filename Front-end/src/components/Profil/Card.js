@@ -19,9 +19,11 @@ const Card = ({post}) => {
     let isDisliked = post.isDisliked;
 
     if (isLiked === 0) {
+        console.log('true');
         isLiked = true;
     }
     else if (isLiked === 1) {
+        console.log('false');
         isLiked = false;
     }
 

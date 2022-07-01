@@ -3,7 +3,7 @@ import { useJwt } from "react-jwt";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faThumbsUp, faMessage, faThumbsDown, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
 import { convertTime } from '../../App';
-import { cancelDislikePost, cancelLikePost, dislikePost, getAllPosts, likePost, updatePost } from '../../actions/post.actions';
+import { cancelDislikePost, cancelLikePost, deleteDislikePost, deleteLikePost, deletePicturePost, deletePost, dislikePost, getAllPosts, likePost, updatePost } from '../../actions/post.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import InputComments from '../Profil/InputComments';
 import { displayComments, hideComments } from '../Profil/Comments';
@@ -17,9 +17,11 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     let isDisliked = elt.isDisliked;
 
     if (isLiked === 0) {
+        console.log(isLiked);
         isLiked = true;
     }
     else if (isLiked === 1) {
+        console.log(isLiked);
         isLiked = false;
     }
 
@@ -198,6 +200,17 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
         }
     
     }, [toggleLike, toggleDislike])
+
+    // Suppression du post: suppression des likes / dislikes et de l'image de la DB
+    const deleteArticle = () => {
+        const postId = elt.post_id;
+
+        dispatch(deletePost(postId))
+            .then(() => dispatch(deletePicturePost(postId)))
+            .then(() => dispatch(deleteLikePost(postId)))
+            .then(() => dispatch(deleteDislikePost(postId)))
+            .then(() => dispatch(getAllPosts()));
+    }
     
     // Récupération du cookie et décodage du token pour récupérer l'userId 
     const readCookie = document.cookie;
@@ -251,7 +264,10 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                     { (userId === elt.user_id) ? 
                     <div className="modify-delete">
                         <FontAwesomeIcon icon={faPen} onClick={() => setIsUpdated(!isUpdated)}/>
-                        <FontAwesomeIcon icon={faTrashCan} />
+                        <FontAwesomeIcon icon={faTrashCan}  onClick={() => {
+                        if (window.confirm('Êtes-vous sûr de vouloir supprimer ce post ?'))
+                            { deleteArticle() }
+                        }} />
                     </div>
                     : null
                     }
