@@ -3,7 +3,7 @@ import { useJwt } from "react-jwt";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faThumbsUp, faMessage, faThumbsDown, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
 import { convertTime } from '../../App';
-import { cancelLikePost, getAllPosts, likePost, updatePost } from '../../actions/post.actions';
+import { cancelDislikePost, cancelLikePost, dislikePost, getAllPosts, likePost, updatePost } from '../../actions/post.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import InputComments from '../Profil/InputComments';
 import { displayComments, hideComments } from '../Profil/Comments';
@@ -85,6 +85,20 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             .then(() => dispatch(getAllPosts()));
     }
 
+    function addDislike() {
+        const postId = elt.post_id;
+
+        console.log(`==> post disliké : post_id ${postId}`);
+        dispatch(dislikePost(postId))
+            .then(() => dispatch(getAllPosts()));
+    }
+
+    function removeDislike() {
+        console.log(`==> dislike annulé : post_id ${elt.post_id}`);
+        dispatch(cancelDislikePost(elt.post_id))
+            .then(() => dispatch(getAllPosts()));
+    }   
+
     const toggleLike = () => {
 
         console.log(greenActive);
@@ -97,9 +111,9 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             selectElt.classList.add('active-green');
 
             // Ajout de l'id du post liké dans le local storage
-            const likesArray = JSON.parse(localStorage.getItem('greenActiveHome') || '[]');
+            const likesArray = JSON.parse(localStorage.getItem('greenActive') || '[]');
             likesArray.push(`.post_id-green${elt.post_id}`);
-            localStorage.setItem('greenActiveHome', JSON.stringify(likesArray));
+            localStorage.setItem('greenActive', JSON.stringify(likesArray));
 
             // // Vérification si l'utilisateur a déjà disliké le post: si oui, on annule le dislike
             // const selectContainer = document.querySelector(`.post_id-red${postId}`);
@@ -115,49 +129,49 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             selectElt.classList.remove('active-green');
 
             // Suppression de l'id du post liké dans le local storage
-            const likesArray = JSON.parse(localStorage.getItem('greenActiveHome'));
+            const likesArray = JSON.parse(localStorage.getItem('greenActive'));
             const index = likesArray.indexOf(`.post_id-green${elt.post_id}`);
             if (index >= 0) {
                 likesArray.splice( index, 1 );
             }
-            localStorage.setItem('greenActiveHome', JSON.stringify(likesArray));
+            localStorage.setItem('greenActive', JSON.stringify(likesArray));
         }
     };
 
 
-    // const toggleDislike = () => {
-    //     setRedActive(!redActive);
+    const toggleDislike = () => {
+        setRedActive(!redActive);
         
-    //     if (redActive === true) {
-    //         addDislike();
-    //         const selectElt = document.querySelector(`.post_id-red${postId}`);
-    //         selectElt.classList.add('active-red');
+        if (redActive === true) {
+            addDislike();
+            const selectElt = document.querySelector(`.post_id-red${elt.post_id}`);
+            selectElt.classList.add('active-red');
 
-    //         // Ajout de l'id du post disliké dans le local storage
-    //         const dislikesArray = JSON.parse(localStorage.getItem('redActive') || '[]');
-    //         dislikesArray.push(`.post_id-red${postId}`);
-    //         localStorage.setItem('redActive', JSON.stringify(dislikesArray));
+            // Ajout de l'id du post disliké dans le local storage
+            const dislikesArray = JSON.parse(localStorage.getItem('redActive') || '[]');
+            dislikesArray.push(`.post_id-red${elt.post_id}`);
+            localStorage.setItem('redActive', JSON.stringify(dislikesArray));
 
-    //         // Vérification si l'utilisateur a déjà liké le post: si oui, on annule le like
-    //         const selectContainer = document.querySelector(`.post_id-green${postId}`);
-    //         if (selectContainer.classList.contains('active-green')) {
-    //             toggleLike();
-    //         }
-    //     }
-    //     else if (redActive === false) {
-    //         removeDislike();
-    //         const selectElt = document.querySelector(`.post_id-red${postId}`);
-    //         selectElt.classList.remove('active-red');
+            // Vérification si l'utilisateur a déjà liké le post: si oui, on annule le like
+            const selectContainer = document.querySelector(`.post_id-green${elt.post_id}`);
+            if (selectContainer.classList.contains('active-green')) {
+                toggleLike();
+            }
+        }
+        else if (redActive === false) {
+            removeDislike();
+            const selectElt = document.querySelector(`.post_id-red${elt.post_id}`);
+            selectElt.classList.remove('active-red');
 
-    //         // Suppression de l'id du post disliké dans le local storage
-    //         const dislikesArray = JSON.parse(localStorage.getItem('redActive'));
-    //         const index = dislikesArray.indexOf(`.post_id-red${postId}`);
-    //         if (index >= 0) {
-    //         dislikesArray.splice( index, 1 );
-    //         }
-    //         localStorage.setItem('redActive', JSON.stringify(dislikesArray));
-    //     }
-    // };
+            // Suppression de l'id du post disliké dans le local storage
+            const dislikesArray = JSON.parse(localStorage.getItem('redActive'));
+            const index = dislikesArray.indexOf(`.post_id-red${elt.post_id}`);
+            if (index >= 0) {
+            dislikesArray.splice( index, 1 );
+            }
+            localStorage.setItem('redActive', JSON.stringify(dislikesArray));
+        }
+    };
     
     // Récupération du cookie et décodage du token pour récupérer l'userId 
     const readCookie = document.cookie;
@@ -245,7 +259,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                         { (elt.comments_number > 1) ? <span>{elt.comments_number} commentaires</span> : <span>{elt.comments_number} commentaire</span> }
                         <FontAwesomeIcon icon={ faThumbsUp } className={`thumbs-up post_id-green${elt.post_id}`} onClick={toggleLike}/>
                         { (elt.like_number > 1) ? <span>{elt.like_number} likes</span> : <span>{elt.like_number} like</span> }
-                        <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down post_id-red${elt.post_id}`} />
+                        <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down post_id-red${elt.post_id}`} onClick={toggleDislike}/>
                         { (elt.dislike_number > 1) ? <span>{elt.dislike_number} dislikes</span> : <span>{elt.dislike_number} dislike</span> }
                     </div>
                 </div>
