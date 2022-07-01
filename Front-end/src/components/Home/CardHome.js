@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useJwt } from "react-jwt";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faThumbsUp, faMessage, faThumbsDown, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
@@ -99,6 +99,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             .then(() => dispatch(getAllPosts()));
     }   
 
+    // eslint-disable-next-line
     const toggleLike = () => {
 
         console.log(greenActive);
@@ -115,11 +116,11 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             likesArray.push(`.post_id-green${elt.post_id}`);
             localStorage.setItem('greenActive', JSON.stringify(likesArray));
 
-            // // Vérification si l'utilisateur a déjà disliké le post: si oui, on annule le dislike
-            // const selectContainer = document.querySelector(`.post_id-red${postId}`);
-            // if (selectContainer.classList.contains('active-red')) {
-            //     toggleDislike();
-            // }
+            // Vérification si l'utilisateur a déjà disliké le post: si oui, on annule le dislike
+            const selectContainer = document.querySelector(`.post_id-red${elt.post_id}`);
+            if (selectContainer.classList.contains('active-red')) {
+                toggleDislike();
+            }
         }
 
         else if (greenActive === false) {
@@ -138,7 +139,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
         }
     };
 
-
+    // eslint-disable-next-line
     const toggleDislike = () => {
         setRedActive(!redActive);
         
@@ -172,6 +173,31 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             localStorage.setItem('redActive', JSON.stringify(dislikesArray));
         }
     };
+
+
+    useEffect(() => {
+        
+        const likesArray = JSON.parse(localStorage.getItem('greenActive'));
+        
+        for (let i in likesArray) {
+            const selectElt = document.querySelector(likesArray[i]);
+    
+            if (selectElt !== null) {
+                selectElt.classList.add('active-green');
+            }
+        }
+
+        const dislikesArray = JSON.parse(localStorage.getItem('redActive'));
+        
+        for (let j in dislikesArray) {
+            const selectElt = document.querySelector(dislikesArray[j]);
+    
+            if (selectElt !== null) {
+                selectElt.classList.add('active-red');
+            }
+        }
+    
+    }, [toggleLike, toggleDislike])
     
     // Récupération du cookie et décodage du token pour récupérer l'userId 
     const readCookie = document.cookie;
@@ -209,7 +235,6 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             selectEmail.textContent = `${filterUsersPosts[0].email}`;
         }
     }
-
     
     return (
         <>
@@ -258,9 +283,9 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                         <FontAwesomeIcon icon={ faMessage } onClick={toggleVisibility}/>
                         { (elt.comments_number > 1) ? <span>{elt.comments_number} commentaires</span> : <span>{elt.comments_number} commentaire</span> }
                         <FontAwesomeIcon icon={ faThumbsUp } className={`thumbs-up post_id-green${elt.post_id}`} onClick={toggleLike}/>
-                        { (elt.like_number > 1) ? <span>{elt.like_number} likes</span> : <span>{elt.like_number} like</span> }
+                        { (elt.like_number > 1) ? <span className="post-like">{elt.like_number} likes</span> : <span className="post-like">{elt.like_number} like</span> }
                         <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down post_id-red${elt.post_id}`} onClick={toggleDislike}/>
-                        { (elt.dislike_number > 1) ? <span>{elt.dislike_number} dislikes</span> : <span>{elt.dislike_number} dislike</span> }
+                        { (elt.dislike_number > 1) ? <span className="post-dislike">{elt.dislike_number} dislikes</span> : <span className="post-dislike">{elt.dislike_number} dislike</span> }
                     </div>
                 </div>
             </div>
