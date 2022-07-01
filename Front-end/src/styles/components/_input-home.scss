@@ -1,12 +1,25 @@
 .input-area {
     display: flex;
     align-items: center;
+    justify-content: center;
+    height: 12%;
+    width: 90%;
+    background-color: #222029;
+    border-radius: 20px;
+
+    .flex-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 80%;
+        width: 400px;
+        border-radius: 20px;
+        background-color: hsl(251deg 9% 23%);
+    }
 
     .user-picture-input {
         height: 50px;
         width: 50px;
-        margin: 0 1em;
-        flex-grow: 1;
 
         img {
             border-radius: 50%;
@@ -20,7 +33,6 @@
         height: 100%;
         display: flex;
         align-items: center;
-        flex-grow: 30;
         input {
             height: 30px;
             width: 100%;
@@ -31,11 +43,11 @@
     }
 
     .buttons-icons {
-        flex-grow: 1;
         width: 20%;
         display: flex;
         justify-content: space-around;
         padding-right: 10px;
+        position: relative;
 
         svg {
             height: 25px;         
@@ -44,6 +56,19 @@
             &:hover {
                 transform: scale(1.15);
             }
+        }
+
+        .input-file {
+        position: absolute;
+        right: 48px;
+        width: 28px;
+        top: -3px;
+        height: 28px;
+        opacity: 0;
+        }
+
+        .input-file[type=file]::file-selector-button {
+            cursor: pointer;
         }
     }
 }
