@@ -3,7 +3,7 @@ import { useJwt } from "react-jwt";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faThumbsUp, faMessage, faThumbsDown, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
 import { convertTime } from '../../App';
-import { getAllPosts, updatePost } from '../../actions/post.actions';
+import { getAllPosts, likePost, updatePost } from '../../actions/post.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import InputComments from '../Profil/InputComments';
 import { displayComments, hideComments } from '../Profil/Comments';
@@ -11,8 +11,29 @@ import { displayComments, hideComments } from '../Profil/Comments';
 
 const CardHome = ({postsObject, allUsersResults, elt}) => {
 
-    const dispatch = useDispatch;
+    const dispatch = useDispatch();
 
+    let isLiked = elt.isLiked;
+    // let isDisliked = elt.isDisliked;
+
+    if (isLiked === 0) {
+        isLiked = true;
+    }
+    else if (isLiked === 1) {
+        isLiked = false;
+    }
+
+    // if (isDisliked === 0) {
+    //     isDisliked = true;
+    // }
+    // else if (isDisliked === 1) {
+    //     isDisliked = false;
+    // }
+
+    // console.log(isLiked);
+    // console.log(isDisliked);
+
+    const [greenActive, setGreenActive] = useState(isLiked);
     const [visibility, setVisibility] = useState(true);
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
@@ -43,6 +64,56 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                 .then(() => dispatch(getAllPosts()));
         }
     }
+
+    function addLike() {
+        const postId = elt.post_id;
+        const postText = elt.text;
+        console.log(postId);
+        console.log(postText);
+        
+        console.log(`==> post liké : post_id ${postId}`);
+        dispatch(likePost(postId, postText))
+            .then(() => dispatch(getAllPosts()));
+    }
+
+    const toggleLike = () => {
+
+        console.log(greenActive);
+        setGreenActive(!greenActive);
+        
+        if (greenActive === true) {
+            
+            addLike();
+            const selectElt = document.querySelector(`.post_id-green${elt.post_id}`);
+            selectElt.classList.add('active-green');
+
+            // Ajout de l'id du post liké dans le local storage
+            const likesArray = JSON.parse(localStorage.getItem('greenActiveHome') || '[]');
+            likesArray.push(`.post_id-green${elt.post_id}`);
+            localStorage.setItem('greenActiveHome', JSON.stringify(likesArray));
+
+            // // Vérification si l'utilisateur a déjà disliké le post: si oui, on annule le dislike
+            // const selectContainer = document.querySelector(`.post_id-red${postId}`);
+            // if (selectContainer.classList.contains('active-red')) {
+            //     toggleDislike();
+            // }
+        }
+
+        else if (greenActive === false) {
+
+            // removeLike();
+            const selectElt = document.querySelector(`.post_id-green${elt.post_id}`);
+            selectElt.classList.remove('active-green');
+
+            // Suppression de l'id du post liké dans le local storage
+            const likesArray = JSON.parse(localStorage.getItem('greenActiveHome'));
+            const index = likesArray.indexOf(`.post_id-green${elt.post_id}`);
+            if (index >= 0) {
+                likesArray.splice( index, 1 );
+            }
+            localStorage.setItem('greenActiveHome', JSON.stringify(likesArray));
+        }
+    };
     
     // Récupération du cookie et décodage du token pour récupérer l'userId 
     const readCookie = document.cookie;
@@ -128,9 +199,9 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                     <div className="card-likes-posts">   
                         <FontAwesomeIcon icon={ faMessage } onClick={toggleVisibility}/>
                         { (elt.comments_number > 1) ? <span>{elt.comments_number} commentaires</span> : <span>{elt.comments_number} commentaire</span> }
-                        <FontAwesomeIcon icon={ faThumbsUp } className={`thumbs-up post_id${elt.post_id}`} />
+                        <FontAwesomeIcon icon={ faThumbsUp } className={`thumbs-up post_id-green${elt.post_id}`} onClick={toggleLike}/>
                         { (elt.like_number > 1) ? <span>{elt.like_number} likes</span> : <span>{elt.like_number} like</span> }
-                        <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down post_id${elt.post_id}`} />
+                        <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down post_id-red${elt.post_id}`} />
                         { (elt.dislike_number > 1) ? <span>{elt.dislike_number} dislikes</span> : <span>{elt.dislike_number} dislike</span> }
                     </div>
                 </div>
