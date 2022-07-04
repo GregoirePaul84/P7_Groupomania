@@ -10,6 +10,6 @@ router.post('/register', password, authCtlr.register);
 router.post('/login', authCtlr.login);
 
 // Déconnexion d'un utilisateur
-router.get('/logout', authCtlr.logout);
+router.post('/logout', authCtlr.logout);
 
 module.exports = router;

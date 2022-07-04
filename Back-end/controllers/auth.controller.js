@@ -62,7 +62,7 @@ module.exports.register = async (req, res) => {
     }
 
     catch(error) {
-        res.status(200).json({ error });
+        res.status(500).json({ error });
     }
 };
 
@@ -126,15 +126,21 @@ module.exports.login = async (req,res) => {
         })
     }
     catch {
-        res.status(200).json({ error });
+        res.status(500).json({ error });
     }
 };
 
 
 // ********** Déconnexion d'un utilisateur ********** //
 
-module.exports.logout = (req,res) => {
+module.exports.logout = async (req,res) => {
 
-    res.clearCookie('jwt');
-    res.status(200).json({ message: "Utilisateur déconnecté !"});
+    try {
+        console.log('Utilisateur déconnecté !');
+        res.clearCookie('jwt');
+        res.status(200).json({ message: "Utilisateur déconnecté !"});
+    }
+    catch (error) {
+        res.status(500).json({ error });
+    } 
 };

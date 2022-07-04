@@ -202,6 +202,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
 
     useEffect(() => {
         dispatch(getComments());
+    // eslint-disable-next-line
     }, []);
 
     // Suppression du post: suppression des likes / dislikes et de l'image de la DB
@@ -234,12 +235,9 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     if(userDataResults === undefined || commentsDataResults === undefined) return;
     const objectUser = userDataResults[0];
 
-    
-    console.log(commentsDataResults);
-
     // Arrêt de la fonction si les props n'ont pas été reçues
     if (postsObject === undefined || allUsersResults === undefined || elt === undefined) return;
-
+    
     for (let i in postsObject) {
 
         // On récupère les infos utilisateurs dont l'userID est présente dans les posts

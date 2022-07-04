@@ -7,6 +7,7 @@ export const UPLOAD_PROFIL = "UPLOAD_PROFIL";
 export const DELETE_USER = "DELETE_USER";
 export const CHANGE_PASSWORD = "CHANGE_PASSWORD";
 export const GET_ALL_LIKES = "GET_ALL_LIKES";
+export const USER_LOGOUT = "USER_LOGOUT";
 
 export const getAllUsers = () => {
 
@@ -164,5 +165,21 @@ export const getAllLikes = (userId) => {
         } catch (error) {
             console.log(error);
         }
+    }
+}
+
+export const userLogout = async () => {
+
+    try {
+        console.log('déconnexion');
+
+        await axios({
+            method: "post",
+            url: `${process.env.REACT_APP_API_URL}api/auth/logout`,
+            withCredentials: true,
+        });
+        
+    } catch (error) {
+        console.log(error);
     }
 }
