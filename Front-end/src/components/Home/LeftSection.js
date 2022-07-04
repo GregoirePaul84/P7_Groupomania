@@ -47,7 +47,7 @@ const LeftSection = ({user_info}) => {
                                 </div>
                                 { (likesObject.length !== 0) ?
                                     <ul className="likes-list">
-                                        {likesObject.map((key) => {                                    
+                                        {likesObject.map((key) => {                           
                                             return (  
                                                 <li key={key.likes_id}>
                                                     <div className="liked-post-text">

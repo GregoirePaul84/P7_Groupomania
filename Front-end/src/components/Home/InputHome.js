@@ -35,7 +35,6 @@ const InputHome = ({user_info}) => {
             .then(() => dispatch(getAllPosts()))
             .then(() => dispatch(getPicturesPost()));
             setFile(false);
-            // removeColorIcon();
     }
 
     useEffect(() => {

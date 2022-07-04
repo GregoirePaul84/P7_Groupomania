@@ -240,10 +240,11 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     
     for (let i in postsObject) {
 
-        // On récupère les infos utilisateurs dont l'userID est présente dans les posts
+        // On récupère les infos utilisateurs dont l'userID est présent dans les posts
         const filterUsersPosts = (allUsersResults.filter((elt) => elt.user_id === postsObject[i].user_id));
         const postId = postsObject[i].post_id;
         const selectCards = document.querySelector(`.post_id${postId}`);
+        console.log(filterUsersPosts);
         
         if (selectCards !== null) {
             const selectImg = selectCards.querySelector('.profil-pic');

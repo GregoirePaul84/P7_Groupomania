@@ -36,7 +36,7 @@ const Settings = () => {
     const userAddress = objectUser.adresse;
     const userPhone = objectUser.tel;
 
-    
+
     const [file, setFile] = useState();
     const [bio, setBio] = useState('');
     const [lastName, setLastname] = useState('');
@@ -136,7 +136,7 @@ const Settings = () => {
                                       id="biography" 
                                       cols="30" 
                                       rows="10" 
-                                      defaultValue={userBio} 
+                                      defaultValue={null} 
                                       onChange={(e) => setBio(e.target.value)}></textarea>
                             <div className="input-container">
                                 <div className="info-container">
@@ -166,14 +166,14 @@ const Settings = () => {
                                     <label htmlFor="birthday">Date de naissance :</label>
                                     <input type="date" 
                                            id='birthday' 
-                                           defaultValue={userBirthday} 
+                                           defaultValue={null} 
                                            onChange={(e) => setBirthday(e.target.value)}/>
                                 </div>
                                 <div className="info-container">
                                     <label htmlFor="address">Adresse :</label>
                                     <input type="text" 
                                            id='address' 
-                                           defaultValue={userAddress} 
+                                           defaultValue={null} 
                                            onChange={(e) => setAddress(e.target.value)}/>
                                 </div>
                                 <div className="info-container">
@@ -181,7 +181,7 @@ const Settings = () => {
                                     <input type="text" 
                                            id='tel' 
                                            autoComplete='on'
-                                           defaultValue={userPhone} 
+                                           defaultValue={null} 
                                            onChange={(e) => setPhoneNumber(e.target.value)}/>
                                 </div>
                                 <div className="info-container">
