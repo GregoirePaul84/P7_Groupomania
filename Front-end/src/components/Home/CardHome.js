@@ -6,7 +6,9 @@ import { convertTime } from '../../App';
 import { cancelDislikePost, cancelLikePost, deleteDislikePost, deleteLikePost, deletePicturePost, deletePost, dislikePost, getAllPosts, likePost, updatePost } from '../../actions/post.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import InputComments from '../Profil/InputComments';
-import { displayComments, hideComments } from '../Profil/Comments';
+import Comments, { displayComments, hideComments } from '../Profil/Comments';
+import { getAllLikes } from '../../actions/user.actions';
+import { getComments } from '../../actions/comment.actions';
 
 
 const CardHome = ({postsObject, allUsersResults, elt}) => {
@@ -17,11 +19,9 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     let isDisliked = elt.isDisliked;
 
     if (isLiked === 0) {
-        console.log(isLiked);
         isLiked = true;
     }
     else if (isLiked === 1) {
-        console.log(isLiked);
         isLiked = false;
     }
 
@@ -31,9 +31,6 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     else if (isDisliked === 1) {
         isDisliked = false;
     }
-
-    // console.log(isLiked);
-    // console.log(isDisliked);
 
     const [greenActive, setGreenActive] = useState(isLiked);
     const [redActive, setRedActive] = useState(isDisliked);
@@ -71,19 +68,21 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     function addLike() {
         const postId = elt.post_id;
         const postText = elt.text;
-        console.log(postId);
-        console.log(postText);
+        const userId = elt.user_id;
         
         console.log(`==> post liké : post_id ${postId}`);
         dispatch(likePost(postId, postText))
+            .then(() => dispatch(getAllLikes(userId)))
             .then(() => dispatch(getAllPosts()));
     }
 
     function removeLike() {
         const postId = elt.post_id;
+        const userId = elt.user_id;
 
         console.log(`==> like annulé : post_id ${postId}`);
         dispatch(cancelLikePost(postId))
+            .then(() => dispatch(getAllLikes(userId)))
             .then(() => dispatch(getAllPosts()));
     }
 
@@ -201,6 +200,10 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     
     }, [toggleLike, toggleDislike])
 
+    useEffect(() => {
+        dispatch(getComments());
+    }, []);
+
     // Suppression du post: suppression des likes / dislikes et de l'image de la DB
     const deleteArticle = () => {
         const postId = elt.post_id;
@@ -223,9 +226,16 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     }
 
     const userData = useSelector((state) => state.userReducer);
+    const commentsData = useSelector((state) => state.commentsReducer);
+
     const userDataResults = userData.results;
-    if(userDataResults === undefined) return;
+    const commentsDataResults = commentsData.results;
+
+    if(userDataResults === undefined || commentsDataResults === undefined) return;
     const objectUser = userDataResults[0];
+
+    
+    console.log(commentsDataResults);
 
     // Arrêt de la fonction si les props n'ont pas été reçues
     if (postsObject === undefined || allUsersResults === undefined || elt === undefined) return;
@@ -307,15 +317,15 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             </div>
             <div className={`input-comments-container input-post_id${elt.post_id}`}>
             <InputComments postId={elt.post_id} infoUser={objectUser} userId={elt.user_id}/>
-            {/* {commentsArray.map((comment) => {
-                if (comment.post_id === postId) {
+            {commentsDataResults.map((comment) => {
+                if (comment.post_id === elt.post_id) {
                     
                     return (
                         // eslint-disable-next-line
-                        <div className={"comments-container " + "post_id" + postId + " comment_id" + comment.comment_id} key={comment.comment_id}> 
-                            <Comments postId={postId} 
-                                comments={commentsArray}
-                                userId={userId}
+                        <div className={"comments-container " + "post_id" + elt.post_id + " comment_id" + comment.comment_id} key={comment.comment_id}> 
+                            <Comments postId={elt.postId} 
+                                comments={commentsDataResults}
+                                userId={elt.user_id}
                                 commentDate={comment.created}
                                 commentText={comment.text}
                                 commentId={comment.comment_id}
@@ -329,7 +339,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                 else {
                     return (null);
                 }
-            })} */}
+            })}
             </div>
         </>
     );

@@ -179,10 +179,9 @@ module.exports.changePassword = async (req, res) => {
 
 module.exports.readAllLikes = (req, res) => {
     
-    const sqlGetAllLikes = `SELECT * FROM likes WHERE user_id = ?`;
-    const userId = req.params.id;
+    const sqlGetAllLikes = `SELECT * FROM likes`;
 
-    mySqlConnection.query(sqlGetAllLikes, userId, (error, results) => {
+    mySqlConnection.query(sqlGetAllLikes, (error, results) => {
         
         if (results) {
             res.status(200).json( {message: "Likes récupérés !", results});
