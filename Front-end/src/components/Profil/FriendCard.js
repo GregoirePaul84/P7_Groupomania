@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage, faPaperPlane, faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { convertTime } from '../../App';
-import { displayComments, hideComments } from './Comments';
-import InputComments from './InputComments';
+import Comments, { displayComments, hideComments } from './Comments';
+import { useSelector } from 'react-redux';
 
 const FriendCard = ({post, objectUser}) => {
 
@@ -23,6 +23,13 @@ const FriendCard = ({post, objectUser}) => {
             hideComments(postId);
         }
     }
+
+    const commentsData = useSelector((state) => state.commentsReducer);
+
+    const commentsDataResults = commentsData.results;
+
+    if(commentsDataResults === undefined) return;
+    console.log(commentsDataResults);
     
     return (
         <>
@@ -58,7 +65,29 @@ const FriendCard = ({post, objectUser}) => {
                 </div>
             </div>
             <div className={`input-comments-container input-post_id${post.post_id}`}>
-                <InputComments postId={post.post_id} infoUser={objectUser} userId={post.user_id}/>
+                {commentsDataResults.map((comment) => {
+                    if (comment.post_id === post.post_id) {
+                        
+                        return (
+                            // eslint-disable-next-line
+                            <div className={"comments-container " + "post_id" + post.post_id + " comment_id" + comment.comment_id} key={comment.comment_id}> 
+                                <Comments postId={post.postId} 
+                                    comments={commentsDataResults}
+                                    userId={post.user_id}
+                                    commentDate={comment.created}
+                                    commentText={comment.text}
+                                    commentId={comment.comment_id}
+                                    imgUrl={comment.image_url}
+                                    nbOfLikes={comment.like_number}
+                                    nbOfDislikes={comment.dislike_number} 
+                                    key={comment.comment_id} />
+                            </div>
+                        )
+                    }
+                    else {
+                        return (null);
+                    }
+                })}
             </div>
         </>
     );
