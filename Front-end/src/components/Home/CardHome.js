@@ -132,13 +132,6 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             const selectElt = document.querySelector(`.post_id-green${elt.post_id}`);
             selectElt.classList.remove('active-green');
 
-            // Suppression de l'id du post liké dans le local storage
-            const likesArray = JSON.parse(localStorage.getItem('greenActive'));
-            const index = likesArray.indexOf(`.post_id-green${elt.post_id}`);
-            if (index >= 0) {
-                likesArray.splice( index, 1 );
-            }
-            localStorage.setItem('greenActive', JSON.stringify(likesArray));
         }
     };
 
@@ -222,10 +215,10 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     }
 
     // Récupération de tous les likes qui ont été cochés par l'utilisateur
-    const filterLikes = likesDataResults.filter((elt) => elt.isLiked === 1);
+    const filterLikes = likesDataResults.filter((elt) => elt.isLiked === 1 && elt.user_id === userId);
     const likesUserId = filterLikes.map((elt) => elt.user_id);
     const likesPostId = filterLikes.map((elt) => elt.post_id);
-    console.log(likesUserId);
+    console.log(filterLikes);
     
 
     return (
