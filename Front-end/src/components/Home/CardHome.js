@@ -8,10 +8,19 @@ import InputComments from '../Profil/InputComments';
 import Comments, { displayComments, hideComments } from '../Profil/Comments';
 import { getAllLikes } from '../../actions/user.actions';
 import { getComments } from '../../actions/comment.actions';
+let postId = {};
 
 const CardHome = ({postsObject, allUsersResults, elt}) => {
 
     const dispatch = useDispatch();
+
+    const userData = useSelector((state) => state.userReducer);
+    const commentsData = useSelector((state) => state.commentsReducer);
+    const likesData = useSelector((state) => state.allLikesReducer);
+
+    const userDataResults = userData.results;
+    const commentsDataResults = commentsData.results;
+    const likesDataResults = likesData.results;
 
     let isLiked = elt.isLiked;
     let isDisliked = elt.isDisliked;
@@ -110,11 +119,6 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             const selectElt = document.querySelector(`.post_id-green${elt.post_id}`);
             selectElt.classList.add('active-green');
 
-            // Ajout de l'id du post liké dans le local storage
-            const likesArray = JSON.parse(localStorage.getItem('greenActive') || '[]');
-            likesArray.push(`.post_id-green${elt.post_id}`);
-            localStorage.setItem('greenActive', JSON.stringify(likesArray));
-
             // Vérification si l'utilisateur a déjà disliké le post: si oui, on annule le dislike
             const selectContainer = document.querySelector(`.post_id-red${elt.post_id}`);
             if (selectContainer.classList.contains('active-red')) {
@@ -173,31 +177,6 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
         }
     };
 
-
-    useEffect(() => {
-        
-        const likesArray = JSON.parse(localStorage.getItem('greenActive'));
-        
-        for (let i in likesArray) {
-            const selectElt = document.querySelector(likesArray[i]);
-    
-            if (selectElt !== null) {
-                selectElt.classList.add('active-green');
-            }
-        }
-
-        const dislikesArray = JSON.parse(localStorage.getItem('redActive'));
-        
-        for (let j in dislikesArray) {
-            const selectElt = document.querySelector(dislikesArray[j]);
-    
-            if (selectElt !== null) {
-                selectElt.classList.add('active-red');
-            }
-        }
-    
-    }, [toggleLike, toggleDislike])
-
     useEffect(() => {
         dispatch(getComments());
     // eslint-disable-next-line
@@ -214,39 +193,41 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             .then(() => dispatch(getAllPosts()));
     }
 
-    const userData = useSelector((state) => state.userReducer);
-    const commentsData = useSelector((state) => state.commentsReducer);
-
-    const userDataResults = userData.results;
-    const commentsDataResults = commentsData.results;
-
-    if(userDataResults === undefined || commentsDataResults === undefined) return;
+    if(userDataResults === undefined || commentsDataResults === undefined || likesDataResults === undefined) return;
 
     const objectUser = userDataResults[0];
     const userId = userDataResults[0].user_id;
 
     // Arrêt de la fonction si les props n'ont pas été reçues
     if (postsObject === undefined || allUsersResults === undefined || elt === undefined) return;
-    console.log(postsObject);
+    
     for (let i in postsObject) {
 
         // On récupère les infos utilisateurs dont l'userID est présent dans les posts
-        const filterUsersPosts = (allUsersResults.filter((elt) => elt.user_id === postsObject[i].user_id));
-        const postId = postsObject[i].post_id;
+        const filterUsersPosts = allUsersResults.filter((elt) => elt.user_id === postsObject[i].user_id);
+        postId = postsObject[i].post_id;
         const selectCards = document.querySelector(`.post_id${postId}`);
         
         if (selectCards !== null) {
             const selectImg = selectCards.querySelector('.profil-pic');
-            // selectImg.setAttribute('src', `${filterUsersPosts[0].profil_pic}`);
+            if(selectImg === null) return;
+            selectImg.setAttribute('src', `${filterUsersPosts[0].profil_pic}`);
 
             const selectH3 = selectCards.querySelector('.user-name');
-            // selectH3.textContent = `${filterUsersPosts[0].first_name}, ${filterUsersPosts[0].last_name}`;
+            selectH3.textContent = `${filterUsersPosts[0].first_name}, ${filterUsersPosts[0].last_name}`;
 
             const selectEmail = selectCards.querySelector('.email');
-            // selectEmail.textContent = `${filterUsersPosts[0].email}`;
+            selectEmail.textContent = `${filterUsersPosts[0].email}`;
         }
     }
+
+    // Récupération de tous les likes qui ont été cochés par l'utilisateur
+    const filterLikes = likesDataResults.filter((elt) => elt.isLiked === 1);
+    const likesUserId = filterLikes.map((elt) => elt.user_id);
+    const likesPostId = filterLikes.map((elt) => elt.post_id);
+    console.log(likesUserId);
     
+
     return (
         <>
             <div className={`card-container post_id${elt.post_id}`} key={elt.post_id}> 
@@ -296,7 +277,12 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                     <div className="card-likes-posts">   
                         <FontAwesomeIcon icon={ faMessage } onClick={toggleVisibility}/>
                         { (elt.comments_number > 1) ? <span>{elt.comments_number} commentaires</span> : <span>{elt.comments_number} commentaire</span> }
-                        <FontAwesomeIcon icon={ faThumbsUp } className={`thumbs-up post_id-green${elt.post_id}`} onClick={toggleLike}/>
+                        {/* Si le tableau des likes contient isLiked = 1 ainsi que l'userId on ajoute la classe active-green */}
+                        { (likesUserId.includes(userId) && likesPostId.includes(elt.post_id)) ? 
+                            <FontAwesomeIcon icon={ faThumbsUp } className={`thumbs-up post_id-green${elt.post_id} active-green`} onClick={toggleLike}/>
+                        :
+                            <FontAwesomeIcon icon={ faThumbsUp } className={`thumbs-up post_id-green${elt.post_id}`} onClick={toggleLike}/>
+                        }
                         { (elt.like_number > 1) ? <span className="post-like">{elt.like_number} likes</span> : <span className="post-like">{elt.like_number} like</span> }
                         <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down post_id-red${elt.post_id}`} onClick={toggleDislike}/>
                         { (elt.dislike_number > 1) ? <span className="post-dislike">{elt.dislike_number} dislikes</span> : <span className="post-dislike">{elt.dislike_number} dislike</span> }

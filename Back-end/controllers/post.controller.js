@@ -251,7 +251,7 @@ module.exports.likeDislikePost = (req, res) => {
             }
 
             // Si l'utilisateur n'a pas liké, insertion du post_id et user_id dans la table likes
-            const sqlLike = `INSERT INTO likes(post_id, user_id, text_post) VALUES (? , ? , ?)`;
+            const sqlLike = `INSERT INTO likes(post_id, user_id, text_post, isLiked) VALUES (? , ? , ?, 1)`;
             mySqlConnection.query( sqlLike, postInfos, (error, results) => {
     
                 if (!error) {
@@ -405,3 +405,4 @@ module.exports.readAllPics = (req, res) => {
         }
     });  
 };
+

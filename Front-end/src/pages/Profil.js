@@ -28,20 +28,15 @@ const Profil = () => {
         userId = objectUser.user_id;
 
         objectProfil = profilData.results[0];
-        console.log(objectProfil);
     }
     
     useEffect(() => {
         
         if(paramsId === userId) {
-            console.log(paramsId);
-            console.log(userId);
             dispatch(getUser(userId));
             dispatch(getUserPosts(userId));
         }
         else {
-            console.log(paramsId);
-            console.log(userId);
             dispatch(getProfil(paramsId));
             dispatch(getAllPosts());
         }
