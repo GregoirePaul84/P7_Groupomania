@@ -6,7 +6,7 @@ import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
 import { userLogout } from '../../actions/user.actions';
 
-const NavBar = (props) => {
+const NavBar = () => {
 
     function logoutPop() {
         document.querySelector('.logout-action').style.visibility = "visible";
@@ -19,13 +19,12 @@ const NavBar = (props) => {
         userLogout();
     }
     
-    const userIdToken = props.userId;
-
     const userData = useSelector((state) => state.userReducer);
+    if (Object.keys(userData).length === 0) return;
     const userDataResults = userData.results;
+    const userId = userDataResults[0].user_id;
 
-    if (userDataResults === undefined) return;
-
+    
     return (
         <header>
             <div className="groupomania-logo">
@@ -39,7 +38,7 @@ const NavBar = (props) => {
                         </NavLink>
                     </div>
                     <div className="profil">
-                        <NavLink to={`/profil/${userIdToken}`}>
+                        <NavLink to={`/profil/${userId}`}>
                             Profil
                         </NavLink>
                     </div>

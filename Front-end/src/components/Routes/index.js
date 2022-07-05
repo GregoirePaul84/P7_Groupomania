@@ -19,7 +19,10 @@ const index = () => {
             <Routes>
                 <Route path="/register" element={<Register/>} />
                 <Route path="/home" element={<Home/>} />
-                <Route path="/profil/:id" element={<Profil/>} />
+                <Route path="/profil" >
+                    <Route path="" element={<Profil/>}></Route>
+                    <Route path=":user_id" element={<Profil/>}></Route>
+                </Route >
                 <Route path="/settings" element={<Parameters/>} />
                 <Route path="/logout" element={<Register/>} />
 

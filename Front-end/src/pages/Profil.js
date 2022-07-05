@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useJwt } from "react-jwt";
 import NavBar from '../components/Profil/NavBar';
 import InputPost from '../components/Profil/InputPost';
 import UserDescription from '../components/Profil/UserDescription';
@@ -9,50 +8,52 @@ import FriendPosts from '../components/Profil/FriendPosts';
 import { getAllPosts } from '../actions/post.actions';
 import { getUser } from '../actions/user.actions';
 import { getUserPosts } from '../actions/user_posts.actions';
+import { useParams } from 'react-router-dom';
+let objectUser = {};
+let objectProfil = {};
+let userId = {};
 
 const Profil = () => {
 
     const dispatch = useDispatch();
 
-    const url = window.location.href;
-    const userId = parseInt(url.split('/')[4], 10);
+    const {user_id} = useParams();
+    const paramsId = parseInt(user_id, 10);
 
-    // Récupération du cookie et décodage du token pour récupérer l'user Id 
-    const readCookie = document.cookie;
-    const token = readCookie.split('jwt=')[1];
-    const { decodedToken } = useJwt(token);
-    // eslint-disable-next-line
-    let userIdToken = {};
+    const userData = useSelector((state) => state.userReducer);
+    const profilData = useSelector((state) => state.profilReducer);
 
-    if (decodedToken !== null) {
-        userIdToken = decodedToken.userId
+    if (Object.keys(userData).length !== 0 && Object.keys(profilData).length !== 0) {
+        objectUser = userData.results[0];
+        userId = objectUser.user_id;
+
+        objectProfil = profilData.results[0];
+        console.log(objectProfil);
     }
-
+    
     useEffect(() => {
-        if(userId === userIdToken) {
-            dispatch(getUser(userIdToken));
-            dispatch(getUserPosts(userIdToken));
+        
+        if(paramsId === userId) {
+            console.log(paramsId);
+            console.log(userId);
+            dispatch(getUser(userId));
+            dispatch(getUserPosts(userId));
         }
         else {
-            dispatch(getProfil(userId));
+            console.log(paramsId);
+            console.log(userId);
+            dispatch(getProfil(paramsId));
             dispatch(getAllPosts());
         }
-    }, [dispatch, userId, userIdToken])
+        // eslint-disable-next-line
+    }, [ userId, paramsId])
 
-    const userData = useSelector((state) => state.profilReducer);
-
-    let objectUser = {};
-
-    if (Object.keys(userData).length !== 0) {
-        objectUser = userData.results[0];
-    }
-
-    if(userId === userIdToken) {
+    if(paramsId === userId) {
         return (
             <div className="profil-page">
                 <div className="background-transparent">
                     <div className="profil-container">
-                        <NavBar user_info={objectUser} userId={userIdToken}/>
+                        <NavBar user_info={objectUser} userId={userId}/>
                         <UserDescription user_info={objectUser}/>
                         <InputPost user_info={objectUser}/>
                     </div>
@@ -65,9 +66,9 @@ const Profil = () => {
             <div className="profil-page">
                 <div className="background-transparent">
                     <div className="profil-container">
-                        <NavBar user_info={objectUser} userId={userIdToken}/>
-                        <UserDescription user_info={objectUser}/>
-                        <FriendPosts user_info={objectUser}/>
+                        <NavBar user_info={objectProfil} userId={userId}/>
+                        <UserDescription user_info={objectProfil}/>
+                        <FriendPosts user_info={objectProfil}/>
                     </div>
                 </div>
             </div>

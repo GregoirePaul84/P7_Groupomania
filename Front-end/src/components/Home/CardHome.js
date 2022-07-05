@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useJwt } from "react-jwt";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faThumbsUp, faMessage, faThumbsDown, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
 import { convertTime } from '../../App';
@@ -9,7 +8,6 @@ import InputComments from '../Profil/InputComments';
 import Comments, { displayComments, hideComments } from '../Profil/Comments';
 import { getAllLikes } from '../../actions/user.actions';
 import { getComments } from '../../actions/comment.actions';
-
 
 const CardHome = ({postsObject, allUsersResults, elt}) => {
 
@@ -215,16 +213,6 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             .then(() => dispatch(deleteDislikePost(postId)))
             .then(() => dispatch(getAllPosts()));
     }
-    
-    // Récupération du cookie et décodage du token pour récupérer l'userId 
-    const readCookie = document.cookie;
-    const token = readCookie.split('jwt=')[1];
-    const { decodedToken } = useJwt(token);
-    let userId = {};
-
-    if (decodedToken !== null) {
-        userId = decodedToken.userId
-    }
 
     const userData = useSelector((state) => state.userReducer);
     const commentsData = useSelector((state) => state.commentsReducer);
@@ -233,28 +221,29 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     const commentsDataResults = commentsData.results;
 
     if(userDataResults === undefined || commentsDataResults === undefined) return;
+
     const objectUser = userDataResults[0];
+    const userId = userDataResults[0].user_id;
 
     // Arrêt de la fonction si les props n'ont pas été reçues
     if (postsObject === undefined || allUsersResults === undefined || elt === undefined) return;
-    
+    console.log(postsObject);
     for (let i in postsObject) {
 
         // On récupère les infos utilisateurs dont l'userID est présent dans les posts
         const filterUsersPosts = (allUsersResults.filter((elt) => elt.user_id === postsObject[i].user_id));
         const postId = postsObject[i].post_id;
         const selectCards = document.querySelector(`.post_id${postId}`);
-        console.log(filterUsersPosts);
         
         if (selectCards !== null) {
             const selectImg = selectCards.querySelector('.profil-pic');
-            selectImg.setAttribute('src', `${filterUsersPosts[0].profil_pic}`);
+            // selectImg.setAttribute('src', `${filterUsersPosts[0].profil_pic}`);
 
             const selectH3 = selectCards.querySelector('.user-name');
-            selectH3.textContent = `${filterUsersPosts[0].first_name}, ${filterUsersPosts[0].last_name}`;
+            // selectH3.textContent = `${filterUsersPosts[0].first_name}, ${filterUsersPosts[0].last_name}`;
 
             const selectEmail = selectCards.querySelector('.email');
-            selectEmail.textContent = `${filterUsersPosts[0].email}`;
+            // selectEmail.textContent = `${filterUsersPosts[0].email}`;
         }
     }
     

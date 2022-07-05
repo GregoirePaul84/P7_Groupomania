@@ -133,7 +133,7 @@ module.exports.login = async (req,res) => {
 
 // ********** Déconnexion d'un utilisateur ********** //
 
-module.exports.logout = async (req,res) => {
+module.exports.logout = (req,res) => {
 
     try {
         console.log('Utilisateur déconnecté !');
@@ -144,3 +144,7 @@ module.exports.logout = async (req,res) => {
         res.status(500).json({ error });
     } 
 };
+
+// const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
+// const userId = decodedToken.userId;
+

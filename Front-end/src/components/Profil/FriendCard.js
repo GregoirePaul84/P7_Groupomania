@@ -29,7 +29,6 @@ const FriendCard = ({post, objectUser}) => {
     const commentsDataResults = commentsData.results;
 
     if(commentsDataResults === undefined) return;
-    console.log(commentsDataResults);
     
     return (
         <>
