@@ -19,9 +19,13 @@ const LeftSection = ({user_info}) => {
     const dataResults = useSelector((state) => state.allLikesReducer);
 
     let likesObject = {};
+    let likesFromUser = {};
 
     if (Object.keys(dataResults).length !== 0) {
         likesObject = dataResults.results;
+        console.log(likesObject);
+        likesFromUser = likesObject.filter((elt) => elt.user_id === userId)
+        console.log(likesFromUser);
     }
     else {
         return;
@@ -46,9 +50,9 @@ const LeftSection = ({user_info}) => {
                                 <div className="title-line">
                                     <div className="purple-line"></div>
                                 </div>
-                                { (likesObject.length !== 0) ?
+                                { (likesFromUser.length !== 0) ?
                                     <ul className="likes-list">
-                                        {likesObject.map((key) => {                           
+                                        {likesFromUser.map((key) => {                           
                                             return (  
                                                 <li key={key.likes_id}>
                                                     <div className="liked-post-text">
