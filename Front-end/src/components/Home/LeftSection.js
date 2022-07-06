@@ -52,8 +52,8 @@ const LeftSection = ({user_info}) => {
                                 </div>
                                 { (likesFromUser.length !== 0) ?
                                     <ul className="likes-list">
-                                        {likesFromUser.map((key) => {                           
-                                            return (  
+                                        {likesFromUser.map((key) => {                         
+                                            return (
                                                 <li key={key.likes_id}>
                                                     <div className="liked-post-text">
                                                         <div className="date-liked">
@@ -63,9 +63,15 @@ const LeftSection = ({user_info}) => {
                                                         <div className="title-line">
                                                             <div className="purple-line"></div>
                                                         </div>
+                                                        {(key.text_post === "null") ? 
+                                                        <div className="text-post">
+                                                            "Post sans texte"
+                                                        </div>
+                                                        :
                                                         <div className="text-post">
                                                             "{key.text_post}"
                                                         </div>
+                                                        }
                                                     </div>     
                                                 </li> 
                                             )                         
