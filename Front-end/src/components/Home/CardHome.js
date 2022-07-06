@@ -107,7 +107,8 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             // Vérification si l'utilisateur a déjà disliké le post: si oui, on annule le dislike
             const selectContainer = document.querySelector(`.post_id-red${elt.post_id}`);
             if (selectContainer.classList.contains('active-red')) {
-                toggleDislike();
+                isDisliked = false;
+                removeDislike();
             }
         }
 
@@ -131,8 +132,10 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
 
             // Vérification si l'utilisateur a déjà liké le post: si oui, on annule le like
             const selectContainer = document.querySelector(`.post_id-green${elt.post_id}`);
+            console.log(selectContainer);
             if (selectContainer.classList.contains('active-green')) {
-                toggleLike();
+                isLiked = false;
+                removeLike();
             }
         }
         else if (isDisliked === false) {
