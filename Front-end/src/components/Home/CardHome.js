@@ -6,9 +6,11 @@ import { cancelDislikePost, cancelLikePost, deleteDislikePost, deleteLikePost, d
 import { useDispatch, useSelector } from 'react-redux';
 import InputComments from '../Profil/InputComments';
 import Comments, { displayComments, hideComments } from '../Profil/Comments';
-import { getAllLikes } from '../../actions/user.actions';
+import { getAllDislikes, getAllLikes } from '../../actions/user.actions';
 import { getComments } from '../../actions/comment.actions';
 let postId = {};
+let isLiked = Boolean;
+let isDisliked = Boolean;
 
 const CardHome = ({postsObject, allUsersResults, elt}) => {
 
@@ -17,33 +19,17 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     const userData = useSelector((state) => state.userReducer);
     const commentsData = useSelector((state) => state.commentsReducer);
     const likesData = useSelector((state) => state.allLikesReducer);
+    const dislikesData = useSelector((state) => state.allDislikesReducer);
 
     const userDataResults = userData.results;
     const commentsDataResults = commentsData.results;
     const likesDataResults = likesData.results;
+    const dislikesDataResults = dislikesData.results;  
 
-    let isLiked = elt.isLiked;
-    let isDisliked = elt.isDisliked;
-
-    if (isLiked === 0) {
-        isLiked = true;
-    }
-    else if (isLiked === 1) {
-        isLiked = false;
-    }
-
-    if (isDisliked === 0) {
-        isDisliked = true;
-    }
-    else if (isDisliked === 1) {
-        isDisliked = false;
-    }
-
-    const [greenActive, setGreenActive] = useState(isLiked);
-    const [redActive, setRedActive] = useState(isDisliked);
     const [visibility, setVisibility] = useState(true);
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
+
 
     const toggleVisibility = () => {
         
@@ -98,22 +84,21 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
 
         console.log(`==> post disliké : post_id ${postId}`);
         dispatch(dislikePost(postId))
+        .then(() => dispatch(getAllDislikes(userId)))
             .then(() => dispatch(getAllPosts()));
     }
 
     function removeDislike() {
         console.log(`==> dislike annulé : post_id ${elt.post_id}`);
         dispatch(cancelDislikePost(elt.post_id))
+        .then(() => dispatch(getAllDislikes(userId)))
             .then(() => dispatch(getAllPosts()));
     }   
 
     // eslint-disable-next-line
     const toggleLike = () => {
 
-        console.log(greenActive);
-        setGreenActive(!greenActive);
-        
-        if (greenActive === true) {
+        if (isLiked === true) {
             
             addLike();
             const selectElt = document.querySelector(`.post_id-green${elt.post_id}`);
@@ -126,7 +111,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             }
         }
 
-        else if (greenActive === false) {
+        else if (isLiked === false) {
 
             removeLike();
             const selectElt = document.querySelector(`.post_id-green${elt.post_id}`);
@@ -137,17 +122,12 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
 
     // eslint-disable-next-line
     const toggleDislike = () => {
-        setRedActive(!redActive);
         
-        if (redActive === true) {
+        if (isDisliked === true) {
+            
             addDislike();
             const selectElt = document.querySelector(`.post_id-red${elt.post_id}`);
             selectElt.classList.add('active-red');
-
-            // Ajout de l'id du post disliké dans le local storage
-            const dislikesArray = JSON.parse(localStorage.getItem('redActive') || '[]');
-            dislikesArray.push(`.post_id-red${elt.post_id}`);
-            localStorage.setItem('redActive', JSON.stringify(dislikesArray));
 
             // Vérification si l'utilisateur a déjà liké le post: si oui, on annule le like
             const selectContainer = document.querySelector(`.post_id-green${elt.post_id}`);
@@ -155,18 +135,11 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                 toggleLike();
             }
         }
-        else if (redActive === false) {
+        else if (isDisliked === false) {
             removeDislike();
             const selectElt = document.querySelector(`.post_id-red${elt.post_id}`);
             selectElt.classList.remove('active-red');
 
-            // Suppression de l'id du post disliké dans le local storage
-            const dislikesArray = JSON.parse(localStorage.getItem('redActive'));
-            const index = dislikesArray.indexOf(`.post_id-red${elt.post_id}`);
-            if (index >= 0) {
-            dislikesArray.splice( index, 1 );
-            }
-            localStorage.setItem('redActive', JSON.stringify(dislikesArray));
         }
     };
 
@@ -186,7 +159,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             .then(() => dispatch(getAllPosts()));
     }
 
-    if(userDataResults === undefined || commentsDataResults === undefined || likesDataResults === undefined) return;
+    if(userDataResults === undefined || commentsDataResults === undefined || likesDataResults === undefined || dislikesDataResults === undefined) return;
 
     const objectUser = userDataResults[0];
     const userId = userDataResults[0].user_id;
@@ -217,9 +190,12 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     // Récupération de tous les likes qui ont été cochés par l'utilisateur
     const filterLikes = likesDataResults.filter((elt) => elt.isLiked === 1 && elt.user_id === userId);
     const likesUserId = filterLikes.map((elt) => elt.user_id);
-    const likesPostId = filterLikes.map((elt) => elt.post_id);
-    console.log(filterLikes);
-    
+    const likesPostId = filterLikes.map((elt) => elt.post_id); 
+
+    // Récupération de tous les dislikes qui ont été cochés par l'utilisateur
+    const filterDislikes = dislikesDataResults.filter((elt) => elt.isDisliked === 1 && elt.user_id === userId);
+    const dislikesUserId = filterDislikes.map((elt) => elt.user_id);
+    const dislikesPostId = filterDislikes.map((elt) => elt.post_id); 
 
     return (
         <>
@@ -272,12 +248,32 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                         { (elt.comments_number > 1) ? <span>{elt.comments_number} commentaires</span> : <span>{elt.comments_number} commentaire</span> }
                         {/* Si le tableau des likes contient isLiked = 1 ainsi que l'userId on ajoute la classe active-green */}
                         { (likesUserId.includes(userId) && likesPostId.includes(elt.post_id)) ? 
-                            <FontAwesomeIcon icon={ faThumbsUp } className={`thumbs-up post_id-green${elt.post_id} active-green`} onClick={toggleLike}/>
+                            <FontAwesomeIcon icon={ faThumbsUp } className={`thumbs-up post_id-green${elt.post_id} active-green`} onClick={()=> {
+                                isLiked = false;
+                                console.log(isLiked);
+                                toggleLike();
+                            }}/>
                         :
-                            <FontAwesomeIcon icon={ faThumbsUp } className={`thumbs-up post_id-green${elt.post_id}`} onClick={toggleLike}/>
+                            <FontAwesomeIcon icon={ faThumbsUp } className={`thumbs-up post_id-green${elt.post_id}`}  onClick={()=> {
+                                isLiked = true;
+                                console.log(isLiked);
+                                toggleLike();
+                            }}/>
                         }
                         { (elt.like_number > 1) ? <span className="post-like">{elt.like_number} likes</span> : <span className="post-like">{elt.like_number} like</span> }
-                        <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down post_id-red${elt.post_id}`} onClick={toggleDislike}/>
+                        { (dislikesUserId.includes(userId) && dislikesPostId.includes(elt.post_id)) ? 
+                            <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down post_id-red${elt.post_id} active-red`} onClick={()=> {
+                                isDisliked = false;
+                                console.log(isDisliked);
+                                toggleDislike();
+                            }}/>
+                        :
+                            <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down post_id-red${elt.post_id}`}  onClick={()=> {
+                                isDisliked = true;
+                                console.log(isDisliked);
+                                toggleDislike();
+                            }}/>
+                        }
                         { (elt.dislike_number > 1) ? <span className="post-dislike">{elt.dislike_number} dislikes</span> : <span className="post-dislike">{elt.dislike_number} dislike</span> }
                     </div>
                 </div>

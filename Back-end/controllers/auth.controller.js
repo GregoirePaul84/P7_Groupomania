@@ -145,6 +145,21 @@ module.exports.logout = (req,res) => {
     } 
 };
 
-// const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
-// const userId = decodedToken.userId;
 
+// ********** Décodage du token ********** //
+
+module.exports.getDecodedToken = (req,res) => {
+
+    const token = req.headers.cookie.split('jwt=')[1];
+    const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
+    const userId = decodedToken.userId;
+
+    mySqlConnection.query(sqlInsertProfilPic, imageUserArray, (error, results) => {
+        if (!error) {
+            res.status(201).json( {message: "Image de profil envoyée !"});
+        }
+        else {
+            res.status(500).json( {error} );
+        }
+    });
+};

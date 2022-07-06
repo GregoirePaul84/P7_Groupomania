@@ -62,6 +62,7 @@ export const sendPost = (data) => {
     }
 }
 
+
 export const updatePost = (postId, textUpdate) => {
     return async (dispatch) => {
 

@@ -29,5 +29,7 @@ router.delete('/:id', auth, userCtlr.deleteUser);
 // Récupérer tous les likes
 router.get('/likes/:id', auth, userCtlr.readAllLikes);
 
+// Récupérer tous les dislikes
+router.get('/dislikes/:id', auth, userCtlr.readAllDislikes);
 
 module.exports = router;

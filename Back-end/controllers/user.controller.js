@@ -193,6 +193,24 @@ module.exports.readAllLikes = (req, res) => {
     });
 }
 
+// ********** Récupération de tous les likes d'un utilisateur********** //
+
+module.exports.readAllDislikes = (req, res) => {
+    
+    const sqlGetAllDislikes = `SELECT * FROM dislikes`;
+
+    mySqlConnection.query(sqlGetAllDislikes, (error, results) => {
+        
+        if (results) {
+            res.status(200).json( {message: "Dislikes récupérés !", results});
+        }
+
+        else {
+            res.status(500).json( {error} )
+        } 
+    });
+}
+
 // ********** Récupération de toutes les images ********** //
 
 module.exports.readAllPictures = (req, res) => {

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faHeartCrack, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllLikes } from '../../actions/user.actions';
+import { getAllDislikes, getAllLikes } from '../../actions/user.actions';
 import { convertTime } from '../../App';
 
 const LeftSection = ({user_info}) => {
@@ -13,6 +13,7 @@ const LeftSection = ({user_info}) => {
 
     useEffect(() => {
         dispatch(getAllLikes(userId));
+        dispatch(getAllDislikes(userId));
     }, [userId, dispatch]);
 
     const dataResults = useSelector((state) => state.allLikesReducer);

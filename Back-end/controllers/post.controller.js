@@ -85,6 +85,7 @@ module.exports.createPost = (req, res) => {
                         console.log("===> Texte créé !");
                         res.status(201).json( {message: "Texte créé !"} )
                     } 
+                    
                 });
             }
 
@@ -125,7 +126,6 @@ module.exports.createPost = (req, res) => {
         }
     });
 };
-
 
 // ********** Modification d'un post ********** //
 
@@ -290,7 +290,7 @@ module.exports.likeDislikePost = (req, res) => {
             }
 
             // Si l'utilisateur n'a pas disliké, insertion du post_id et user_id dans la table likes
-            const sqlDislike = `INSERT INTO dislikes(post_id, user_id) VALUES (? , ?)`;
+            const sqlDislike = `INSERT INTO dislikes(post_id, user_id, isDisliked) VALUES (? , ? , 1)`;
             mySqlConnection.query( sqlDislike, userPostId, (error, results) => {
     
                 if (!error) {
