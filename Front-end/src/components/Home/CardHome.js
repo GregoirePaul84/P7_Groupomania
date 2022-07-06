@@ -151,6 +151,30 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     // eslint-disable-next-line
     }, []);
 
+    useEffect(() => {
+        if (postsObject === undefined || allUsersResults === undefined) return;
+
+        for (let i in postsObject) {
+
+            // On récupère les infos utilisateurs dont l'userID est présent dans les posts
+            const filterUsersPosts = allUsersResults.filter((elt) => elt.user_id === postsObject[i].user_id);
+            postId = postsObject[i].post_id;
+            const selectCards = document.querySelector(`.post_id${postId}`);
+            
+            if (selectCards !== null) {
+                const selectImg = selectCards.querySelector('.profil-pic');
+                if(selectImg === null) return;
+                selectImg.setAttribute('src', `${filterUsersPosts[0].profil_pic}`);
+    
+                const selectH3 = selectCards.querySelector('.user-name');
+                selectH3.textContent = `${filterUsersPosts[0].first_name}, ${filterUsersPosts[0].last_name}`;
+    
+                const selectEmail = selectCards.querySelector('.email');
+                selectEmail.textContent = `${filterUsersPosts[0].email}`;
+            }
+        }
+    })
+
     // Suppression du post: suppression des likes / dislikes et de l'image de la DB
     const deleteArticle = () => {
         const postId = elt.post_id;
@@ -166,29 +190,6 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
 
     const objectUser = userDataResults[0];
     const userId = userDataResults[0].user_id;
-
-    // Arrêt de la fonction si les props n'ont pas été reçues
-    if (postsObject === undefined || allUsersResults === undefined || elt === undefined) return;
-    
-    for (let i in postsObject) {
-
-        // On récupère les infos utilisateurs dont l'userID est présent dans les posts
-        const filterUsersPosts = allUsersResults.filter((elt) => elt.user_id === postsObject[i].user_id);
-        postId = postsObject[i].post_id;
-        const selectCards = document.querySelector(`.post_id${postId}`);
-        
-        if (selectCards !== null) {
-            const selectImg = selectCards.querySelector('.profil-pic');
-            if(selectImg === null) return;
-            selectImg.setAttribute('src', `${filterUsersPosts[0].profil_pic}`);
-
-            const selectH3 = selectCards.querySelector('.user-name');
-            selectH3.textContent = `${filterUsersPosts[0].first_name}, ${filterUsersPosts[0].last_name}`;
-
-            const selectEmail = selectCards.querySelector('.email');
-            selectEmail.textContent = `${filterUsersPosts[0].email}`;
-        }
-    }
 
     // Récupération de tous les likes qui ont été cochés par l'utilisateur
     const filterLikes = likesDataResults.filter((elt) => elt.isLiked === 1 && elt.user_id === userId);
