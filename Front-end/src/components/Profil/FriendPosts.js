@@ -84,6 +84,7 @@ const FriendPosts = (props) => {
                 </div>
                 <div className="user-posts-container">
                 {friendPosts.map((post) => {
+                    console.log(post);
                     return <FriendCard post={post} key={post.post_id} objectUser={objectUser} /> })
                 }
                 </div>

@@ -30,6 +30,8 @@ const Stories = () => {
         selectBox.scrollBy(20, 0);
     }
 
+    if(picturesObject === undefined) return;
+    
     if (picturesObject.length !== 0) {
         return (
             <div className="stories">

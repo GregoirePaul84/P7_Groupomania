@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { convertTime } from '../../App';
 import Comments, { displayComments, hideComments } from './Comments';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getComments } from '../../actions/comment.actions';
 
 const FriendCard = ({post, objectUser}) => {
+
+    const dispatch = useDispatch();
 
     const [visibility, setVisibility] = useState(true);
 
@@ -23,6 +26,11 @@ const FriendCard = ({post, objectUser}) => {
             hideComments(postId);
         }
     }
+
+    useEffect(() => {
+        dispatch(getComments());
+    // eslint-disable-next-line
+    }, [])
 
     const commentsData = useSelector((state) => state.commentsReducer);
 
@@ -68,16 +76,7 @@ const FriendCard = ({post, objectUser}) => {
                         return (
                             // eslint-disable-next-line
                             <div className={"comments-container " + "post_id" + post.post_id + " comment_id" + comment.comment_id} key={comment.comment_id}> 
-                                <Comments postId={post.postId} 
-                                    comments={commentsDataResults}
-                                    userId={post.user_id}
-                                    commentDate={comment.created}
-                                    commentText={comment.text}
-                                    commentId={comment.comment_id}
-                                    imgUrl={comment.image_url}
-                                    nbOfLikes={comment.like_number}
-                                    nbOfDislikes={comment.dislike_number} 
-                                    key={comment.comment_id} />
+                                <Comments comment={comment} />
                             </div>
                         )
                     }
