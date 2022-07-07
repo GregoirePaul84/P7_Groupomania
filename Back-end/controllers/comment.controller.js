@@ -196,6 +196,7 @@ module.exports.likeDislikeComment = (req, res) => {
     const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
     const userId = decodedToken.userId;
     const commentId = req.params.id;
+    const commentText = req.body.postText;
     const userCommentId = [commentId, userId];
     
     if (req.body.like == 1) {
@@ -214,13 +215,13 @@ module.exports.likeDislikeComment = (req, res) => {
             }
 
             // Si l'utilisateur n'a pas liké, insertion du comment_id et user_id dans la table likes
-            const sqlLike = `INSERT INTO likes(comment_id, user_id) VALUES (? , ?)`;
+            const sqlLike = `INSERT INTO likes(comment_id, user_id, isLiked) VALUES (?, ?, 1)`;
             mySqlConnection.query( sqlLike, userCommentId, (error, results) => {
     
                 if (!error) {
 
                     // Incrémentation du like dans la table comments
-                    const sqlIncrementLike = `UPDATE comments Set like_number=like_number+1 where comment_id=?`;
+                    const sqlIncrementLike = `UPDATE comments SET like_number=like_number+1, isLiked=1 where comment_id=?`;
                     mySqlConnection.query( sqlIncrementLike, commentId, (error, results) => {
                         if (!error) {
                             res.status(200).json( {message : "Like ajouté !"} );
@@ -253,7 +254,7 @@ module.exports.likeDislikeComment = (req, res) => {
             }
 
             // Si l'utilisateur n'a pas disliké, insertion du comment_id et user_id dans la table dislikes
-            const sqlDislike = `INSERT INTO dislikes(comment_id, user_id) VALUES (? , ?)`;
+            const sqlDislike = `INSERT INTO dislikes(comment_id, user_id, isDisliked) VALUES (? , ? , 1)`;
             mySqlConnection.query( sqlDislike, userCommentId, (error, results) => {
     
                 if (!error) {

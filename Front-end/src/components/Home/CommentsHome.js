@@ -6,27 +6,10 @@ import { getAllUsers } from '../../actions/user.actions';
 import { convertTime } from '../../App';
 import { cancelDislikeComment, cancelLikeComment, decreaseNbOfComments, deleteComment, deleteDislikeComment, deleteLikeComment, deletePictureComment, dislikeComment, getComments, likeComment, updateComment} from '../../actions/comment.actions';
 import { getUserPosts } from '../../actions/user_posts.actions';
+let isLiked = Boolean;
+let isDisliked = Boolean;
 
-
-export function displayComments(postId) {
-    const selectInput = document.querySelector(`.input-post_id${postId}`);
-    selectInput.style.display = "block";
-    const selectContainer = document.querySelectorAll(`.input-post_id${postId}`);
-    for (let i=0; i<selectContainer.length; i+=1) {
-        selectContainer[i].style.display = "block";
-    }
-}
-
-export function hideComments(postId) {
-    const selectInput = document.querySelector(`.input-post_id${postId}`);
-    selectInput.style.display = "none";
-    const selectContainer = document.querySelectorAll(`.input-post_id${postId}`);
-    for (let i=0; i<selectContainer.length; i+=1) {
-        selectContainer[i].style.display = "none";
-    }
-}
-
-const Comments = (props) => {
+const CommentsHome = (props) => {
 
     const dispatch = useDispatch();
     const comments = props.comments;
@@ -36,15 +19,21 @@ const Comments = (props) => {
     const commentText = props.commentText;
     const imgUrl = props.imgUrl;
     const commentDate = props.commentDate;
-    const userId = props.userId;
     const postId = props.postId;
     
-    
-    const [greenActive, setGreenActive] = useState(true);
-    const [redActive, setRedActive] = useState(true);
+
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
 
+    const userData = useSelector((state) => state.userReducer);
+    const allUsersData = useSelector((state) => state.userAllReducer);
+    const likesData = useSelector((state) => state.allLikesReducer);
+    const dislikesData = useSelector((state) => state.allDislikesReducer);
+
+    const userResults = userData.results;
+    const usersResults = allUsersData.results;
+    const likesDataResults = likesData.results;
+    const dislikesDataResults = dislikesData.results;  
 
     const updateItem = () => {
         if(textUpdate) {
@@ -62,8 +51,6 @@ const Comments = (props) => {
     // eslint-disable-next-line    
     }, []);
 
-    const allUsersData = useSelector((state) => state.userAllReducer);
-    const usersResults = allUsersData.results;
     
     useEffect(() => {
         for (let j in comments) {
@@ -107,6 +94,7 @@ const Comments = (props) => {
     }, [usersResults]);
 
     function addLike() {
+
         console.log(`==> commentaire liké : comment_id ${commentId}`);
         dispatch(likeComment(commentId))
             .then(() => dispatch(getComments()));
@@ -120,10 +108,18 @@ const Comments = (props) => {
 
     // eslint-disable-next-line
     const toggleLike = () => {
-        setGreenActive(!greenActive);
-        console.log(greenActive);
 
-        if (greenActive === true) {
+        const selectLike = document.querySelector(`.comment_id-green${commentId}`);
+        const checkColor = selectLike.classList.contains('active-green');
+
+        if (checkColor) {
+            isLiked = false;
+        }
+        else {
+            isLiked = true;
+        }
+            
+        if (isLiked === true) {
             addLike();
             const selectElt = document.querySelector(`.comment_id-green${commentId}`);
             selectElt.classList.add('active-green');
@@ -131,10 +127,11 @@ const Comments = (props) => {
             // Vérification si l'utilisateur a déjà disliké le commentaire: si oui, on annule le dislike
             const selectContainer = document.querySelector(`.comment_id-red${commentId}`);
             if (selectContainer.classList.contains('active-red')) {
+                isDisliked = false;
                 toggleDislike();
             }
         }
-        else if (greenActive === false) {
+        else if (isLiked === false) {
             removeLike();
             const selectElt = document.querySelector(`.comment_id-green${commentId}`);
             selectElt.classList.remove('active-green');
@@ -155,38 +152,39 @@ const Comments = (props) => {
 
     // eslint-disable-next-line
     const toggleDislike = () => {
-        setRedActive(!redActive);
 
-        if (redActive === true) {
+        const selectDislike = document.querySelector(`.comment_id-red${commentId}`);
+        const checkColor = selectDislike.classList.contains('active-red');
+
+        if (checkColor) {
+            isDisliked = false;
+        }
+        else {
+            isDisliked = true;
+        }
+
+        if (isDisliked === true) {
             addDislike();
             const selectElt = document.querySelector(`.comment_id-red${commentId}`);
             selectElt.classList.add('active-red');
 
-            // Ajout de l'id du commentaire liké dans le local storage
-            const dislikesArray = JSON.parse(localStorage.getItem('commentRedActive') || '[]');
-            dislikesArray.push(`.comment_id-red${commentId}`);
-            localStorage.setItem('commentRedActive', JSON.stringify(dislikesArray));
-
             // Vérification si l'utilisateur a déjà liké le commentaire: si oui, on annule le like
             const selectContainer = document.querySelector(`.comment_id-green${commentId}`);
             if (selectContainer.classList.contains('active-green')) {
+                isLiked = false;
                 toggleLike();
             }
         }
-        else if (redActive === false) {
+        else if (isDisliked=== false) {
             removeDislike();
             const selectElt = document.querySelector(`.comment_id-red${commentId}`);
             selectElt.classList.remove('active-red');
-
-            // Suppression de l'id du commentaire liké dans le local storage
-            const dislikesArray = JSON.parse(localStorage.getItem('commentRedActive'));
-            const index = dislikesArray.indexOf(`.comment_id-red${commentId}`);
-            if (index >= 0) {
-            dislikesArray.splice( index, 1 );
-            }
-            localStorage.setItem('commentRedActive', JSON.stringify(dislikesArray));
         }
     };
+
+    if(likesDataResults === undefined || dislikesDataResults === undefined || userResults === undefined) return;
+
+    const userId = userResults[0].user_id;
 
     const deleteCom = () => {
         dispatch(deleteComment(commentId, postId))
@@ -198,30 +196,17 @@ const Comments = (props) => {
             .then(() => dispatch(getUserPosts(userId)));
     }
 
-    useEffect(() => {
-        
-        const likesArray = JSON.parse(localStorage.getItem('commentGreenActive'));
-        
-        for (let i in likesArray) {
-            const selectElt = document.querySelector(likesArray[i]);
-    
-            if (selectElt !== null) {
-                selectElt.classList.add('active-green');
-            }
-        }
+    // Récupération de tous les likes qui ont été cochés par l'utilisateur
+    const filterLikes = likesDataResults.filter((elt) => elt.isLiked === 1 && elt.user_id === userId);
+    const likesUserId = filterLikes.map((elt) => elt.user_id);
+    const likesCommentId = filterLikes.map((elt) => elt.comment_id); 
+    console.log(likesUserId);
 
-        const dislikesArray = JSON.parse(localStorage.getItem('commentRedActive'));
-        
-        for (let j in dislikesArray) {
-            const selectElt = document.querySelector(dislikesArray[j]);
-    
-            if (selectElt !== null) {
-                selectElt.classList.add('active-red');
-            }
-        }
-    
-    }, [toggleLike, toggleDislike])
-
+    // Récupération de tous les dislikes qui ont été cochés par l'utilisateur
+    const filterDislikes = dislikesDataResults.filter((elt) => elt.isDisliked === 1 && elt.user_id === userId);
+    const dislikesUserId = filterDislikes.map((elt) => elt.user_id);
+    const dislikesCommentId = filterDislikes.map((elt) => elt.comment_id); 
+    console.log(likesUserId);
         
     return (
         
@@ -249,7 +234,7 @@ const Comments = (props) => {
                         <div className="comment-content">
                             {isUpdated === false && 
                                 <div className='message'>{commentText}</div>
-                                }
+                            }
                             {isUpdated && (
                                 <div className="update-comment">
                                     <textarea
@@ -270,9 +255,25 @@ const Comments = (props) => {
                         </div>
                     </div>
                     <div className="comments-likes">
-                        <FontAwesomeIcon className={"thumbs-up comment"} icon={ faThumbsUp }  onClick={toggleLike}/>
+                        { (likesCommentId.includes(commentId) && likesUserId.includes(userId)) ? 
+                            <FontAwesomeIcon icon={ faThumbsUp } className={"thumbs-up comment active-green"} onClick={()=> {
+                                toggleLike();
+                            }}/>
+                        :
+                            <FontAwesomeIcon icon={ faThumbsUp } className={"thumbs-up comment"}  onClick={()=> {
+                                toggleLike();
+                            }}/>
+                        }
                         { (likeNumber > 1) ? <span className="comment-like">{likeNumber} likes</span> : <span className="comment-like">{likeNumber} like</span> }
-                        <FontAwesomeIcon className={"thumbs-down"} icon={ faThumbsDown } onClick={toggleDislike}/>
+                        { (dislikesCommentId.includes(commentId) && dislikesUserId.includes(userId)) ? 
+                            <FontAwesomeIcon icon={ faThumbsDown } className={"thumbs-down comment active-red"} onClick={()=> {
+                                toggleDislike();
+                            }}/>
+                        :
+                            <FontAwesomeIcon icon={ faThumbsDown } className={"thumbs-down comment"}  onClick={()=> {
+                                toggleDislike();
+                            }}/>
+                        }
                         { (dislikeNumber > 1) ? <span className="comment-dislike">{likeNumber} dislikes</span> : <span className="comment-dislike">{dislikeNumber} dislike</span> }
                     </div>
                 </div>
@@ -281,4 +282,4 @@ const Comments = (props) => {
     
 };
 
-export default Comments;
+export default CommentsHome;

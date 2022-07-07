@@ -23,9 +23,7 @@ const LeftSection = ({user_info}) => {
 
     if (Object.keys(dataResults).length !== 0) {
         likesObject = dataResults.results;
-        console.log(likesObject);
         likesFromUser = likesObject.filter((elt) => elt.user_id === userId)
-        console.log(likesFromUser);
     }
     else {
         return;

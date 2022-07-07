@@ -5,7 +5,8 @@ import { convertTime } from '../../App';
 import { cancelDislikePost, cancelLikePost, deleteDislikePost, deleteLikePost, deletePicturePost, deletePost, dislikePost, getAllPosts, likePost, updatePost } from '../../actions/post.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import InputComments from '../Profil/InputComments';
-import Comments, { displayComments, hideComments } from '../Profil/Comments';
+import CommentsHome from '../Home/CommentsHome';
+import { displayComments, hideComments } from '../Profil/Comments';
 import { getAllDislikes, getAllLikes } from '../../actions/user.actions';
 import { getComments } from '../../actions/comment.actions';
 let postId = {};
@@ -113,11 +114,9 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
         }
 
         else if (isLiked === false) {
-
             removeLike();
             const selectElt = document.querySelector(`.post_id-green${elt.post_id}`);
             selectElt.classList.remove('active-green');
-
         }
     };
 
@@ -212,7 +211,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                         <h3 className='user-name'>{"userName"}</h3>
                         <p className='email'></p>
                     </div>
-                    {/* Si le token décodé est égal à l'userId du post, on permet la modification / suppression */}
+                    {/* Si l'userID est égal à l'userId du post, on permet la modification / suppression */}
                     { (userId === elt.user_id) ? 
                     <div className="modify-delete">
                         <FontAwesomeIcon icon={faPen} onClick={() => setIsUpdated(!isUpdated)}/>
@@ -290,9 +289,8 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                     return (
                         // eslint-disable-next-line
                         <div className={"comments-container " + "post_id" + elt.post_id + " comment_id" + comment.comment_id} key={comment.comment_id}> 
-                            <Comments postId={elt.postId} 
+                            <CommentsHome postId={elt.postId} 
                                 comments={commentsDataResults}
-                                userId={elt.user_id}
                                 commentDate={comment.created}
                                 commentText={comment.text}
                                 commentId={comment.comment_id}

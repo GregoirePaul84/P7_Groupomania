@@ -27,9 +27,6 @@ const Card = ({post}) => {
 
     const userData = useSelector((state) => state.userReducer);
     const commentsData = useSelector((state) => state.commentsReducer);
-    const likesData = useSelector((state) => state.allLikesReducer);
-    const dislikesData = useSelector((state) => state.allDislikesReducer);
-
 
     let objectUser = {};
     objectUser = userData.results[0];
@@ -141,32 +138,7 @@ const Card = ({post}) => {
             .then(() => dispatch(deleteLikePost(postId)))
             .then(() => dispatch(deleteDislikePost(postId)))
             .then(() => dispatch(getUserPosts(userId)));
-    }
-
-    useEffect(() => {
-        
-        const likesArray = JSON.parse(localStorage.getItem('greenActive'));
-        
-        for (let i in likesArray) {
-            const selectElt = document.querySelector(likesArray[i]);
-    
-            if (selectElt !== null) {
-                selectElt.classList.add('active-green');
-            }
-        }
-
-        const dislikesArray = JSON.parse(localStorage.getItem('redActive'));
-        
-        for (let j in dislikesArray) {
-            const selectElt = document.querySelector(dislikesArray[j]);
-    
-            if (selectElt !== null) {
-                selectElt.classList.add('active-red');
-            }
-        }
-    
-    }, [toggleLike, toggleDislike])
-    
+    }   
 
     useEffect(() => {
         dispatch(getUserPosts(userId));
@@ -217,12 +189,13 @@ const Card = ({post}) => {
 
     useEffect(() => {
         dispatch(getAllLikes());
+    // eslint-disable-next-line
     }, [])
 
     if (commentsArray === undefined) {
         return;
     }
-
+    console.log(numberOfComments);
     return (
         <>
         <div className="card-container">

@@ -4,6 +4,7 @@ import { faComment, faImage} from '@fortawesome/free-solid-svg-icons'
 import { getComments, increaseNbOfComments, sendComment } from '../../actions/comment.actions';
 import { useDispatch } from 'react-redux';
 import { getUserPosts } from '../../actions/user_posts.actions';
+import { getAllPosts } from '../../actions/post.actions';
 
 const InputComments = (props) => {
     
@@ -35,6 +36,7 @@ const InputComments = (props) => {
         await dispatch(sendComment(data))
             .then(() => dispatch(increaseNbOfComments(postId)))
             .then(() => dispatch(getUserPosts(userId)))
+            .then(() => dispatch(getAllPosts()))
             .then(() => dispatch(getComments()))
             .then(() => selectInput.value = '');
             setFile(false);

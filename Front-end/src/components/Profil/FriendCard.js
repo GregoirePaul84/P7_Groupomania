@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMessage, faPaperPlane, faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faMessage, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { convertTime } from '../../App';
 import Comments, { displayComments, hideComments } from './Comments';
 import { useSelector } from 'react-redux';
@@ -56,9 +56,7 @@ const FriendCard = ({post, objectUser}) => {
                     <div className="card-likes-posts">   
                         <FontAwesomeIcon icon={ faMessage } onClick={toggleVisibility} />
                         { (post.comments_number > 1) ? <span>{post.comments_number} commentaires</span> : <span>{post.comments_number} commentaire</span> }
-                        <FontAwesomeIcon icon={ faThumbsUp } />
                         { (post.like_number > 1) ? <span>{post.like_number} likes</span> : <span>{post.like_number} like</span> }
-                        <FontAwesomeIcon icon={ faThumbsDown } />
                         { (post.dislike_number > 1) ? <span>{post.dislike_number} dislikes</span> : <span>{post.dislike_number} dislike</span> }
                     </div>
                 </div>

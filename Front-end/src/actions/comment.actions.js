@@ -248,12 +248,13 @@ export const decreaseNbOfComments = (postId) => {
 }
 
 
-export const likeComment = (commentId) => {
-    console.log(commentId);
+export const likeComment = (commentId, commentText) => {
+    
     return async (dispatch) => {
         try {
             const data = JSON.stringify({
-                "like": "1"
+                "like": "1",
+                "postText": `${commentText}`
               });
             
             const res = await axios({

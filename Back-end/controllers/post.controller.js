@@ -231,7 +231,6 @@ module.exports.likeDislikePost = (req, res) => {
     const userId = decodedToken.userId;
     const postId = req.params.id;
     const postText = req.body.postText;
-    const commentText = req.body.postText;
     const userPostId = [postId, userId];
     const postInfos = [postId, userId, postText];
     
