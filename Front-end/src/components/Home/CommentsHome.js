@@ -6,6 +6,7 @@ import { getAllUsers } from '../../actions/user.actions';
 import { convertTime } from '../../App';
 import { cancelDislikeComment, cancelLikeComment, decreaseNbOfComments, deleteComment, deleteDislikeComment, deleteLikeComment, deletePictureComment, dislikeComment, getComments, likeComment, updateComment} from '../../actions/comment.actions';
 import { getUserPosts } from '../../actions/user_posts.actions';
+import { getAllPosts } from '../../actions/post.actions';
 let isLiked = Boolean;
 let isDisliked = Boolean;
 
@@ -19,8 +20,8 @@ const CommentsHome = (props) => {
     const commentText = props.commentText;
     const imgUrl = props.imgUrl;
     const commentDate = props.commentDate;
-    const postId = props.postId;
-    
+    const comment = props.comment;
+    const postId = comment.post_id;
 
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
@@ -185,6 +186,7 @@ const CommentsHome = (props) => {
     if(likesDataResults === undefined || dislikesDataResults === undefined || userResults === undefined) return;
 
     const userId = userResults[0].user_id;
+    console.log(postId);
 
     const deleteCom = () => {
         dispatch(deleteComment(commentId, postId))
@@ -193,7 +195,7 @@ const CommentsHome = (props) => {
             .then(() => dispatch(deleteLikeComment(commentId)))
             .then(() => dispatch(deleteDislikeComment(commentId)))
             .then(() => dispatch(getComments()))
-            .then(() => dispatch(getUserPosts(userId)));
+            .then(() => dispatch(getAllPosts()));
     }
 
     // Récupération de tous les likes qui ont été cochés par l'utilisateur

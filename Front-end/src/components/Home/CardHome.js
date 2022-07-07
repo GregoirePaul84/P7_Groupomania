@@ -289,7 +289,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                     return (
                         // eslint-disable-next-line
                         <div className={"comments-container " + "post_id" + elt.post_id + " comment_id" + comment.comment_id} key={comment.comment_id}> 
-                            <CommentsHome postId={elt.postId} 
+                            <CommentsHome comment={comment} 
                                 comments={commentsDataResults}
                                 commentDate={comment.created}
                                 commentText={comment.text}
