@@ -17,6 +17,11 @@
             width: 125px;
             border-radius: 20px;
             padding: 5px;
+            transition: transform 400ms;
+            cursor: pointer;
+            &:hover {
+                transform: scale(1.05);
+            }
         }
     }
 

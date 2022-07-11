@@ -31,8 +31,6 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
     const [showPicture, setShowPicture] = useState(false);
-    console.log(showPicture);
-
 
     const toggleVisibility = () => {
         
