@@ -133,9 +133,10 @@ module.exports.updatePost = (req, res) => {
     
     const postId = req.params.id;
     const newText = req.body.text;
-    const updateArray = [newText, postId]
+    const userId = req.user().userId;
+    const updateArray = [newText, postId, userId];
 
-    const sqlUpdatePost = `UPDATE posts SET text = ? WHERE post_id = ?`;
+    const sqlUpdatePost = `UPDATE posts SET text = ? WHERE post_id = ? AND user_id = ?`;
     mySqlConnection.query (sqlUpdatePost, updateArray, (error, results) => {
         if (!error) {  
             res.status(200).json( {message : "Modification du post réussie !"} ); 
@@ -151,8 +152,11 @@ module.exports.updatePost = (req, res) => {
 module.exports.deletePost = (req, res) => {
     
     const postId = req.params.id;
-    const sqlDeletePost = `DELETE FROM posts WHERE posts.post_id = ?`;
-    mySqlConnection.query (sqlDeletePost, postId, (error, results) => {
+    const userId = req.user().userId;
+    const idArray = [postId, userId];
+
+    const sqlDeletePost = `DELETE FROM posts WHERE posts.post_id = ? AND posts.user_id = ?`;
+    mySqlConnection.query (sqlDeletePost, idArray, (error, results) => {
         if (!error) {
             const sqlDeleteComments = `DELETE FROM comments WHERE comments.post_id = ?`;
             mySqlConnection.query(sqlDeleteComments, postId, (error, results) => {
@@ -175,8 +179,11 @@ module.exports.deletePost = (req, res) => {
 module.exports.deletePicturePost = (req, res) => {
     
     const postId = req.params.id;
-    const sqlDeletePicturePost = `DELETE FROM post_image WHERE post_id = ?`;
-    mySqlConnection.query (sqlDeletePicturePost, postId, (error, results) => {
+    const userId = req.user().userId;
+    const idArray = [postId, userId];
+
+    const sqlDeletePicturePost = `DELETE FROM post_image WHERE post_id = ? AND user_id = ?`;
+    mySqlConnection.query (sqlDeletePicturePost, idArray, (error, results) => {
         
         if (!error) {
             res.status(200).json( {message : "Suppression de l'image réussie !"} ); 
@@ -192,8 +199,11 @@ module.exports.deletePicturePost = (req, res) => {
 module.exports.deleteLikesPost = (req, res) => {
     
     const postId = req.params.id;
-    const sqlDeleteLikesPost = `DELETE FROM likes WHERE post_id = ?`;
-    mySqlConnection.query (sqlDeleteLikesPost, postId, (error, results) => {
+    const userId = req.user().userId;
+    const idArray = [postId, userId];
+
+    const sqlDeleteLikesPost = `DELETE FROM likes WHERE post_id = ? AND user_id = ?`;
+    mySqlConnection.query (sqlDeleteLikesPost, idArray, (error, results) => {
         
         if (!error) {
             res.status(200).json( {message : "Suppression de likes réussie !"} ); 
@@ -209,8 +219,11 @@ module.exports.deleteLikesPost = (req, res) => {
 module.exports.deleteDislikesPost = (req, res) => {
     
     const postId = req.params.id;
-    const sqlDeleteDislikesPost = `DELETE FROM dislikes WHERE post_id = ?`;
-    mySqlConnection.query (sqlDeleteDislikesPost, postId, (error, results) => {
+    const userId = req.user().userId;
+    const idArray = [postId, userId];
+
+    const sqlDeleteDislikesPost = `DELETE FROM dislikes WHERE post_id = ? AND user_id = ?`;
+    mySqlConnection.query (sqlDeleteDislikesPost, idArray, (error, results) => {
         
         if (!error) {
             res.status(200).json( {message : "Suppression de dislikes réussie !"} ); 

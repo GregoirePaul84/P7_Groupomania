@@ -121,9 +121,10 @@ module.exports.updateComment = (req, res) => {
     
     const commentId = req.params.id;
     const newText = req.body.text;
-    const updateArray = [newText, commentId];
+    const userId = req.user().userId;
+    const updateArray = [newText, commentId, userId];
 
-    const sqlUpdatePost = `UPDATE comments SET text = ? WHERE comment_id = ?`;
+    const sqlUpdatePost = `UPDATE comments SET text = ? WHERE comment_id = ? AND user_id = ?`;
     mySqlConnection.query (sqlUpdatePost, updateArray, (error, results) => {
         if (!error) {  
             res.status(200).json( {message : "Modification du commentaire réussie !"} ); 
@@ -175,9 +176,11 @@ module.exports.decreaseNbOfComments = (req, res) => {
 module.exports.deleteComment = (req, res) => {
     
     const commentId = req.params.id;
+    const userId = req.user().userId;
+    const idArray = [commentId, userId];
 
-    const sqlDeleteComment = `DELETE FROM comments WHERE comments.comment_id = ?`;
-    mySqlConnection.query (sqlDeleteComment, commentId, (error, results) => {
+    const sqlDeleteComment = `DELETE FROM comments WHERE comments.comment_id = ? AND comments.user_id = ?`;
+    mySqlConnection.query (sqlDeleteComment, idArray, (error, results) => {
         if (!error) {
             res.status(200).json( {message : `Suppression du commentaire (id: ${commentId}) réussie !`} ); 
         }
@@ -360,9 +363,11 @@ module.exports.cancelLikeDislikeComment = (req, res) => {
 module.exports.deletePictureComment = (req, res) => {
     
     const commentId = req.params.id;
-    const sqlDeletePictureComment = `DELETE FROM comment_image WHERE comment_id = ?`;
+    const userId = req.user().userId;
+    const idArray = [commentId, userId];
+    const sqlDeletePictureComment = `DELETE FROM comment_image WHERE comment_id = ? AND user_id = ?`;
 
-    mySqlConnection.query(sqlDeletePictureComment, commentId, (error, results) => {
+    mySqlConnection.query(sqlDeletePictureComment, idArray, (error, results) => {
         
         if (!error) {
             res.status(200).json( {message : "Suppression de l'image réussie !"} ); 
@@ -378,8 +383,11 @@ module.exports.deletePictureComment = (req, res) => {
 module.exports.deleteLikesComment = (req, res) => {
     
     const commentId = req.params.id;
-    const sqlDeleteLikesComment = `DELETE FROM likes WHERE comment_id = ?`;
-    mySqlConnection.query(sqlDeleteLikesComment, commentId, (error, results) => {
+    const userId = req.user().userId;
+    const idArray = [commentId, userId];
+
+    const sqlDeleteLikesComment = `DELETE FROM likes WHERE comment_id = ? AND user_id = ?`;
+    mySqlConnection.query(sqlDeleteLikesComment, idArray, (error, results) => {
         
         if (!error) {
             res.status(200).json( {message : "Suppression de likes réussie !"} ); 
@@ -395,8 +403,11 @@ module.exports.deleteLikesComment = (req, res) => {
 module.exports.deleteDislikesComment = (req, res) => {
     
     const commentId = req.params.id;
-    const sqlDeleteDislikesComment = `DELETE FROM dislikes WHERE comment_id = ?`;
-    mySqlConnection.query(sqlDeleteDislikesComment, commentId, (error, results) => {
+    const userId = req.user().userId;
+    const idArray = [commentId, userId];
+
+    const sqlDeleteDislikesComment = `DELETE FROM dislikes WHERE comment_id = ? AND user_id = ?`;
+    mySqlConnection.query(sqlDeleteDislikesComment, idArray, (error, results) => {
         
         if (!error) {
             res.status(200).json( {message : "Suppression de dislikes réussie !"} ); 

@@ -172,6 +172,8 @@ const CommentsHome = ({comment}) => {
                         <h3>{filterUser[0].first_name}, {filterUser[0].last_name}</h3>
                         <p>{filterUser[0].email}</p>
                     </div>
+                    {/* Si l'userID est égal à l'userId du post, on permet la modification / suppression */}
+                    { (userId === comment.user_id) ?
                     <div className="modify-delete">
                         <FontAwesomeIcon className="pen" icon={faPen} 
                         onClick={() => setIsUpdated(!isUpdated)}/>
@@ -181,6 +183,7 @@ const CommentsHome = ({comment}) => {
                             { deleteCom() }
                         }} />
                     </div>
+                    : null }
                     <div className="comment-message-box">
                         <FontAwesomeIcon icon={ faPaperPlane } />
                         <span className="comment-date">{convertTime(comment.created)}</span>
@@ -202,7 +205,7 @@ const CommentsHome = ({comment}) => {
                             )}
                             { (comment.image_url) ? 
                                 <div className='comment-picture'>
-                                    <img src="" alt="commentaire" className='comment-img'/>
+                                    <img src={comment.image_url} alt="commentaire" className='comment-img'/>
                                 </div>
                                 : <div></div>}
                         </div>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faThumbsUp, faMessage, faThumbsDown, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
 import { convertTime } from '../../App';
-import { cancelDislikePost, cancelLikePost, deleteDislikePost, deleteLikePost, deletePicturePost, deletePost, dislikePost, getAllPosts, likePost, updatePost } from '../../actions/post.actions';
+import { cancelDislikePost, cancelLikePost, deleteDislikePost, deleteLikePost, deletePicturePost, deletePost, dislikePost, getAllPosts, getPicturesPost, likePost, updatePost } from '../../actions/post.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import InputComments from '../Profil/InputComments';
 import CommentsHome from '../Home/CommentsHome';
@@ -131,7 +131,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
 
             // Vérification si l'utilisateur a déjà liké le post: si oui, on annule le like
             const selectContainer = document.querySelector(`.post_id-green${elt.post_id}`);
-            console.log(selectContainer);
+        
             if (selectContainer.classList.contains('active-green')) {
                 isLiked = false;
                 removeLike();
@@ -182,6 +182,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             .then(() => dispatch(deletePicturePost(postId)))
             .then(() => dispatch(deleteLikePost(postId)))
             .then(() => dispatch(deleteDislikePost(postId)))
+            .then(() => dispatch(getPicturesPost()))
             .then(() => dispatch(getAllPosts()));
     }
 

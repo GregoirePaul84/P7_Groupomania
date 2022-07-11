@@ -15,6 +15,7 @@ module.exports = (req, res, next) => {
     } 
     
     else {
+      req.user = () => decodedToken
       next();
     }
   } 

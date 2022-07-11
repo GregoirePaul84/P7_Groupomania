@@ -8,7 +8,7 @@ import InputComments from './InputComments';
 import { getComments} from '../../actions/comment.actions';
 import { getUserPosts } from '../../actions/user_posts.actions';
 import { convertTime } from '../../App';
-import { getAllLikes } from '../../actions/user.actions';
+import { getAllDislikes, getAllLikes } from '../../actions/user.actions';
 let isLiked = Boolean;
 let isDisliked = Boolean;
 
@@ -144,6 +144,7 @@ const Card = ({post}) => {
         dispatch(getUserPosts(userId));
         dispatch(getComments());
         dispatch(getAllLikes(userId));
+        dispatch(getAllDislikes(userId));
     // eslint-disable-next-line
     }, [])
 
@@ -195,7 +196,7 @@ const Card = ({post}) => {
     if (commentsArray === undefined) {
         return;
     }
-    console.log(numberOfComments);
+    
     return (
         <>
         <div className="card-container">

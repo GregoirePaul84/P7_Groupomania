@@ -160,7 +160,6 @@ const Comments = ({comment}) => {
 
     if(likesDataResults === undefined || dislikesDataResults === undefined) return;
 
-    console.log(comment);
     if(usersResults === undefined) return;
     const filterUser = usersResults.filter((elt) => elt.user_id === comment.user_id);
     
