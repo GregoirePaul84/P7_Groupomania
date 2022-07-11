@@ -4,17 +4,19 @@ import logo from '../../images/icon-left-font-monochrome-white.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { userLogout } from '../../actions/user.actions';
+let hideButton = undefined;
 
 const NavBarHome = (props) => {
 
     function logoutPop() {
         document.querySelector('.logout-action').style.visibility = "visible";
-        setTimeout(function () {
+        hideButton = setTimeout(function () {
             document.querySelector('.logout-action').style.visibility = "hidden";
           }, 5000);   
     }
 
     function closeSession() {
+        clearTimeout(hideButton);
         userLogout();
     }
 
