@@ -30,6 +30,8 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     const [visibility, setVisibility] = useState(true);
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
+    const [showPicture, setShowPicture] = useState(false);
+    console.log(showPicture);
 
 
     const toggleVisibility = () => {
@@ -174,6 +176,46 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
         }
     })
 
+    useEffect(() => {
+        if(showPicture) {
+
+            // Création de la modale image de post
+            const createDiv = document.createElement("div");
+            createDiv.className = "picture-modal";
+            
+            const selectRoot = document.getElementById('root');
+            selectRoot.appendChild(createDiv);
+            
+            const createImg = document.createElement("img");
+            createImg.setAttribute("src", `${elt.image_url}`);
+            
+            const selectPictureModal = document.querySelector('.picture-modal');
+            selectPictureModal.appendChild(createImg);
+            
+            const createCrossSpan = document.createElement("span");
+            createCrossSpan.className = "cross-span";
+            createCrossSpan.textContent = "x";
+            selectPictureModal.appendChild(createCrossSpan);
+
+            document.querySelector('.home-page').style.filter = "blur(5px)";
+
+            // Ecoute du clic pour fermer la modale en cas de clic extérieur
+            createCrossSpan.onclick = function() {  
+                setShowPicture(false);
+            }
+        }
+        
+        if(showPicture === false && document.querySelector('.picture-modal') !== null) {
+
+            const selectPictureModal = document.querySelector('.picture-modal');
+            selectPictureModal.remove();
+
+            document.querySelector('.home-page').style.filter = "blur(0)";
+        }
+
+    // eslint-disable-next-line
+    }, [showPicture]);
+
     // Suppression du post: suppression des likes / dislikes et de l'image de la DB
     const deleteArticle = () => {
         const postId = elt.post_id;
@@ -243,7 +285,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                         </div>
                         { (elt.image_url !== null) ? 
                         <div className='picture'>
-                            <img src={elt.image_url} alt="post utilisateur" />
+                            <img src={elt.image_url} alt="post utilisateur" onClick={ (e) => setShowPicture(!showPicture)}/>
                         </div>
                         : <div></div>}
                     </div>
