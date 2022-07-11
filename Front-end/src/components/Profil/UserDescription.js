@@ -18,7 +18,7 @@ const User_description = (props) => {
     if (decodedToken !== null) {
         userIdToken = decodedToken.userId
     }
-        
+       
     return (
         <aside className='user-description-box'>
             <div className="profil-pic-name_box">
@@ -38,7 +38,7 @@ const User_description = (props) => {
                     </h3>
                     <div className="purple-line"></div>
                 </div>
-                {(objectUser.bio) ?
+                {(objectUser.bio !== 'null') ?
                     <div className="biography-content">
                         {objectUser.bio}
                     </div>
@@ -57,7 +57,7 @@ const User_description = (props) => {
                     <div className="info-box">
                         <FontAwesomeIcon icon={ faCakeCandles } />
                         <span className='info-key'>Date de naissance:</span>
-                        {(objectUser.date_naissance) ?
+                        {(objectUser.date_naissance !== 'null') ?
                         <span className='info-value'>{objectUser.date_naissance}</span> 
                         : <span className='info-value'>non précisée</span>}
                     </div>
@@ -69,14 +69,14 @@ const User_description = (props) => {
                     <div className="info-box">
                         <FontAwesomeIcon icon={ faPhone } />
                         <span className='info-key'>Téléphone:</span>
-                        {(objectUser.tel) ?
+                        {(objectUser.tel !== 'null') ?
                         <span className='info-value'>{objectUser.tel}</span>
                         : <span className='info-value'>non précisé</span>}
                     </div>
                     <div className="info-box">
                         <FontAwesomeIcon icon={ faLocationDot } />
                         <span className='info-key'>Adresse:</span>
-                        {(objectUser.adresse) ?
+                        {(objectUser.adresse !== 'null') ?
                         <span className='info-value'>{objectUser.adresse}</span>
                         : <span className='info-value'>non précisée</span>}
                     </div>

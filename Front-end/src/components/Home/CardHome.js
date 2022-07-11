@@ -158,6 +158,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             // On récupère les infos utilisateurs dont l'userID est présent dans les posts
             const filterUsersPosts = allUsersResults.filter((elt) => elt.user_id === postsObject[i].user_id);
             postId = postsObject[i].post_id;
+            console.log(filterUsersPosts);
             const selectCards = document.querySelector(`.post_id${postId}`);
             
             if (selectCards !== null) {

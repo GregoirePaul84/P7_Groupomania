@@ -4,9 +4,11 @@
     background-color: #222029;
     border-radius: 20px;
     display: flex;
-    position: relative;
-    overflow: hidden;
+    overflow: scroll;
     padding: 0 5px;
+    &::-webkit-scrollbar { 
+        display: none; 
+    }
 
     .picture-container {
         height: 100%;
@@ -21,20 +23,6 @@
             cursor: pointer;
             &:hover {
                 transform: scale(1.05);
-            }
-        }
-    }
-
-    .arrow-right {
-        position: fixed;
-        top: 30.5%;
-        right: 31%;
-        transform: translateY(-50%);
-        cursor: pointer;
-        svg {
-            font-size: 3em;
-            path {
-                color: #222029;
             }
         }
     }

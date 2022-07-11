@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPicturesPost } from '../../actions/post.actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleRight, faImages } from '@fortawesome/free-solid-svg-icons';
+import { faImages } from '@fortawesome/free-solid-svg-icons';
 
 const Stories = () => {
 
@@ -66,13 +66,6 @@ const Stories = () => {
         return;
     }
 
-    function moveRight() {
-        console.log("droite");
-        const selectBox = document.querySelector('.stories');
-        console.log(selectBox);
-        selectBox.scrollBy(20, 0);
-    }
-
     if(picturesObject === undefined) return;
     
     if (picturesObject.length !== 0) {
@@ -86,9 +79,6 @@ const Stories = () => {
                                  onClick={ (e) => [setShowPicture(!showPicture), setPicture(key.image_url)]} />
                         </div>)     
                 })}
-                <div className="arrow-right">
-                    <FontAwesomeIcon icon={ faAngleRight} onClick={moveRight}/>
-                </div>
             </div>
         );
     }

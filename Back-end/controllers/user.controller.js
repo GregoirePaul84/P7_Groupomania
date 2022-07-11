@@ -52,8 +52,9 @@ module.exports.updateUser = (req, res) => {
     // Si l'utilisateur souhaite changer sa photo de profil
     if (req.file) {
         const image_url = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
-        const imageUserArray = [image_url, req.params.id, req.params.id];
-        const sqlUpdateProfilPic = `UPDATE profil_image SET image_url= ?, user_id= ? WHERE user_id= ?`;
+        const userId = req.user().userId;
+        const imageUserArray = [image_url, req.params.id, req.params.id, userId];
+        const sqlUpdateProfilPic = `UPDATE profil_image SET image_url= ?, user_id= ? WHERE user_id= ? AND user_id= ?`;
         const sqlUpdateUserProfilPic = `UPDATE user SET profil_pic= ? WHERE user_id= ?`;
 
         // Mise à jour de la table profil_image
@@ -79,8 +80,9 @@ module.exports.updateUser = (req, res) => {
 
     // Si l'utilisateur ne change que ses données personnelles
     if (req.body.first_name || req.body.last_name || req.body.date_naissance || req.body.bio || req.body.adresse || req.body.tel) {
-        const SqlUpdateUser = `UPDATE user SET first_name= ?, last_name= ?, date_naissance= ?, bio= ?, adresse= ?, tel= ? WHERE user_id= ?`;
-        const bodyInfos = [req.body.first_name, req.body.last_name, req.body.date_naissance, req.body.bio, req.body.adresse, req.body.tel, req.params.id];
+        const userId = req.user().userId;
+        const SqlUpdateUser = `UPDATE user SET first_name= ?, last_name= ?, date_naissance= ?, bio= ?, adresse= ?, tel= ? WHERE user_id= ? AND user_id= ?`;
+        const bodyInfos = [req.body.first_name, req.body.last_name, req.body.date_naissance, req.body.bio, req.body.adresse, req.body.tel, req.params.id, userId];
 
         mySqlConnection.query(SqlUpdateUser, bodyInfos, function (error, results) {
             if (!error) {
@@ -96,22 +98,24 @@ module.exports.updateUser = (req, res) => {
 // ********** Suppression d'un utilisateur de la DB ********** //
 
 module.exports.deleteUser = (req, res) => {
-    
-    const sqlDeleteUser = `DELETE FROM user WHERE user_id = ?`;
-    const sqlDeleteProfilImage = `DELETE FROM profil_image WHERE user_id = ?`;
+    const userId = req.user().userId;
+    const idArray = [req.params.id, userId]
+    const sqlDeleteUser = `DELETE FROM user WHERE user_id = ? AND user_id = ?`;
+    const sqlDeleteProfilImage = `DELETE FROM profil_image WHERE user_id = ? AND user_id = ?`;
 
     // Suppression de l'utilisateur de la table user
-    mySqlConnection.query(sqlDeleteUser, req.params.id, (error, results) => {
+    mySqlConnection.query(sqlDeleteUser, idArray, (error, results) => {
         if (error) {
             res.status(500).json( {error} );    
         }
         else {
             // Suppression de la photo de profil liée à l'utilisateur
-            mySqlConnection.query(sqlDeleteProfilImage, req.params.id, (error, results) => {
+            mySqlConnection.query(sqlDeleteProfilImage, idArray, (error, results) => {
                 if(error) {
                     res.status(500).json( {error} ); 
                 }
                 else {
+                    res.clearCookie('jwt');
                     res.status(200).json( {message: 'Utilisateur supprimé!' });
                 }
             });
@@ -161,10 +165,11 @@ module.exports.postPicUser = (req, res) => {
 // ********** Changer le mot de passe ********** //
 
 module.exports.changePassword = async (req, res) => {
-    const sqlChangePassword = `UPDATE user SET password= ? WHERE user_id= ?`;
+    const userId = req.user().userId;
+    const sqlChangePassword = `UPDATE user SET password= ? WHERE user_id= ? AND user_id= ?`;
     const passwordHash = await bcrypt.hash(req.body.password, 10);
 
-    mySqlConnection.query(sqlChangePassword, [passwordHash, req.params.id], (error, results) => {
+    mySqlConnection.query(sqlChangePassword, [passwordHash, req.params.id, userId], (error, results) => {
         if (error) {
             res.status(500).json( {error} ); 
         }
