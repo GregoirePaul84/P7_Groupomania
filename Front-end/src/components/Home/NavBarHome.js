@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import logo from '../../images/icon-left-font-monochrome-white.svg';
+import logo from '../../images/Logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { userLogout } from '../../actions/user.actions';
 let hideButton = undefined;
 
 const NavBarHome = (props) => {
+
+    const [displayBox, setDisplayBox] = useState(true);
 
     function logoutPop() {
         document.querySelector('.logout-action').style.visibility = "visible";
@@ -19,21 +21,29 @@ const NavBarHome = (props) => {
         clearTimeout(hideButton);
         userLogout();
     }
+    
+    function displayContacts() {
+
+        setDisplayBox(!displayBox);
+        console.log(displayBox);
+        const selectContacts = document.querySelector('.right-container');
+
+        if (displayBox)
+            selectContacts.style.display = 'block';
+        else
+            selectContacts.style.display = 'none';
+    }
 
     const objectUser = props.user_info;
 
     return (
         <header className='home-header'>
-            <div className="groupomania-logo">
-                <img src={logo} alt="logo de groupomania" />
+            <div className="img-container">
+                <img src={ logo } alt="Logo de Groupomania" className="groupomania-logo" />
+                <h1 className="bounce-in-right">Groupomania</h1>
             </div>
             <nav className="profil-nav-bar">
                 <div className="home-settings-links">
-                    <div className="home">
-                        <NavLink to="/home">
-                            Accueil
-                        </NavLink>
-                    </div>
                     <div className="profil">
                         <NavLink to={`/profil/${objectUser.user_id}`}>
                             Profil
@@ -43,6 +53,9 @@ const NavBarHome = (props) => {
                         <NavLink to="/settings">
                             Paramètres
                         </NavLink>    
+                    </div>
+                    <div className="contacts">
+                        <FontAwesomeIcon icon={ faBars } onClick={displayContacts}/>
                     </div>
                     <div className="picture-logout" onClick={logoutPop}>
                         <img src={objectUser.profil_pic} alt="déconnexion utilisateur" />

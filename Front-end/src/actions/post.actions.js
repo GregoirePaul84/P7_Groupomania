@@ -115,6 +115,7 @@ export const deletePost = (postId) => {
     }
 }
 
+
 export const deletePicturePost = (postId) => {
     return async (dispatch) => {
 

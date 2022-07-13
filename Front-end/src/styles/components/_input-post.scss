@@ -13,7 +13,11 @@
         justify-content: space-between;
 
         .user-name {
+            display: flex;
             align-self: center;
+            .cellphone-profil-pic {
+                display: none;
+            }
         }
 
         .pictures-contact-box {
@@ -102,6 +106,7 @@
             display: flex;
             margin-bottom: 1em;
             .user-titles {
+                margin-right: 30px;
                 width: 20%;
             }
             .purple-line {

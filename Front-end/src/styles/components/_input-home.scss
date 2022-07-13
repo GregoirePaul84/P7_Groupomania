@@ -50,7 +50,7 @@
         position: relative;
 
         svg {
-            height: 25px;         
+            height: 25px;
             cursor: pointer;
             transition: transform 400ms;
             &:hover {
@@ -58,13 +58,17 @@
             }
         }
 
+        .fa-paper-plane {
+            margin-left: 20px;
+        }
+
         .input-file {
-        position: absolute;
-        right: 48px;
-        width: 28px;
-        top: -3px;
-        height: 28px;
-        opacity: 0;
+            position: absolute;
+            right: 54px;
+            width: 30px;
+            top: 2px;
+            height: 28px;
+            opacity: 0;
         }
 
         .input-file[type=file]::file-selector-button {

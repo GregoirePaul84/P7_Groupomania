@@ -174,6 +174,7 @@ module.exports.deletePost = (req, res) => {
     })         
 }
 
+
 // ********** Suppression d'une image d'un post ********** //
 
 module.exports.deletePicturePost = (req, res) => {

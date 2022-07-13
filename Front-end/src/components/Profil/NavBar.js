@@ -1,21 +1,23 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import logo from '../../images/icon-left-font-monochrome-white.svg';
+import logo from '../../images/Logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
 import { userLogout } from '../../actions/user.actions';
+let hideButton = undefined;
 
 const NavBar = () => {
 
     function logoutPop() {
         document.querySelector('.logout-action').style.visibility = "visible";
-        setTimeout(function () {
+        hideButton = setTimeout(function () {
             document.querySelector('.logout-action').style.visibility = "hidden";
           }, 5000);   
     }
 
     function closeSession() {
+        clearTimeout(hideButton);
         userLogout();
     }
     
@@ -27,8 +29,9 @@ const NavBar = () => {
     
     return (
         <header>
-            <div className="groupomania-logo">
-                <img src={logo} alt="logo de groupomania" />
+            <div className="img-container">
+                <img src={ logo } alt="Logo de Groupomania" className="groupomania-logo" />
+                <h1 className="bounce-in-right">Groupomania</h1>
             </div>
             <nav className="profil-nav-bar">
                 <div className="home-settings-links">

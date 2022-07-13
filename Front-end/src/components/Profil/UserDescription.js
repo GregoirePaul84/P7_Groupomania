@@ -55,27 +55,35 @@ const User_description = (props) => {
                 </div>
                 <div className="informations-content">
                     <div className="info-box">
-                        <FontAwesomeIcon icon={ faCakeCandles } />
-                        <span className='info-key'>Date de naissance:</span>
+                        <span className='info-key'>
+                            <FontAwesomeIcon icon={ faCakeCandles } />
+                            Date de naissance:
+                        </span>
                         {(objectUser.date_naissance !== 'null') ?
                         <span className='info-value'>{objectUser.date_naissance}</span> 
                         : <span className='info-value'>non précisée</span>}
                     </div>
                     <div className="info-box">
-                        <FontAwesomeIcon icon={ faAt } />
-                        <span className='info-key'>Email:</span>
+                        <span className='info-key'>
+                            <FontAwesomeIcon icon={ faAt } />
+                            Email:
+                        </span>
                         <span className='info-value'>{objectUser.email}</span>
                     </div>
                     <div className="info-box">
-                        <FontAwesomeIcon icon={ faPhone } />
-                        <span className='info-key'>Téléphone:</span>
+                        <span className='info-key'>
+                            <FontAwesomeIcon icon={ faPhone } />
+                            Téléphone:
+                        </span>
                         {(objectUser.tel !== 'null') ?
                         <span className='info-value'>{objectUser.tel}</span>
                         : <span className='info-value'>non précisé</span>}
                     </div>
                     <div className="info-box">
+                        <span className='info-key'>
                         <FontAwesomeIcon icon={ faLocationDot } />
-                        <span className='info-key'>Adresse:</span>
+                            Adresse:
+                        </span>
                         {(objectUser.adresse !== 'null') ?
                         <span className='info-value'>{objectUser.adresse}</span>
                         : <span className='info-value'>non précisée</span>}

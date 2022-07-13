@@ -289,7 +289,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                     </div>
                     <div className="card-likes-posts">   
                         <FontAwesomeIcon icon={ faMessage } onClick={toggleVisibility}/>
-                        { (elt.comments_number > 1) ? <span>{elt.comments_number} commentaires</span> : <span>{elt.comments_number} commentaire</span> }
+                        { (elt.comments_number > 1) ? <span>{elt.comments_number} <span className="comments-text">commentaires</span></span> : <span>{elt.comments_number} <span className="comments-text">commentaire</span></span> }
                         {/* Si le tableau des likes contient isLiked = 1 ainsi que l'userId on ajoute la classe active-green */}
                         { (likesUserId.includes(userId) && likesPostId.includes(elt.post_id)) ? 
                             <FontAwesomeIcon icon={ faThumbsUp } className={`thumbs-up post_id-green${elt.post_id} active-green`} onClick={()=> {
@@ -304,7 +304,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                                 toggleLike();
                             }}/>
                         }
-                        { (elt.like_number > 1) ? <span className="post-like">{elt.like_number} likes</span> : <span className="post-like">{elt.like_number} like</span> }
+                        { (elt.like_number > 1) ? <span className="post-like">{elt.like_number} <span className="like-text">likes</span></span> : <span className="post-like">{elt.like_number} <span className="like-text">like</span></span> }
                         { (dislikesUserId.includes(userId) && dislikesPostId.includes(elt.post_id)) ? 
                             <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down post_id-red${elt.post_id} active-red`} onClick={()=> {
                                 isDisliked = false;
@@ -318,7 +318,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                                 toggleDislike();
                             }}/>
                         }
-                        { (elt.dislike_number > 1) ? <span className="post-dislike">{elt.dislike_number} dislikes</span> : <span className="post-dislike">{elt.dislike_number} dislike</span> }
+                        { (elt.dislike_number > 1) ? <span className="post-dislike">{elt.dislike_number} <span className="dislike-text">dislikes</span></span> : <span className="post-dislike">{elt.dislike_number} <span className="dislike-text">dislike</span></span> }
                     </div>
                 </div>
             </div>

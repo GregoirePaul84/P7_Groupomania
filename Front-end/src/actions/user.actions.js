@@ -121,7 +121,7 @@ export const changePassword = (password, userId) => {
                 "password": password
             });
             
-            const res = await axios({
+            await axios({
                 method: "put",
                 url: `${process.env.REACT_APP_API_URL}api/user/password/${userId}`,
                 withCredentials: true,
@@ -130,11 +130,8 @@ export const changePassword = (password, userId) => {
                 
             });
 
-            dispatch({
-                type: CHANGE_PASSWORD,
-                payload: res.data.password
-            });
-            
+            alert("mot de passe modifié !");
+
         } catch (error) {
             console.log(error);
         }

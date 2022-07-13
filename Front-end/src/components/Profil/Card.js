@@ -255,7 +255,7 @@ const Card = ({post}) => {
                                 toggleLike();
                             }}/>
                 }
-                { (numberOfLikes > 1) ? <span className="post-like">{numberOfLikes} likes</span> : <span className="post-like">{numberOfLikes} like</span> }
+                { (numberOfLikes > 1) ? <span className="post-like">{numberOfLikes} <span className="like-text">likes</span></span> : <span className="post-like">{numberOfLikes} like</span> }
                 { (post.isDisliked === 1) ? 
                             <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down post_id-red${postId} active-red`} onClick={()=> {
                                 isDisliked = false;
