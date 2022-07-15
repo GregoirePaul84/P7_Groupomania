@@ -23,7 +23,7 @@ const index = () => {
                     <Route path="" element={<Profil/>}></Route>
                     <Route path=":user_id" element={<Profil/>}></Route>
                 </Route >
-                <Route path="/settings" element={<Parameters/>} />
+                <Route path="/settings/:user_id" element={<Parameters/>} />
                 <Route path="/logout" element={<Register/>} />
 
                 {/* Redirection vers /register si paramètres inconnus */}

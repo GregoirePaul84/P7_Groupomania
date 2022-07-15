@@ -1,28 +1,23 @@
 import React from 'react';
-import { useJwt } from "react-jwt";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAt, faCakeCandles, faLocationDot, faPhone} from '@fortawesome/free-solid-svg-icons';
 import ChangeProfilPic from './ChangeProfilPic';
+import { useParams } from 'react-router-dom';
 
 const User_description = (props) => {
 
     const objectUser = props.user_info;
     const userId = objectUser.user_id;
 
-    // Récupération du cookie et décodage du token pour récupérer l'user Id 
-    const readCookie = document.cookie;
-    const token = readCookie.split('jwt=')[1];
-    const { decodedToken } = useJwt(token);
-    let userIdToken = {};
+    const {user_id} = useParams();
+    const paramsId = parseInt(user_id, 10);
 
-    if (decodedToken !== null) {
-        userIdToken = decodedToken.userId
-    }
+    if(objectUser.adresse === undefined) return;
        
     return (
         <aside className='user-description-box'>
             <div className="profil-pic-name_box">
-                {(userId === userIdToken) ?
+                {(userId === paramsId) ?
                 <div className="profil-pic">
                     <ChangeProfilPic />
                     <img src={objectUser.profil_pic} alt="Utilisateur" />
@@ -38,7 +33,7 @@ const User_description = (props) => {
                     </h3>
                     <div className="purple-line"></div>
                 </div>
-                {(objectUser.bio !== 'null') ?
+                {(objectUser.bio !== 'null' && objectUser.bio !== null) ?
                     <div className="biography-content">
                         {objectUser.bio}
                     </div>
@@ -59,7 +54,7 @@ const User_description = (props) => {
                             <FontAwesomeIcon icon={ faCakeCandles } />
                             Date de naissance:
                         </span>
-                        {(objectUser.date_naissance !== 'null') ?
+                        {(objectUser.date_naissance !== 'null' && objectUser.date_naissance !== null) ?
                         <span className='info-value'>{objectUser.date_naissance}</span> 
                         : <span className='info-value'>non précisée</span>}
                     </div>
@@ -75,7 +70,7 @@ const User_description = (props) => {
                             <FontAwesomeIcon icon={ faPhone } />
                             Téléphone:
                         </span>
-                        {(objectUser.tel !== 'null') ?
+                        {(objectUser.tel !== 'null' && objectUser.tel !== null) ?
                         <span className='info-value'>{objectUser.tel}</span>
                         : <span className='info-value'>non précisé</span>}
                     </div>
@@ -84,7 +79,7 @@ const User_description = (props) => {
                         <FontAwesomeIcon icon={ faLocationDot } />
                             Adresse:
                         </span>
-                        {(objectUser.adresse !== 'null') ?
+                        {(objectUser.adresse !== 'null' && objectUser.adresse !== null) ?
                         <span className='info-value'>{objectUser.adresse}</span>
                         : <span className='info-value'>non précisée</span>}
                     </div>

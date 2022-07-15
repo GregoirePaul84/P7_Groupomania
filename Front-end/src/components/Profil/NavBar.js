@@ -46,7 +46,7 @@ const NavBar = () => {
                         </NavLink>
                     </div>
                     <div className="settings">
-                        <NavLink to="/settings">
+                        <NavLink to={`/settings/${userId}`}>
                             Paramètres
                         </NavLink>    
                     </div>

@@ -50,7 +50,7 @@ const NavBarHome = (props) => {
                         </NavLink>
                     </div>
                     <div className="settings">
-                        <NavLink to="/settings">
+                        <NavLink to={`/settings/${objectUser.user_id}`}>
                             Paramètres
                         </NavLink>    
                     </div>
