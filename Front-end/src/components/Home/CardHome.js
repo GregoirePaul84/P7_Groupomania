@@ -9,6 +9,7 @@ import CommentsHome from '../Home/CommentsHome';
 import { displayComments, hideComments } from '../Profil/Comments';
 import { getAllDislikes, getAllLikes } from '../../actions/user.actions';
 import { getComments } from '../../actions/comment.actions';
+
 let postId = {};
 let isLiked = Boolean;
 let isDisliked = Boolean;
@@ -163,13 +164,23 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
             if (selectCards !== null) {
                 const selectImg = selectCards.querySelector('.profil-pic');
                 if(selectImg === null) return;
-                selectImg.setAttribute('src', `${filterUsersPosts[0].profil_pic}`);
+                
+                // Condition si un utilisateur a supprimé son compte
+                if(filterUsersPosts[0] === undefined) {
+                    selectImg.setAttribute('src', `http://localhost:3000/images/empty_profil_pic.png`);
+                    const selectH3 = selectCards.querySelector('.user-name');
+                    selectH3.textContent = `Profil supprimé`;
+                }
+                    
+                else {
+                    selectImg.setAttribute('src', `${filterUsersPosts[0].profil_pic}`);
     
-                const selectH3 = selectCards.querySelector('.user-name');
-                selectH3.textContent = `${filterUsersPosts[0].first_name}, ${filterUsersPosts[0].last_name}`;
-    
-                const selectEmail = selectCards.querySelector('.email');
-                selectEmail.textContent = `${filterUsersPosts[0].email}`;
+                    const selectH3 = selectCards.querySelector('.user-name');
+                    selectH3.textContent = `${filterUsersPosts[0].first_name}, ${filterUsersPosts[0].last_name}`;
+        
+                    const selectEmail = selectCards.querySelector('.email');
+                    selectEmail.textContent = `${filterUsersPosts[0].email}`;
+                }
             }
         }
     })
