@@ -28,6 +28,9 @@
 
         .user-name {
             align-self: center;
+            .cellphone-profil-pic {
+                display: none;
+            }
         }
         .pictures-contact-box {
             display: flex;

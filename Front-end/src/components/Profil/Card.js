@@ -241,35 +241,61 @@ const Card = ({post}) => {
                 </div>
                 <div className="card-likes-posts">
                 <FontAwesomeIcon icon={ faMessage } onClick={toggleVisibility}/>
-                { (numberOfComments > 1) ? <span>{numberOfComments} <span className="comment-text">commentaires</span></span> : <span>{numberOfComments} <span className="comment-text">commentaire</span></span> }
+                { (numberOfComments > 1) ? <span>{numberOfComments} 
+                                                <span className="comment-text"> commentaires</span>
+                                            </span> 
+                                            : 
+                                            <span>{numberOfComments} 
+                                                <span className="comment-text"> commentaire</span>
+                                            </span> }
                 { (post.isLiked === 1) ? 
-                            <FontAwesomeIcon icon={ faThumbsUp } className={`thumbs-up post_id-green${postId} active-green`} onClick={()=> {
-                                isLiked = false;
-                                console.log(isLiked);
-                                toggleLike();
-                            }}/>
+                            <FontAwesomeIcon icon={ faThumbsUp } 
+                                             className={`thumbs-up post_id-green${postId} active-green`} 
+                                             onClick={()=> {
+                                                isLiked = false;
+                                                console.log(isLiked);
+                                                toggleLike();
+                                             }}/>
                         :
-                            <FontAwesomeIcon icon={ faThumbsUp } className={`thumbs-up post_id-green${postId}`}  onClick={()=> {
-                                isLiked = true;
-                                console.log(isLiked);
-                                toggleLike();
-                            }}/>
+                            <FontAwesomeIcon icon={ faThumbsUp } 
+                                             className={`thumbs-up post_id-green${postId}`} 
+                                             onClick={()=> {
+                                                isLiked = true;
+                                                console.log(isLiked);
+                                                toggleLike();
+                                             }}/>
                 }
-                { (numberOfLikes > 1) ? <span className="post-like">{numberOfLikes} <span className="like-text">likes</span></span> : <span className="post-like">{numberOfLikes} <span className="like-text">like</span></span> }
+                { (numberOfLikes > 1) ? <span className="post-like">{numberOfLikes} 
+                                            <span className="like-text"> likes</span>
+                                        </span> 
+                                        : 
+                                        <span className="post-like">{numberOfLikes} 
+                                            <span className="like-text"> like</span>
+                                        </span> }
                 { (post.isDisliked === 1) ? 
-                            <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down post_id-red${postId} active-red`} onClick={()=> {
-                                isDisliked = false;
-                                console.log(isDisliked);
-                                toggleDislike();
-                            }}/>
+                            <FontAwesomeIcon icon={ faThumbsDown } 
+                                             className={`thumbs-down post_id-red${postId} active-red`} 
+                                             onClick={()=> {
+                                                isDisliked = false;
+                                                console.log(isDisliked);
+                                                toggleDislike();
+                                             }}/>
                         :
-                            <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down post_id-red${postId}`}  onClick={()=> {
-                                isDisliked = true;
-                                console.log(isDisliked);
-                                toggleDislike();
-                            }}/>
+                            <FontAwesomeIcon icon={ faThumbsDown } 
+                                             className={`thumbs-down post_id-red${postId}`} 
+                                             onClick={()=> {
+                                                isDisliked = true;
+                                                console.log(isDisliked);
+                                                toggleDislike();
+                                             }}/>
                 }
-                { (numberOfDislikes > 1) ? <span className="post-dislike">{numberOfDislikes} <span className="dislike-text">dislikes</span></span> : <span className="post-dislike">{numberOfDislikes} <span className="dislike-text">dislike</span></span> }
+                { (numberOfDislikes > 1) ? <span className="post-dislike">{numberOfDislikes} 
+                                                <span className="dislike-text"> dislikes</span>
+                                            </span> 
+                                            : 
+                                            <span className="post-dislike">{numberOfDislikes} 
+                                                <span className="dislike-text"> dislike</span>
+                                            </span> }
                 </div>
             </div>
         </div>

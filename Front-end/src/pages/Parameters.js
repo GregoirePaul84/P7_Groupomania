@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import NavBar from '../components/Profil/NavBar';
 import UserDescription from '../components/Profil/UserDescription';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAddressBook, faCamera, faUserXmark } from '@fortawesome/free-solid-svg-icons';
+import { faUserXmark } from '@fortawesome/free-solid-svg-icons';
 import { changePassword, deleteUser, getUser, uploadProfil } from '../actions/user.actions';
 
 
@@ -117,12 +117,11 @@ const Settings = () => {
                     <section className="main-section-settings">
                         <div className="flex-container">
                             <div className="user-name">
+                            <div className="cellphone-profil-pic">
+                                <img src={objectUser.profil_pic} alt="utilisateur mobile" />
+                            </div>
                                 <h2>{userFirstName}, {userLastName}</h2>
                             </div>
-                            <ul className="pictures-contact-box">
-                                <li><FontAwesomeIcon icon={ faCamera } />Photos</li>
-                                <li><FontAwesomeIcon icon={ faAddressBook } />Contacts</li>
-                            </ul>
                         </div>
                         <div className="settings">
                             <div className="settings-title-box">

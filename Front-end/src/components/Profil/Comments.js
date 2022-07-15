@@ -221,25 +221,45 @@ const Comments = ({comment}) => {
                     </div>
                     <div className="comments-likes">
                         { (likesCommentId.includes(comment.comment_id) && likesUserId.includes(comment.user_id)) ? 
-                            <FontAwesomeIcon icon={ faThumbsUp } className={`thumbs-up comment comment_id-green${comment.comment_id} active-green`} onClick={()=> {
-                                toggleLike();
-                            }}/>
+                            <FontAwesomeIcon icon={ faThumbsUp } 
+                                             className={`thumbs-up comment comment_id-green${comment.comment_id} active-green`} 
+                                             onClick={()=> {
+                                                toggleLike();
+                                             }}/>
                         :
-                            <FontAwesomeIcon icon={ faThumbsUp } className={`thumbs-up comment comment_id-green${comment.comment_id}`}  onClick={()=> {
-                                toggleLike();
-                            }}/>
+                            <FontAwesomeIcon icon={ faThumbsUp } 
+                                             className={`thumbs-up comment comment_id-green${comment.comment_id}`}  
+                                             onClick={()=> {
+                                                toggleLike();
+                                             }}/>
                         }
-                        { (comment.like_number > 1) ? <span className="comment-like">{comment.like_number} <span className="like-text">likes</span></span> : <span className="comment-like">{comment.like_number} <span className="like-text">like</span></span> }
+                        { (comment.like_number > 1) ? <span className="comment-like">{comment.like_number} 
+                                                        <span className="like-text"> likes</span>
+                                                      </span> 
+                                                      : 
+                                                      <span className="comment-like">{comment.like_number} 
+                                                        <span className="like-text"> like</span>
+                                                    </span> }
                         { (dislikesCommentId.includes(comment.comment_id) && dislikesUserId.includes(comment.user_id)) ? 
-                            <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down comment comment_id-red${comment.comment_id} active-red`} onClick={()=> {
-                                toggleDislike();
-                            }}/>
+                            <FontAwesomeIcon icon={ faThumbsDown } 
+                                             className={`thumbs-down comment comment_id-red${comment.comment_id} active-red`} 
+                                             onClick={()=> {
+                                                toggleDislike();
+                                             }}/>
                         :
-                            <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down comment comment_id-red${comment.comment_id}`} onClick={()=> {
-                                toggleDislike();
-                            }}/>
+                            <FontAwesomeIcon icon={ faThumbsDown } 
+                                             className={`thumbs-down comment comment_id-red${comment.comment_id}`} 
+                                             onClick={()=> {
+                                                toggleDislike();
+                                             }}/>
                         }
-                        { (comment.dislike_number > 1) ? <span className="comment-dislike">{comment.dislike_number} <span className="dislike-text">dislikes</span></span> : <span className="comment-dislike">{comment.dislike_number} <span className="dislike-text">dislike</span></span> }
+                        { (comment.dislike_number > 1) ? <span className="comment-dislike">{comment.dislike_number} 
+                                                            <span className="dislike-text"> dislikes</span>
+                                                        </span> 
+                                                        : 
+                                                        <span className="comment-dislike">{comment.dislike_number} 
+                                                            <span className="dislike-text"> dislike</span>
+                                                        </span> }
                     </div>
                 </div>
             </div>

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage, faPaperPlane} from '@fortawesome/free-solid-svg-icons'
-import { faCamera} from '@fortawesome/free-solid-svg-icons'
-import { faAddressBook} from '@fortawesome/free-solid-svg-icons'
 import UserPosts from './UserPosts';
 import { sendPost } from '../../actions/post.actions';
 import { useDispatch } from 'react-redux';
@@ -59,7 +57,7 @@ const Posts = (props) => {
             <div className="flex-container">
                 <div className="user-name">
                     <div className="cellphone-profil-pic">
-                        <img src={objectUser.profil_pic} alt="" />
+                        <img src={objectUser.profil_pic} alt="utilisateur mobile" />
                     </div>
                     <h2>{objectUser.first_name}, {objectUser.last_name}</h2>
                 </div>

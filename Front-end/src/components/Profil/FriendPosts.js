@@ -69,12 +69,11 @@ const FriendPosts = (props) => {
             <section className='main-section-profil'>
                 <div className="flex-container">
                     <div className="user-name">
+                        <div className="cellphone-profil-pic">
+                            <img src={objectUser.profil_pic} alt="" />
+                        </div>
                         <h2>{objectUser.first_name}, {objectUser.last_name}</h2>
                     </div>
-                    <ul className="pictures-contact-box">
-                        <li><FontAwesomeIcon icon={ faCamera } />Photos</li>
-                        <li><FontAwesomeIcon icon={ faAddressBook } />Contacts</li>
-                    </ul>
                 </div>
                 <div className="posts">
                     <div className="posts-title-box">

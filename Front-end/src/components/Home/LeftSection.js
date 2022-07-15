@@ -58,7 +58,7 @@ const LeftSection = ({user_info}) => {
                                                             <FontAwesomeIcon icon={ faThumbsUp } />
                                                             <span>{convertTime(key.created)}</span>
                                                         </div>
-                                                        <div className="title-line">
+                                                        {/* <div className="title-line">
                                                             <div className="purple-line"></div>
                                                         </div>
                                                         {(key.text_post === "null") ? 
@@ -69,7 +69,7 @@ const LeftSection = ({user_info}) => {
                                                         <div className="text-post">
                                                             "{key.text_post}"
                                                         </div>
-                                                        }
+                                                        } */}
                                                     </div>     
                                                 </li> 
                                             )                         

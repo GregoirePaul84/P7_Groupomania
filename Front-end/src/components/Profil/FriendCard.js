@@ -63,9 +63,29 @@ const FriendCard = ({post, objectUser}) => {
                     </div>
                     <div className="card-likes-posts">   
                         <FontAwesomeIcon icon={ faMessage } onClick={toggleVisibility} />
-                        { (post.comments_number > 1) ? <span>{post.comments_number} commentaires</span> : <span>{post.comments_number} commentaire</span> }
-                        { (post.like_number > 1) ? <span>{post.like_number} likes</span> : <span>{post.like_number} like</span> }
-                        { (post.dislike_number > 1) ? <span>{post.dislike_number} dislikes</span> : <span>{post.dislike_number} dislike</span> }
+                        { (post.comments_number > 1) ? <span>
+                                                            {post.comments_number} 
+                                                            <span className="comment-text">commentaires</span>
+                                                        </span> 
+                                                        : 
+                                                        <span>
+                                                            {post.comments_number} 
+                                                            <span className="comment-text">commentaire</span>
+                                                        </span> }
+                        { (post.like_number > 1) ? <span className='post-like'>
+                                                        {post.like_number} likes
+                                                    </span> 
+                                                    : 
+                                                    <span className='post-like'>
+                                                        {post.like_number} like
+                                                    </span> }
+                        { (post.dislike_number > 1) ? <span className='post-dislike'>
+                                                        {post.dislike_number} dislikes
+                                                    </span> 
+                                                    : 
+                                                    <span className='post-dislike'>
+                                                        {post.dislike_number} dislike
+                                                    </span> }
                     </div>
                 </div>
             </div>
