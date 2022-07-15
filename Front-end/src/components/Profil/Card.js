@@ -205,8 +205,8 @@ const Card = ({post}) => {
                     <img src={objectUser.profil_pic} alt="utilisateur" />
                 </div>
                 <div className="card-name-user">
-                    <h3>{objectUser.first_name}, {objectUser.last_name}</h3>
-                    <p>{objectUser.email}</p>
+                    <h3 className='user-name'>{objectUser.first_name}, {objectUser.last_name}</h3>
+                    <p className='email'>{objectUser.email}</p>
                 </div>
                 <div className="modify-delete">
                     <FontAwesomeIcon icon={faPen} onClick={() => setIsUpdated(!isUpdated)}/>
@@ -241,7 +241,7 @@ const Card = ({post}) => {
                 </div>
                 <div className="card-likes-posts">
                 <FontAwesomeIcon icon={ faMessage } onClick={toggleVisibility}/>
-                { (numberOfComments > 1) ? <span>{numberOfComments} commentaires</span> : <span>{numberOfComments} commentaire</span> }
+                { (numberOfComments > 1) ? <span>{numberOfComments} <span className="comment-text">commentaires</span></span> : <span>{numberOfComments} <span className="comment-text">commentaire</span></span> }
                 { (post.isLiked === 1) ? 
                             <FontAwesomeIcon icon={ faThumbsUp } className={`thumbs-up post_id-green${postId} active-green`} onClick={()=> {
                                 isLiked = false;
@@ -255,7 +255,7 @@ const Card = ({post}) => {
                                 toggleLike();
                             }}/>
                 }
-                { (numberOfLikes > 1) ? <span className="post-like">{numberOfLikes} <span className="like-text">likes</span></span> : <span className="post-like">{numberOfLikes} like</span> }
+                { (numberOfLikes > 1) ? <span className="post-like">{numberOfLikes} <span className="like-text">likes</span></span> : <span className="post-like">{numberOfLikes} <span className="like-text">like</span></span> }
                 { (post.isDisliked === 1) ? 
                             <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down post_id-red${postId} active-red`} onClick={()=> {
                                 isDisliked = false;
@@ -269,7 +269,7 @@ const Card = ({post}) => {
                                 toggleDislike();
                             }}/>
                 }
-                { (numberOfDislikes > 1) ? <span className="post-dislike">{numberOfDislikes} dislikes</span> : <span className="post-dislike">{numberOfDislikes} dislike</span> }
+                { (numberOfDislikes > 1) ? <span className="post-dislike">{numberOfDislikes} <span className="dislike-text">dislikes</span></span> : <span className="post-dislike">{numberOfDislikes} <span className="dislike-text">dislike</span></span> }
                 </div>
             </div>
         </div>

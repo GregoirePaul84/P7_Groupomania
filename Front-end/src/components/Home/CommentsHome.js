@@ -220,7 +220,7 @@ const CommentsHome = ({comment}) => {
                                 toggleLike();
                             }}/>
                         }
-                        { (comment.like_number > 1) ? <span className="comment-like">{comment.like_number} likes</span> : <span className="comment-like">{comment.like_number} like</span> }
+                        { (comment.like_number > 1) ? <span className="comment-like">{comment.like_number} <span className="like-text">likes</span></span> : <span className="comment-like">{comment.like_number} <span className="like-text">like</span></span> }
                         { (dislikesCommentId.includes(comment.comment_id) && dislikesUserId.includes(userId)) ? 
                             <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down comment comment_id-red${comment.comment_id} active-red`} onClick={()=> {
                                 toggleDislike();
@@ -230,7 +230,7 @@ const CommentsHome = ({comment}) => {
                                 toggleDislike();
                             }}/>
                         }
-                        { (comment.dislike_number > 1) ? <span className="comment-dislike">{comment.dislike_number} dislikes</span> : <span className="comment-dislike">{comment.dislike_number} dislike</span> }
+                        { (comment.dislike_number > 1) ? <span className="comment-dislike">{comment.dislike_number} <span className="dislike-text">dislikes</span></span> : <span className="comment-dislike">{comment.dislike_number} <span className="dislike-text">dislike</span></span> }
                     </div>
                 </div>
             </div>

@@ -49,13 +49,15 @@
 
         .input-box {
             display: flex;
+            width: 100%;
             align-items: center;
+            justify-content: center;
             margin: 1em 0;
             position: relative;
 
             .input-text {
                 height: 35px;
-                width: 250px;
+                width: 50%;
                 color: #222029;
                 border-radius: 25px;
                 padding-left: 20px;

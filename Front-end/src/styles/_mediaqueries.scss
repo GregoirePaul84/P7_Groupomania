@@ -156,6 +156,14 @@
             .user-description-box {
                 border-radius: 0;
 
+                .biography {
+                    margin: 0 0 1em 1em;
+                }
+
+                .title-line {
+                    margin-bottom: 0.5em;
+                }
+
                 .info-box {
                     flex-direction: column;
                     margin: 0 10px 0 0;
@@ -181,8 +189,18 @@
     }
 }
 
-// Page Home / format mobile large
+
 @media screen and (max-width: 778px) {
+    // Page Register / Login format mobile
+    .register-page {
+        justify-content: center;
+        .colored-box-red, .colored-box-purple, .log-container {
+            margin-left: 0;
+        }
+
+    }
+
+    // Page Home / format mobile large
     .home-page {
         .background-transparent {
             .home-container {
@@ -281,7 +299,6 @@
 
         .main-section-profil {
             width: 100%;
-            height: auto;
 
             .flex-container {
                 justify-content: center;
@@ -306,13 +323,41 @@
             }
 
             .user-posts-container {
-                height: max-content;
+
+                .comment-user-name {
+                    font-size: 1em;
+                }
+        
+                .email {
+                    font-size: 0.9em;
+                }
+
+                .input-comments-container {
+                    .flex-container {
+                        margin: 0;
+                    }
+                }
+
+                .comments-container {
+                    margin: 0;
+                    .modify-delete {
+                        padding: 10px 0 10px 0;
+    
+                        .garbage {
+                            padding-right: 10px;
+                        }
+                    }
+                }  
+
+                .comment-text, .like-text, .dislike-text {
+                    display: none;
+                }
             }
         }
     }
 }
 
-// Page Home / format mobile large
+// Page Home / format mobile 430px
 @media screen and (max-width: 430px) {
     .home-page {
 
@@ -335,6 +380,45 @@
 
         .email {
             font-size: 0.9em;
+        }
+
+        .comment-name-user {
+            h3 {
+                font-size: 1em; 
+            }
+            p {
+                font-size: 0.9em;
+            }
+        }
+    }
+
+    // Page Profil / format mobile 430px
+    .profil-page {
+        .home-settings-links {
+            flex-direction: column-reverse;
+            justify-content: space-evenly;
+
+            .home, .profil, .settings, .contacts, .logout {
+                margin-right: 0 !important;
+            }
+        }
+
+        .input-send-post {
+            width: 100% !important;
+        }
+
+        .user-name {
+            font-size: 1em;
+        }
+
+        .email {
+            font-size: 0.9em;
+        }
+
+        .modify-delete {
+            .fa-trash-can {
+                margin-left: 15px !important;
+            }
         }
     }
 }

@@ -181,8 +181,8 @@ const Comments = ({comment}) => {
                         <img className="user-picture" src={filterUser[0].profil_pic} alt="utilisateur" />
                     </div>
                     <div className="comment-name-user">
-                        <h3>{filterUser[0].first_name}, {filterUser[0].last_name}</h3>
-                        <p>{filterUser[0].email}</p>
+                        <h3 className='comment-user-name'>{filterUser[0].first_name}, {filterUser[0].last_name}</h3>
+                        <p className='email'>{filterUser[0].email}</p>
                     </div>
                     <div className="modify-delete">
                         <FontAwesomeIcon className="pen" icon={faPen} 
@@ -229,7 +229,7 @@ const Comments = ({comment}) => {
                                 toggleLike();
                             }}/>
                         }
-                        { (comment.like_number > 1) ? <span className="comment-like">{comment.like_number} likes</span> : <span className="comment-like">{comment.like_number} like</span> }
+                        { (comment.like_number > 1) ? <span className="comment-like">{comment.like_number} <span className="like-text">likes</span></span> : <span className="comment-like">{comment.like_number} <span className="like-text">like</span></span> }
                         { (dislikesCommentId.includes(comment.comment_id) && dislikesUserId.includes(comment.user_id)) ? 
                             <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down comment comment_id-red${comment.comment_id} active-red`} onClick={()=> {
                                 toggleDislike();
@@ -239,7 +239,7 @@ const Comments = ({comment}) => {
                                 toggleDislike();
                             }}/>
                         }
-                        { (comment.dislike_number > 1) ? <span className="comment-dislike">{comment.dislike_number} dislikes</span> : <span className="comment-dislike">{comment.dislike_number} dislike</span> }
+                        { (comment.dislike_number > 1) ? <span className="comment-dislike">{comment.dislike_number} <span className="dislike-text">dislikes</span></span> : <span className="comment-dislike">{comment.dislike_number} <span className="dislike-text">dislike</span></span> }
                     </div>
                 </div>
             </div>
