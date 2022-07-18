@@ -1,6 +1,7 @@
 .settings-page {
     background-image: url("../../images/cities-city-singapore-naght.jpg");
     height: 100vh;
+    min-height: 677px;
 
     .settings-container {
         position: relative;
@@ -109,7 +110,6 @@
         }
 
         
-
         .input-container {
             display: flex;
             flex-direction: column;
@@ -118,6 +118,7 @@
             align-items: center;
             height: 50%;
             width: 100%;
+            min-width: 460px;
             margin-top: 1.3em;
 
             .info-container {

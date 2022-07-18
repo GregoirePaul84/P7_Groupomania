@@ -65,12 +65,12 @@ const FriendCard = ({post, objectUser}) => {
                         <FontAwesomeIcon icon={ faMessage } onClick={toggleVisibility} />
                         { (post.comments_number > 1) ? <span>
                                                             {post.comments_number} 
-                                                            <span className="comment-text">commentaires</span>
+                                                            <span className="comment-text"> commentaires</span>
                                                         </span> 
                                                         : 
                                                         <span>
                                                             {post.comments_number} 
-                                                            <span className="comment-text">commentaire</span>
+                                                            <span className="comment-text"> commentaire</span>
                                                         </span> }
                         { (post.like_number > 1) ? <span className='post-like'>
                                                         {post.like_number} likes

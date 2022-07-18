@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllPosts } from '../../actions/post.actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage } from '@fortawesome/free-solid-svg-icons';
-import { getAllUsers } from '../../actions/user.actions';
+// import { getAllUsers } from '../../actions/user.actions';
 import CardHome from './CardHome';
 
 const NewsFeed = () => {

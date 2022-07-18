@@ -1,12 +1,15 @@
 # Groupomania
 
+!!! Important !!!
+Etant trop avancé lors de la mise à jour du projet le 26/05/2022, ce dernier correspond à l'ancienne version du 22/02/2022. Le fichier .sql est contenu dans la racine du dossier Back-end.
+
 Dernier projet de la formation Openclassrooms, qui consiste à créer un MVP d'un réseau social d'entreprise. Ceci est mon premier projet basé en partie sur React.
 
 *** Back-end ***
-- SQL, NodeJS
+- MySQL, NodeJS
 
 *** Front-end ***
-- React, Redux, VanillaJS, Sass
+- ReactJS, Redux, VanillaJS, Sass
 
 ## Installation ##
 
