@@ -159,8 +159,6 @@ const CommentsHome = ({comment}) => {
     const filterDislikes = dislikesDataResults.filter((elt) => elt.isDisliked === 1 && elt.user_id === userId);
     const dislikesUserId = filterDislikes.map((elt) => elt.user_id);
     const dislikesCommentId = filterDislikes.map((elt) => elt.comment_id); 
-
-    console.log(filterUser[0]);
         
     return (
         

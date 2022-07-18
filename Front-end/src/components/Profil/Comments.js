@@ -178,11 +178,19 @@ const Comments = ({comment}) => {
             <div className="flex-container">
                 <div className="comments-smallContainer">
                     <div className="comment-user-picture">
-                        <img className="user-picture" src={filterUser[0].profil_pic} alt="utilisateur" />
+                    {(filterUser[0] === undefined) ? 
+                        <img className="user-picture" src={'http://localhost:3000/images/empty_profil_pic.png'} alt="utilisateur"/>
+                        :
+                        <img className="user-picture" src={filterUser[0].profil_pic} alt="utilisateur" /> }
                     </div>
                     <div className="comment-name-user">
-                        <h3 className='comment-user-name'>{filterUser[0].first_name}, {filterUser[0].last_name}</h3>
-                        <p className='email'>{filterUser[0].email}</p>
+                        {(filterUser[0] === undefined) ?
+                        <h3>Profil supprimé</h3>
+                        :
+                        <>
+                            <h3 className='comment-user-name'>{filterUser[0].first_name}, {filterUser[0].last_name}</h3>
+                            <p className='email'>{filterUser[0].email}</p>
+                        </> }
                     </div>
                     <div className="modify-delete">
                         <FontAwesomeIcon className="pen" icon={faPen} 

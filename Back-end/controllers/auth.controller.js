@@ -91,6 +91,11 @@ module.exports.login = async (req,res) => {
             
             if (email && password) {
                 console.log(results);
+                if (results[0] === undefined) {
+                    res.status(404).json( { error } );
+                    return;
+                };
+
                 // Récupération du password hashé de la base de données
                 const hashedPassword = results[0].password;
                 const comparePassword = await bcrypt.compare(password, hashedPassword);
