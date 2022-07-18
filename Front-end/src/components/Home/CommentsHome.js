@@ -159,6 +159,9 @@ const CommentsHome = ({comment}) => {
     const filterDislikes = dislikesDataResults.filter((elt) => elt.isDisliked === 1 && elt.user_id === userId);
     const dislikesUserId = filterDislikes.map((elt) => elt.user_id);
     const dislikesCommentId = filterDislikes.map((elt) => elt.comment_id); 
+
+    const checkIfAdmin = userResults[0].isAdmin;
+    console.log(checkIfAdmin);
         
     return (
         
@@ -180,7 +183,7 @@ const CommentsHome = ({comment}) => {
                         </> }
                     </div>
                     {/* Si l'userID est égal à l'userId du post, on permet la modification / suppression */}
-                    { (userId === comment.user_id) ?
+                    { (userId === comment.user_id || checkIfAdmin === 1) ?
                     <div className="modify-delete">
                         <FontAwesomeIcon className="pen" icon={faPen} 
                         onClick={() => setIsUpdated(!isUpdated)}/>

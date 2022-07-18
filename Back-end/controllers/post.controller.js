@@ -132,19 +132,34 @@ module.exports.createPost = (req, res) => {
 module.exports.updatePost = (req, res) => {
     
     const postId = req.params.id;
+    const isAdmin = req.user().isAdmin;
     const newText = req.body.text;
     const userId = req.user().userId;
     const updateArray = [newText, postId, userId];
+    const adminArray = [newText, postId];
 
-    const sqlUpdatePost = `UPDATE posts SET text = ? WHERE post_id = ? AND user_id = ?`;
-    mySqlConnection.query (sqlUpdatePost, updateArray, (error, results) => {
-        if (!error) {  
-            res.status(200).json( {message : "Modification du post réussie !"} ); 
-        }
-        else {
-            res.status(500).json( {error} );
-        }
-    })         
+    if (isAdmin === 0) {
+        const sqlUpdatePost = `UPDATE posts SET text = ? WHERE post_id = ? AND user_id = ?`;
+        mySqlConnection.query (sqlUpdatePost, updateArray, (error, results) => {
+            if (!error) {  
+                res.status(200).json( {message : "Modification du post réussie !"} ); 
+            }
+            else {
+                res.status(500).json( {error} );
+            }
+        })
+    }
+    else {
+        const sqlUpdatePost = `UPDATE posts SET text = ? WHERE post_id = ?`;
+        mySqlConnection.query (sqlUpdatePost, adminArray, (error, results) => {
+            if (!error) {  
+                res.status(200).json( {message : "Modification du post réussie !"} ); 
+            }
+            else {
+                res.status(500).json( {error} );
+            }
+        })
+    }      
 }
 
 // ********** Suppression d'un post ********** //
@@ -152,26 +167,48 @@ module.exports.updatePost = (req, res) => {
 module.exports.deletePost = (req, res) => {
     
     const postId = req.params.id;
+    const isAdmin = req.user().isAdmin;
     const userId = req.user().userId;
     const idArray = [postId, userId];
 
-    const sqlDeletePost = `DELETE FROM posts WHERE posts.post_id = ? AND posts.user_id = ?`;
-    mySqlConnection.query (sqlDeletePost, idArray, (error, results) => {
-        if (!error) {
-            const sqlDeleteComments = `DELETE FROM comments WHERE comments.post_id = ?`;
-            mySqlConnection.query(sqlDeleteComments, postId, (error, results) => {
-                if (!error) {
-                    res.status(200).json( {message : "Suppression du post réussie !"} ); 
-                }
-                else {
-                    res.status(500).json( {error} ); 
-                }
-            })
-        }
-        else {
-            res.status(500).json( {error} );
-        }
-    })         
+    if (isAdmin === 0) {
+        const sqlDeletePost = `DELETE FROM posts WHERE posts.post_id = ? AND posts.user_id = ?`;
+        mySqlConnection.query(sqlDeletePost, idArray, (error, results) => {
+            if (!error) {
+                const sqlDeleteComments = `DELETE FROM comments WHERE comments.post_id = ?`;
+                mySqlConnection.query(sqlDeleteComments, postId, (error, results) => {
+                    if (!error) {
+                        res.status(200).json( {message : "Suppression du post réussie !"} ); 
+                    }
+                    else {
+                        res.status(500).json( {error} ); 
+                    }
+                })
+            }
+            else {
+                res.status(500).json( {error} );
+            }
+        })   
+    }
+    else {
+        const sqlDeletePostAdmin = `DELETE FROM posts WHERE posts.post_id = ?`;
+        mySqlConnection.query(sqlDeletePostAdmin, [postId], (error, results) => {
+            if (!error) {
+                const sqlDeleteComments = `DELETE FROM comments WHERE comments.post_id = ?`;
+                mySqlConnection.query(sqlDeleteComments, postId, (error, results) => {
+                    if (!error) {
+                        res.status(200).json( {message : "Suppression du post réussie !"} ); 
+                    }
+                    else {
+                        res.status(500).json( {error} ); 
+                    }
+                })
+            }
+            else {
+                res.status(500).json( {error} );
+            }
+        })   
+    }     
 }
 
 
@@ -181,18 +218,33 @@ module.exports.deletePicturePost = (req, res) => {
     
     const postId = req.params.id;
     const userId = req.user().userId;
+    const isAdmin = req.user().isAdmin;
     const idArray = [postId, userId];
 
-    const sqlDeletePicturePost = `DELETE FROM post_image WHERE post_id = ? AND user_id = ?`;
-    mySqlConnection.query (sqlDeletePicturePost, idArray, (error, results) => {
-        
-        if (!error) {
-            res.status(200).json( {message : "Suppression de l'image réussie !"} ); 
-        }
-        else {
-            res.status(500).json( {error} ); 
-        }
-    })            
+    if (isAdmin === 0) {
+        const sqlDeletePicturePost = `DELETE FROM post_image WHERE post_id = ? AND user_id = ?`;
+        mySqlConnection.query (sqlDeletePicturePost, idArray, (error, results) => {
+            
+            if (!error) {
+                res.status(200).json( {message : "Suppression de l'image réussie !"} ); 
+            }
+            else {
+                res.status(500).json( {error} ); 
+            }
+        })
+    }
+    else {
+        const sqlDeletePicturePostAdmin = `DELETE FROM post_image WHERE post_id = ?`;
+        mySqlConnection.query (sqlDeletePicturePostAdmin, [postId], (error, results) => {
+            
+            if (!error) {
+                res.status(200).json( {message : "Suppression de l'image réussie !"} ); 
+            }
+            else {
+                res.status(500).json( {error} ); 
+            }
+        })
+    }      
 }
 
 // ********** Suppression des likes d'un post ********** //
@@ -201,18 +253,34 @@ module.exports.deleteLikesPost = (req, res) => {
     
     const postId = req.params.id;
     const userId = req.user().userId;
+    const isAdmin = req.user().isAdmin;
     const idArray = [postId, userId];
 
-    const sqlDeleteLikesPost = `DELETE FROM likes WHERE post_id = ? AND user_id = ?`;
-    mySqlConnection.query (sqlDeleteLikesPost, idArray, (error, results) => {
-        
-        if (!error) {
-            res.status(200).json( {message : "Suppression de likes réussie !"} ); 
-        }
-        else {
-            res.status(500).json( {error} ); 
-        }
-    })            
+    if (isAdmin === 0) {
+        const sqlDeleteLikesPost = `DELETE FROM likes WHERE post_id = ? AND user_id = ?`;
+        mySqlConnection.query (sqlDeleteLikesPost, idArray, (error, results) => {
+            
+            if (!error) {
+                res.status(200).json( {message : "Suppression de likes réussie !"} ); 
+            }
+            else {
+                res.status(500).json( {error} ); 
+            }
+        }) 
+    }
+    else {
+        const sqlDeleteLikesPostAdmin = `DELETE FROM likes WHERE post_id = ?`;
+        mySqlConnection.query (sqlDeleteLikesPostAdmin, [postId], (error, results) => {
+            
+            if (!error) {
+                res.status(200).json( {message : "Suppression de likes réussie !"} ); 
+            }
+            else {
+                res.status(500).json( {error} ); 
+            }
+        }) 
+    }
+               
 }
 
 // ********** Suppression des dislikes d'un post ********** //
@@ -221,18 +289,34 @@ module.exports.deleteDislikesPost = (req, res) => {
     
     const postId = req.params.id;
     const userId = req.user().userId;
+    const isAdmin = req.user().isAdmin;
     const idArray = [postId, userId];
 
-    const sqlDeleteDislikesPost = `DELETE FROM dislikes WHERE post_id = ? AND user_id = ?`;
-    mySqlConnection.query (sqlDeleteDislikesPost, idArray, (error, results) => {
-        
-        if (!error) {
-            res.status(200).json( {message : "Suppression de dislikes réussie !"} ); 
-        }
-        else {
-            res.status(500).json( {error} ); 
-        }
-    })            
+    if (isAdmin === 0) {
+        const sqlDeleteDislikesPost = `DELETE FROM dislikes WHERE post_id = ? AND user_id = ?`;
+        mySqlConnection.query (sqlDeleteDislikesPost, idArray, (error, results) => {
+            
+            if (!error) {
+                res.status(200).json( {message : "Suppression de dislikes réussie !"} ); 
+            }
+            else {
+                res.status(500).json( {error} ); 
+            }
+        })  
+    }
+    else {
+        const sqlDeleteDislikesPostAdmin = `DELETE FROM dislikes WHERE post_id = ?`;
+        mySqlConnection.query (sqlDeleteDislikesPostAdmin, [postId], (error, results) => {
+            
+            if (!error) {
+                res.status(200).json( {message : "Suppression de dislikes réussie !"} ); 
+            }
+            else {
+                res.status(500).json( {error} ); 
+            }
+        })
+    }
+              
 }
 
 // ********** Like / Dislike d'un post ********** //

@@ -104,9 +104,10 @@ module.exports.login = async (req,res) => {
                     console.log("===> Connexion réussie")
 
                     const token = jwt.sign(
-                        { userId: results[0].user_id },
+                        { userId: results[0].user_id, isAdmin: results[0].isAdmin },
                         process.env.TOKEN_SECRET,
                         { expiresIn: process.env.TOKEN_EXPIRES }
+                        
                     );
                     
                     res.cookie("jwt", token);

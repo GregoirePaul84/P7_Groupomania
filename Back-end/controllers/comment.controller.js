@@ -122,17 +122,33 @@ module.exports.updateComment = (req, res) => {
     const commentId = req.params.id;
     const newText = req.body.text;
     const userId = req.user().userId;
+    const isAdmin = req.user().isAdmin;
     const updateArray = [newText, commentId, userId];
+    const adminArray = [newText, commentId];
 
-    const sqlUpdatePost = `UPDATE comments SET text = ? WHERE comment_id = ? AND user_id = ?`;
-    mySqlConnection.query (sqlUpdatePost, updateArray, (error, results) => {
-        if (!error) {  
-            res.status(200).json( {message : "Modification du commentaire réussie !"} ); 
-        }
-        else {
-            res.status(500).json( {error} );
-        }
-    })         
+    if(isAdmin === 0) {
+        const sqlUpdatePost = `UPDATE comments SET text = ? WHERE comment_id = ? AND user_id = ?`;
+        mySqlConnection.query (sqlUpdatePost, updateArray, (error, results) => {
+            if (!error) {  
+                res.status(200).json( {message : "Modification du commentaire réussie !"} ); 
+            }
+            else {
+                res.status(500).json( {error} );
+            }
+        })    
+    }
+    else {
+        const sqlUpdatePost = `UPDATE comments SET text = ? WHERE comment_id = ?`;
+        mySqlConnection.query (sqlUpdatePost, adminArray, (error, results) => {
+            if (!error) {  
+                res.status(200).json( {message : "Modification du commentaire réussie !"} ); 
+            }
+            else {
+                res.status(500).json( {error} );
+            }
+        })    
+    }
+         
 }
 
 
@@ -177,17 +193,32 @@ module.exports.deleteComment = (req, res) => {
     
     const commentId = req.params.id;
     const userId = req.user().userId;
+    const isAdmin = req.user().isAdmin;
     const idArray = [commentId, userId];
 
-    const sqlDeleteComment = `DELETE FROM comments WHERE comments.comment_id = ? AND comments.user_id = ?`;
-    mySqlConnection.query (sqlDeleteComment, idArray, (error, results) => {
-        if (!error) {
-            res.status(200).json( {message : `Suppression du commentaire (id: ${commentId}) réussie !`} ); 
-        }
-        else {
-            res.status(500).json( {error} );
-        }
-    })
+    if(isAdmin === 0) {
+        const sqlDeleteComment = `DELETE FROM comments WHERE comments.comment_id = ? AND comments.user_id = ?`;
+        mySqlConnection.query (sqlDeleteComment, idArray, (error, results) => {
+            if (!error) {
+                res.status(200).json( {message : `Suppression du commentaire (id: ${commentId}) réussie !`} ); 
+            }
+            else {
+                res.status(500).json( {error} );
+            }
+        })
+    }
+    else {
+        const sqlDeleteCommentAdmin = `DELETE FROM comments WHERE comments.comment_id = ?`;
+        mySqlConnection.query (sqlDeleteCommentAdmin, [commentId], (error, results) => {
+            if (!error) {
+                res.status(200).json( {message : `Suppression du commentaire (id: ${commentId}) réussie !`} ); 
+            }
+            else {
+                res.status(500).json( {error} );
+            }
+        })
+    }
+    
 }
 
 // ********** Like / Dislike d'un post ********** //
@@ -364,18 +395,34 @@ module.exports.deletePictureComment = (req, res) => {
     
     const commentId = req.params.id;
     const userId = req.user().userId;
+    const isAdmin = req.user().isAdmin;
     const idArray = [commentId, userId];
-    const sqlDeletePictureComment = `DELETE FROM comment_image WHERE comment_id = ? AND user_id = ?`;
 
-    mySqlConnection.query(sqlDeletePictureComment, idArray, (error, results) => {
+    if(isAdmin === 0) {
+        const sqlDeletePictureComment = `DELETE FROM comment_image WHERE comment_id = ? AND user_id = ?`;
+        mySqlConnection.query(sqlDeletePictureComment, idArray, (error, results) => {
         
-        if (!error) {
-            res.status(200).json( {message : "Suppression de l'image réussie !"} ); 
-        }
-        else {
-            res.status(500).json( {error} ); 
-        }
-    })            
+            if (!error) {
+                res.status(200).json( {message : "Suppression de l'image réussie !"} ); 
+            }
+            else {
+                res.status(500).json( {error} ); 
+            }
+        }) 
+    }
+    else {
+        const sqlDeletePictureCommentAdmin = `DELETE FROM comment_image WHERE comment_id = ?`;
+        mySqlConnection.query(sqlDeletePictureCommentAdmin, [commentId], (error, results) => {
+        
+            if (!error) {
+                res.status(200).json( {message : "Suppression de l'image réussie !"} ); 
+            }
+            else {
+                res.status(500).json( {error} ); 
+            }
+        })  
+    }
+               
 }
 
 // ********** Suppression des likes d'un commentaire ********** //

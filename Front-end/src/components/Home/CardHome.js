@@ -252,6 +252,8 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
     const dislikesUserId = filterDislikes.map((elt) => elt.user_id);
     const dislikesPostId = filterDislikes.map((elt) => elt.post_id); 
 
+    const checkIfAdmin = userDataResults[0].isAdmin;
+
     return (
         <>
             <div className={`card-container post_id${elt.post_id}`} key={elt.post_id}> 
@@ -264,7 +266,7 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                         <p className='email'></p>
                     </div>
                     {/* Si l'userID est égal à l'userId du post, on permet la modification / suppression */}
-                    { (userId === elt.user_id) ? 
+                    { (userId === elt.user_id || checkIfAdmin === 1) ? 
                     <div className="modify-delete">
                         <FontAwesomeIcon icon={faPen} onClick={() => setIsUpdated(!isUpdated)}/>
                         <FontAwesomeIcon icon={faTrashCan}  onClick={() => {
