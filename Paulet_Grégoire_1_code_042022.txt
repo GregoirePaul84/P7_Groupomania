@@ -1,0 +1,3 @@
+Bonjour, ce livrable contient le lien du répertoire Github correspondant à l'ancienne version (du 22/03/2022).
+
+https://github.com/GregoirePaul84/P7_Groupomania

@@ -160,17 +160,26 @@ const CommentsHome = ({comment}) => {
     const dislikesUserId = filterDislikes.map((elt) => elt.user_id);
     const dislikesCommentId = filterDislikes.map((elt) => elt.comment_id); 
 
+    console.log(filterUser[0]);
         
     return (
         
             <div className="flex-container">
                 <div className="comments-smallContainer">
                     <div className="comment-user-picture">
-                        <img className="user-picture" src={filterUser[0].profil_pic} alt="utilisateur" />
+                        {(filterUser[0] === undefined) ? 
+                        <img className="user-picture" src={'http://localhost:3000/images/empty_profil_pic.png'} alt="utilisateur"/>
+                        :
+                        <img className="user-picture" src={filterUser[0].profil_pic} alt="utilisateur" /> }
                     </div>
                     <div className="comment-name-user">
-                        <h3>{filterUser[0].first_name}, {filterUser[0].last_name}</h3>
-                        <p>{filterUser[0].email}</p>
+                    {(filterUser[0] === undefined) ?
+                        <h3>Profil supprimé</h3>
+                        :
+                        <>
+                            <h3>{filterUser[0].first_name}, {filterUser[0].last_name}</h3>
+                            <p>{filterUser[0].email}</p>
+                        </> }
                     </div>
                     {/* Si l'userID est égal à l'userId du post, on permet la modification / suppression */}
                     { (userId === comment.user_id) ?
