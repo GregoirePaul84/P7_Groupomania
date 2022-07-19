@@ -9,7 +9,10 @@ const password = require('../middlewares/password.middleware');
 router.get('/', auth, userCtlr.readAllUsers);
 
 // Récupérer un utilisateur
-router.get('/:id', auth, userCtlr.readOneUser);
+router.get('/one', auth, userCtlr.readOneUser);
+
+// Récupérer un utilisateur
+router.get('/:id', auth, userCtlr.readProfil);
 
 // Envoyer une photo de profil à la DB
 router.post('/:id', auth, upload.single('profil_image'), userCtlr.postPicUser);

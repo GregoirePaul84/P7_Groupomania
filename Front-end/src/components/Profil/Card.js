@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperPlane, faThumbsUp, faMessage, faThumbsDown, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
-import { likePost, cancelLikePost, dislikePost, cancelDislikePost, deletePost, updatePost, deletePicturePost, deleteLikePost, deleteDislikePost } from '../../actions/post.actions';
+import { faPaperPlane, faMessage, faTrashCan, faPen} from '@fortawesome/free-solid-svg-icons';
+import { deletePost, updatePost, deletePicturePost, deleteLikePost, deleteDislikePost } from '../../actions/post.actions';
 import Comments, {displayComments, hideComments} from './Comments';
 import InputComments from './InputComments';
 import { getComments} from '../../actions/comment.actions';
 import { getUserPosts } from '../../actions/user_posts.actions';
 import { convertTime } from '../../App';
 import { getAllDislikes, getAllLikes } from '../../actions/user.actions';
-let isLiked = Boolean;
-let isDisliked = Boolean;
+
 
 const Card = ({post}) => {
     const postId = post.post_id;
     const userId = post.user_id;
     const isoDate = post.created;
-    const postText = post.text;
     
     const dispatch = useDispatch();
 
@@ -43,81 +41,6 @@ const Card = ({post}) => {
                 .then(() => dispatch(getUserPosts(userId)));
         }
     }
-
-    function addLike() {
-        console.log(`==> post liké : post_id ${postId}`);
-        dispatch(likePost(postId, postText))
-            .then(() => dispatch(getUserPosts(userId)));
-    }
-
-    function removeLike() {
-        console.log(`==> like annulé : post_id ${postId}`);
-        dispatch(cancelLikePost(postId))
-            .then(() => dispatch(getUserPosts(userId)));
-    }
-
-    function addDislike() {
-        console.log(`==> post disliké : post_id ${postId}`);
-        dispatch(dislikePost(postId))
-            .then(() => dispatch(getUserPosts(userId)));
-    }
-
-    function removeDislike() {
-        console.log(`==> dislike annulé : post_id ${postId}`);
-        dispatch(cancelDislikePost(postId))
-            .then(() => dispatch(getUserPosts(userId)));
-    }   
-
-    // eslint-disable-next-line
-    const toggleLike = () => {
-
-        if (isLiked === true) {
-            
-            isLiked = false;
-            addLike();
-            const selectElt = document.querySelector(`.post_id-green${postId}`);
-            selectElt.classList.add('active-green');
-
-            // Vérification si l'utilisateur a déjà disliké le post: si oui, on annule le dislike
-            const selectContainer = document.querySelector(`.post_id-red${postId}`);
-            if (selectContainer.classList.contains('active-red')) {
-                isDisliked = false;
-                removeDislike();
-            }
-        }
-
-        else if (isLiked === false) {
-
-            isLiked = true;
-            removeLike();
-            const selectElt = document.querySelector(`.post_id-green${postId}`);
-            selectElt.classList.remove('active-green');
-        }
-    };
-
-    // eslint-disable-next-line
-    const toggleDislike = () => {
-        
-        if (isDisliked === true) {
-            addDislike();
-            const selectElt = document.querySelector(`.post_id-red${postId}`);
-            selectElt.classList.add('active-red');
-
-            // Vérification si l'utilisateur a déjà liké le post: si oui, on annule le like
-            const selectContainer = document.querySelector(`.post_id-green${postId}`);
-            if (selectContainer.classList.contains('active-green')) {
-                isLiked = false;
-                removeLike();
-            }
-        }
-        else if (isDisliked === false) {
-            removeDislike();
-            const selectElt = document.querySelector(`.post_id-red${postId}`);
-            selectElt.classList.remove('active-red');
-
-        }
-    };
-
 
     const toggleVisibility = () => {
         
@@ -248,47 +171,14 @@ const Card = ({post}) => {
                                             <span>{numberOfComments} 
                                                 <span className="comment-text"> commentaire</span>
                                             </span> }
-                { (post.isLiked === 1) ? 
-                            <FontAwesomeIcon icon={ faThumbsUp } 
-                                             className={`thumbs-up post_id-green${postId} active-green`} 
-                                             onClick={()=> {
-                                                isLiked = false;
-                                                console.log(isLiked);
-                                                toggleLike();
-                                             }}/>
-                        :
-                            <FontAwesomeIcon icon={ faThumbsUp } 
-                                             className={`thumbs-up post_id-green${postId}`} 
-                                             onClick={()=> {
-                                                isLiked = true;
-                                                console.log(isLiked);
-                                                toggleLike();
-                                             }}/>
-                }
                 { (numberOfLikes > 1) ? <span className="post-like">{numberOfLikes} 
                                             <span className="like-text"> likes</span>
                                         </span> 
                                         : 
                                         <span className="post-like">{numberOfLikes} 
                                             <span className="like-text"> like</span>
-                                        </span> }
-                { (post.isDisliked === 1) ? 
-                            <FontAwesomeIcon icon={ faThumbsDown } 
-                                             className={`thumbs-down post_id-red${postId} active-red`} 
-                                             onClick={()=> {
-                                                isDisliked = false;
-                                                console.log(isDisliked);
-                                                toggleDislike();
-                                             }}/>
-                        :
-                            <FontAwesomeIcon icon={ faThumbsDown } 
-                                             className={`thumbs-down post_id-red${postId}`} 
-                                             onClick={()=> {
-                                                isDisliked = true;
-                                                console.log(isDisliked);
-                                                toggleDislike();
-                                             }}/>
-                }
+                                        </span> 
+                                        }
                 { (numberOfDislikes > 1) ? <span className="post-dislike">{numberOfDislikes} 
                                                 <span className="dislike-text"> dislikes</span>
                                             </span> 

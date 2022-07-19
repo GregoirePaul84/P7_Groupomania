@@ -30,9 +30,31 @@ module.exports.readAllUsers = (req, res) => {
 
 module.exports.readOneUser = (req, res) => {
     
+    const userId = req.userId();
+    console.log(userId);
     const sqlGetUser = `SELECT * FROM user WHERE user_id = ?`; 
 
-    mySqlConnection.query(sqlGetUser, req.params.id, (error, results) => {
+    mySqlConnection.query(sqlGetUser, userId, (error, results) => {
+        
+        if (results.length == 1) {
+            res.status(200).json( {message: "Utilisateur récupéré !", results});
+        }
+
+        else {
+            res.status(404).json( {message: "Utilisateur introuvable"} )
+        } 
+    });
+}
+
+
+// ********** Récupération d'un profil ********** //
+
+module.exports.readProfil = (req, res) => {
+    
+    const userId = req.params.id;
+    const sqlGetUser = `SELECT * FROM user WHERE user_id = ?`; 
+
+    mySqlConnection.query(sqlGetUser, userId, (error, results) => {
         
         if (results.length == 1) {
             res.status(200).json( {message: "Utilisateur récupéré !", results});

@@ -33,7 +33,7 @@ const Profil = () => {
     useEffect(() => {
         
         if(paramsId === userId) {
-            dispatch(getUser(userId));
+            dispatch(getUser());
             dispatch(getUserPosts(userId));
         }
         else {

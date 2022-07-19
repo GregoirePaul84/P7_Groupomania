@@ -35,7 +35,7 @@ export const getAllUsers = () => {
 }
 
 
-export const getUser = (userId) => {
+export const getUser = () => {
 
     // Envoi au reducer pour stocker dans le store de Redux
     return async (dispatch) => {
@@ -43,12 +43,13 @@ export const getUser = (userId) => {
         try {
 
             // Contrôle que l'userId est bien un nombre, sinon on bloque la fonction
-            if (isNaN(userId)) {
-                return;
-            }
+            // if (isNaN(userId)) {
+            //     return;
+            // }
+
             const res = await axios({
                 method: "get",
-                url: `${process.env.REACT_APP_API_URL}api/user/${userId}`,
+                url: `${process.env.REACT_APP_API_URL}api/user/one`,
                 withCredentials: true,
             });
 
