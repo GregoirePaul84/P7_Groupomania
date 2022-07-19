@@ -88,6 +88,7 @@
                 .input-area {
                     background-color: hsl(251deg, 9%, 23%);
                     width: 93%;
+                    height: 75px;
                     border-radius: 20px;
                     
                     .flex-container {
@@ -211,6 +212,11 @@
             .main-section-settings {
                 border-radius: 0;
                 width: 100%;
+                height: auto;
+
+                .input-container {
+                    height: auto;
+                }
             }
 
             .user-description-box {

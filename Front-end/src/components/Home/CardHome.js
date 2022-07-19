@@ -317,7 +317,14 @@ const CardHome = ({postsObject, allUsersResults, elt}) => {
                                 toggleLike();
                             }}/>
                         }
-                        { (elt.like_number > 1) ? <span className="post-like">{elt.like_number} <span className="like-text">likes</span></span> : <span className="post-like">{elt.like_number} <span className="like-text">like</span></span> }
+                        { (elt.like_number > 1) ? 
+                        <span className="post-like">{elt.like_number} 
+                            <span className="like-text"> likes</span>
+                        </span> 
+                        : 
+                        <span className="post-like">{elt.like_number} 
+                            <span className="like-text"> like</span>
+                        </span> }
                         { (dislikesUserId.includes(userId) && dislikesPostId.includes(elt.post_id)) ? 
                             <FontAwesomeIcon icon={ faThumbsDown } className={`thumbs-down post_id-red${elt.post_id} active-red`} onClick={()=> {
                                 isDisliked = false;

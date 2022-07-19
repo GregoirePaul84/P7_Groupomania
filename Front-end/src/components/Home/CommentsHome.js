@@ -161,7 +161,6 @@ const CommentsHome = ({comment}) => {
     const dislikesCommentId = filterDislikes.map((elt) => elt.comment_id); 
 
     const checkIfAdmin = userResults[0].isAdmin;
-    console.log(checkIfAdmin);
         
     return (
         

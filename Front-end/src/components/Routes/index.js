@@ -13,7 +13,6 @@ import Parameters from '../../pages/Parameters';
 
 const index = () => {
 
-
     return (
         <Router>
             <Routes>
@@ -28,7 +27,6 @@ const index = () => {
 
                 {/* Redirection vers /register si paramètres inconnus */}
                 <Route path="*" element={<Navigate to="/register"/>} />
-
             </Routes>
         </Router>
         
