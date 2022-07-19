@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 15 juil. 2022 à 15:00
+-- Généré le : mar. 19 juil. 2022 à 09:06
 -- Version du serveur : 8.0.28
 -- Version de PHP : 7.4.26
 
@@ -40,16 +40,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `isDisliked` tinyint(1) NOT NULL DEFAULT '0',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`comment_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1867 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `comments`
---
-
-INSERT INTO `comments` (`comment_id`, `post_id`, `user_id`, `text`, `image_url`, `like_number`, `isLiked`, `dislike_number`, `isDisliked`, `created`) VALUES
-(1864, 434, 31, 'com', NULL, 0, 0, 0, 0, '2022-07-12 10:49:19'),
-(1865, 434, 38, 'salut', NULL, 0, 0, 0, 0, '2022-07-15 10:48:38'),
-(1866, 439, 38, 'commentaire', NULL, 0, 0, 1, 0, '2022-07-15 11:53:51');
+) ENGINE=InnoDB AUTO_INCREMENT=1875 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -65,14 +56,7 @@ CREATE TABLE IF NOT EXISTS `comment_image` (
   `user_id` int NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`comment_image_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `comment_image`
---
-
-INSERT INTO `comment_image` (`comment_image_id`, `comment_id`, `image_url`, `user_id`, `created`) VALUES
-(196, 1862, 'http://localhost:3000/images/comment/1536057558.jpgfile.jpg', 31, '2022-07-11 11:20:57');
+) ENGINE=InnoDB AUTO_INCREMENT=202 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -88,15 +72,7 @@ CREATE TABLE IF NOT EXISTS `dislikes` (
   `user_id` int NOT NULL,
   `isDisliked` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`dislikes_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=371 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `dislikes`
---
-
-INSERT INTO `dislikes` (`dislikes_id`, `post_id`, `comment_id`, `user_id`, `isDisliked`) VALUES
-(368, 434, NULL, 38, 1),
-(370, NULL, 1866, 38, 1);
+) ENGINE=InnoDB AUTO_INCREMENT=384 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -115,16 +91,7 @@ CREATE TABLE IF NOT EXISTS `likes` (
   `isLiked` tinyint(1) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`likes_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1488 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `likes`
---
-
-INSERT INTO `likes` (`likes_id`, `post_id`, `comment_id`, `user_id`, `text_post`, `text_comment`, `isLiked`, `created`) VALUES
-(1482, 441, NULL, 38, 'Bonjour', NULL, 1, '2022-07-15 11:40:17'),
-(1485, 438, NULL, 38, 'svsv', NULL, 1, '2022-07-15 11:43:31'),
-(1486, 439, NULL, 31, 'null', NULL, 1, '2022-07-15 13:48:05');
+) ENGINE=InnoDB AUTO_INCREMENT=1518 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -145,22 +112,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `comments_number` int NOT NULL DEFAULT '0',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`post_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=442 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `posts`
---
-
-INSERT INTO `posts` (`post_id`, `user_id`, `text`, `image_url`, `like_number`, `isLiked`, `dislike_number`, `isDisliked`, `comments_number`, `created`) VALUES
-(433, 38, 'Salut', NULL, 2, 0, 0, 0, 0, '2022-07-11 12:53:16'),
-(434, 38, NULL, 'http://localhost:3000/images/post/754A777FNLAUTQB32LAGZOTEJQ.jpgfile.jpg', 1, 0, 1, 1, 2, '2022-07-11 12:53:34'),
-(435, 31, 'fafzr', 'http://localhost:3000/images/post/17936fca25be3c246a2c34b31d1149db.large.jpgfile.jpg', 0, 0, 0, 0, 0, '2022-07-12 14:56:59'),
-(436, 31, NULL, 'http://localhost:3000/images/post/1536057558.jpgfile.jpg', 0, 0, 0, 0, 0, '2022-07-12 15:34:14'),
-(437, 31, NULL, 'http://localhost:3000/images/post/Artemis_hera.pngfile.png', 0, 0, 0, 0, 0, '2022-07-12 15:34:29'),
-(438, 31, 'svsv', NULL, 1, 1, 0, 0, 0, '2022-07-12 16:22:21'),
-(439, 31, NULL, 'http://localhost:3000/images/post/50NuancesDeGrecs-2.jpgfile.jpg', 1, 1, 0, 0, 1, '2022-07-12 16:24:50'),
-(440, 38, 'post', NULL, 0, 0, 0, 0, 0, '2022-07-15 10:48:43'),
-(441, 22, 'Bonjour', NULL, 1, 1, 0, 0, 0, '2022-07-15 11:28:46');
+) ENGINE=InnoDB AUTO_INCREMENT=451 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -176,18 +128,7 @@ CREATE TABLE IF NOT EXISTS `post_image` (
   `user_id` int NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`post_image_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `post_image`
---
-
-INSERT INTO `post_image` (`post_image_id`, `post_id`, `image_url`, `user_id`, `created`) VALUES
-(100, 434, 'http://localhost:3000/images/post/754A777FNLAUTQB32LAGZOTEJQ.jpgfile.jpg', 38, '2022-07-11 12:53:34'),
-(101, 435, 'http://localhost:3000/images/post/17936fca25be3c246a2c34b31d1149db.large.jpgfile.jpg', 31, '2022-07-12 14:56:59'),
-(102, 436, 'http://localhost:3000/images/post/1536057558.jpgfile.jpg', 31, '2022-07-12 15:34:14'),
-(103, 437, 'http://localhost:3000/images/post/Artemis_hera.pngfile.png', 31, '2022-07-12 15:34:29'),
-(104, 439, 'http://localhost:3000/images/post/50NuancesDeGrecs-2.jpgfile.jpg', 31, '2022-07-12 16:24:50');
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -239,30 +180,32 @@ CREATE TABLE IF NOT EXISTS `user` (
   `profil_pic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `bio` varchar(255) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `isAdmin` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `user`
 --
 
-INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `date_naissance`, `email`, `password`, `tel`, `adresse`, `profil_pic`, `bio`, `created`) VALUES
-(5, 'Hermès', 'Dieu des messagers', '2022-06-10', 'hermes@gmail.com', '$2b$10$Fan38y39Kyxqcb6whnJrLOFcn9IFDgZ2D1p8ch0w0se40xPWVCM1y', '0654782145', '10 rue mercure', 'http://localhost:3000/images/Hermès.PNGfile.png', 'Bio de Hermès', '2022-07-11 13:13:39'),
-(20, 'Narcisse', 'Le narcissique', 'null', 'narcisse@gmail.com', '$2b$10$gTuopjg0uG4Han92KdxmpeoGiWQ.5QI7E5d39SprSMV5Okgrv4DJi', 'null', 'null', 'http://localhost:3000/images/empty_profil_pic.png', 'null', '2022-07-15 13:25:41'),
-(21, 'Héphaïstos', 'Dieu des forgerons', 'null', 'hephaistos@gmail.com', '$2b$10$AycF9AVoHR9NnjF5PTKur.89V5cirzrY7WMfjpRhr13ifSOPV4NM2', 'null', 'null', 'http://localhost:3000/images/hephaistos.PNGfile.png', 'null', '2022-07-15 13:25:32'),
-(23, 'Athéna', 'Déesse de la sagesse', 'null', 'athena@gmail.com', '$2b$10$WaBM4l65any0SiyWbQd3H.DPZ5lTqnac.OWFZ19UYq4LLHmG/LbyG', 'null', 'null', 'http://localhost:3000/images/empty_profil_pic.png', 'null', '2022-07-15 13:25:18'),
-(24, 'Aphrodite', 'Déesse de l\'amour', '2022-06-17', 'aphrodite@gmail.com', '$2b$10$gOceqTvGIQcWtxKbaEYfe.2z.RoXsTASbNjVv91DdGP7CR53N1rLq', '0654782145', '2 rue Pégase', 'http://localhost:3000/images/Aphrodite.PNGfile.png', '', '2022-07-04 17:07:40'),
-(25, 'Dieu du soleil', 'Apollon', 'null', 'apollon@gmail.com', '$2b$10$SqljZfRwYj.SaxpOJHkw2OGJMpSsd7xLr1.jgzvNAqPKEiyz3uDOy', 'null', 'null', 'http://localhost:3000/images/Apollon.PNGfile.png', 'null', '2022-07-15 13:25:04'),
-(27, 'Dieu du vin', 'Dionysos', 'null', 'dionysos@gmail.com', '$2b$10$giVUvjwJ/afQskmHicheluk9iBpvCbsQHLw3GP3nUJkiaJPLTTvUC', 'null', 'null', 'http://localhost:3000/images/Dionysos.PNGfile.png', 'null', '2022-07-15 13:24:51'),
-(28, 'Fille d\'Icarios', 'Pénélope', 'null', 'penelope@gmail.com', '$2b$10$9tKvw74LayOXw4ZN4UKmgeIGKf8kMhgFRxNbKJUKYHpFuUAMYcz0i', 'null', 'null', 'http://localhost:3000/images/penelope.PNGfile.png', 'null', '2022-07-15 13:24:35'),
-(29, 'Artémis', 'Déesse de la chasse', 'null', 'artemis@gmail.com', '$2b$10$5hlTBKdkberDjjNmc4QhHeC6st4uK6QJNptiKsJvJJFCiL0CT/JBy', 'null', 'null', 'http://localhost:3000/images/artemis.PNGfile.png', 'null', '2022-07-15 13:24:16'),
-(31, 'Poseidon', 'Dieu des mers', '2022-06-10', 'poseidon@gmail.com', '$2b$10$EzGCk36g/mih/bQnIR/83eZCEj8mtNCXvUaC1oit4ZUCst7JC0kx.', '0487512465', '15 rue de l\'hippocampe', 'http://localhost:3000/images/poseidon.PNGfile.png', 'Bonjour', '2022-07-07 15:28:39'),
-(34, 'Héra', 'Déesse du mariage', '2022-06-16', 'hera@gmail.com', '$2b$10$9BxAv7BMKqkZvJYTy.E6KeoinGorV6CDiD/ZQwAm4BPHWGMforMu.', 'null', 'null', 'http://localhost:3000/images/Héra.PNGfile.png', 'null', '2022-07-15 13:23:57'),
-(35, 'Eol', 'Dieu du vent', '2022-07-22', 'eol@gmail.com', '$2b$10$klj4O5VRoCfKU/XRugAhDebPMrRqGMzYz.b0s8PimgoxsdlrL9F2W', 'null', 'null', 'http://localhost:3000/images/empty_profil_pic.png', 'null', '2022-07-15 13:23:40'),
-(36, 'Hadès', 'Dieu des enfers', 'null', 'hades@gmail.com', '$2b$10$n86pzx.v0tEzuLYa2XkQKutkflUI8futU2e.EeR4cgsaG5yIBnN4S', 'null', 'null', 'http://localhost:3000/images/empty_profil_pic.png', 'null', '2022-07-15 13:22:58'),
-(38, 'Zeus', 'Dieu des dieux', 'null', 'zeus@gmail.com', '$2b$10$PVQcYHkt5RAySNli.qF3LefJUZajwPRGHADodt.6FObgLY./WcwiS', '0457816495', '2 rue Pégase', 'http://localhost:3000/images/zeus_arte.PNGfile.png', 'null', '2022-07-15 14:03:10'),
-(39, 'Arès', 'Dieu de la guerre', 'null', 'ares@gmail.com', '$2b$10$RpyOdIlw9aUWbDY6EiIYbuuNzW9GGWMa5bcWkJywNyWkVpkKDJzl6', 'null', 'null', 'http://localhost:3000/images/empty_profil_pic.png', 'null', '2022-07-15 13:37:24');
+INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `date_naissance`, `email`, `password`, `tel`, `adresse`, `profil_pic`, `bio`, `created`, `isAdmin`) VALUES
+(5, 'Hermès', 'Dieu des messagers', '2022-06-10', 'hermes@gmail.com', '$2b$10$Fan38y39Kyxqcb6whnJrLOFcn9IFDgZ2D1p8ch0w0se40xPWVCM1y', '0654782145', '10 rue mercure', 'http://localhost:3000/images/Hermès.PNGfile.png', 'Bio de Hermès', '2022-07-11 13:13:39', 0),
+(20, 'Narcisse', 'Le narcissique', 'null', 'narcisse@gmail.com', '$2b$10$gTuopjg0uG4Han92KdxmpeoGiWQ.5QI7E5d39SprSMV5Okgrv4DJi', 'null', 'null', 'http://localhost:3000/images/empty_profil_pic.png', 'null', '2022-07-15 13:25:41', 0),
+(21, 'Héphaïstos', 'Dieu des forgerons', 'null', 'hephaistos@gmail.com', '$2b$10$AycF9AVoHR9NnjF5PTKur.89V5cirzrY7WMfjpRhr13ifSOPV4NM2', 'null', 'null', 'http://localhost:3000/images/hephaistos.PNGfile.png', 'null', '2022-07-15 13:25:32', 0),
+(23, 'Athéna', 'Déesse de la sagesse', 'null', 'athena@gmail.com', '$2b$10$WaBM4l65any0SiyWbQd3H.DPZ5lTqnac.OWFZ19UYq4LLHmG/LbyG', 'null', 'null', 'http://localhost:3000/images/empty_profil_pic.png', 'null', '2022-07-15 13:25:18', 0),
+(24, 'Aphrodite', 'Déesse de l\'amour', '2022-06-17', 'aphrodite@gmail.com', '$2b$10$gOceqTvGIQcWtxKbaEYfe.2z.RoXsTASbNjVv91DdGP7CR53N1rLq', '0654782145', '2 rue Pégase', 'http://localhost:3000/images/Aphrodite.PNGfile.png', '', '2022-07-04 17:07:40', 0),
+(25, 'Dieu du soleil', 'Apollon', 'null', 'apollon@gmail.com', '$2b$10$SqljZfRwYj.SaxpOJHkw2OGJMpSsd7xLr1.jgzvNAqPKEiyz3uDOy', 'null', 'null', 'http://localhost:3000/images/Apollon.PNGfile.png', 'null', '2022-07-15 13:25:04', 0),
+(27, 'Dieu du vin', 'Dionysos', 'null', 'dionysos@gmail.com', '$2b$10$giVUvjwJ/afQskmHicheluk9iBpvCbsQHLw3GP3nUJkiaJPLTTvUC', 'null', 'null', 'http://localhost:3000/images/Dionysos.PNGfile.png', 'null', '2022-07-15 13:24:51', 0),
+(28, 'Fille d\'Icarios', 'Pénélope', 'null', 'penelope@gmail.com', '$2b$10$9tKvw74LayOXw4ZN4UKmgeIGKf8kMhgFRxNbKJUKYHpFuUAMYcz0i', 'null', 'null', 'http://localhost:3000/images/penelope.PNGfile.png', 'null', '2022-07-15 13:24:35', 0),
+(29, 'Artémis', 'Déesse de la chasse', 'null', 'artemis@gmail.com', '$2b$10$5hlTBKdkberDjjNmc4QhHeC6st4uK6QJNptiKsJvJJFCiL0CT/JBy', 'null', 'null', 'http://localhost:3000/images/artemis.PNGfile.png', 'null', '2022-07-15 13:24:16', 0),
+(31, 'Poseidon', 'Dieu des mers', '2022-06-10', 'poseidon@gmail.com', '$2b$10$EzGCk36g/mih/bQnIR/83eZCEj8mtNCXvUaC1oit4ZUCst7JC0kx.', '0487512465', '15 rue de l\'hippocampe', 'http://localhost:3000/images/poseidon.PNGfile.png', 'Bonjour', '2022-07-07 15:28:39', 0),
+(34, 'Héra', 'Déesse du mariage', '2022-06-16', 'hera@gmail.com', '$2b$10$9BxAv7BMKqkZvJYTy.E6KeoinGorV6CDiD/ZQwAm4BPHWGMforMu.', 'null', 'null', 'http://localhost:3000/images/Héra.PNGfile.png', 'null', '2022-07-15 13:23:57', 0),
+(35, 'Eol', 'Dieu du vent', '2022-07-22', 'eol@gmail.com', '$2b$10$klj4O5VRoCfKU/XRugAhDebPMrRqGMzYz.b0s8PimgoxsdlrL9F2W', 'null', 'null', 'http://localhost:3000/images/empty_profil_pic.png', 'null', '2022-07-15 13:23:40', 0),
+(36, 'Hadès', 'Dieu des enfers', 'null', 'hades@gmail.com', '$2b$10$n86pzx.v0tEzuLYa2XkQKutkflUI8futU2e.EeR4cgsaG5yIBnN4S', 'null', 'null', 'http://localhost:3000/images/empty_profil_pic.png', 'null', '2022-07-15 13:22:58', 0),
+(38, 'Zeus', 'Dieu des dieux', 'null', 'zeus@gmail.com', '$2b$10$PVQcYHkt5RAySNli.qF3LefJUZajwPRGHADodt.6FObgLY./WcwiS', '0457816495', '2 rue Pégase', 'http://localhost:3000/images/zeus_arte.PNGfile.png', 'null', '2022-07-15 14:03:10', 0),
+(39, 'Arès', 'Dieu de la guerre', 'null', 'ares@gmail.com', '$2b$10$RpyOdIlw9aUWbDY6EiIYbuuNzW9GGWMa5bcWkJywNyWkVpkKDJzl6', 'null', 'null', 'http://localhost:3000/images/empty_profil_pic.png', 'null', '2022-07-15 13:37:24', 0),
+(47, 'Groupomania', 'Admin', 'null', 'groupomania@gmail.com', '$2b$10$oTDL/21KevHRskU4C02.Ouo6ps8NBlM7wFfrQ9xYgH9h.y4.Y40QO', 'null', 'null', 'http://localhost:3000/images/icon.pngfile.png', 'Admin chez Groupomania', '2022-07-18 17:46:21', 1);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

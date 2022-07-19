@@ -35,3 +35,15 @@ Dernier projet de la formation Openclassrooms, qui consiste à créer un MVP d'u
 - Lancer le projet (port 3001)
 `==> cd front-end`
 `==> npm start`
+
+*** Variables d'environnement ***
+- PORT=3000
+- CLIENT_URL="http://localhost:3001"
+
+- DB_HOST="localhost"
+- DB_USER="root"
+- DB_PASSWORD="aY)]R-6z57KP!-gW"
+- DB_NAME="groupomania"
+
+- TOKEN_SECRET="kc8JGC4E2b)}w$2[ius%9?cFH-MxH(7789"
+- TOKEN_EXPIRES="24h"
