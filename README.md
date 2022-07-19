@@ -1,4 +1,4 @@
-# Groupomania
+## Groupomania ##
 
 !!! Important !!!
 Etant trop avancé lors de la mise à jour du projet le 26/05/2022, ce dernier correspond à l'ancienne version du 22/02/2022. Le fichier .sql est contenu dans la racine du dossier Back-end.
@@ -47,3 +47,5 @@ Dernier projet de la formation Openclassrooms, qui consiste à créer un MVP d'u
 
 - TOKEN_SECRET="kc8JGC4E2b)}w$2[ius%9?cFH-MxH(7789"
 - TOKEN_EXPIRES="24h"
+
+![image Home](https://user-images.githubusercontent.com/90619952/179761722-94145a88-d3b1-45e2-8031-e0a5eadca0ab.jpg)
