@@ -13,15 +13,31 @@ Dernier projet de la formation Openclassrooms, qui consiste à créer un MVP d'u
 
 ## Installation ##
 
+-Créer 2 terminaux renommés en "Front-end" et "Back-end"
+
+/// Etape 1 ///
+
 *** Back-end ***
-- Installer node_modules ainsi que les dépendances dans le dossier Back-end.
+
+- Installer node_modules dans le dossier Back-end.
 `==> cd back-end`
-`==> npm install`
+`==> npm i`
 
 *** Front-end ***
-- Installer node_modules ainsi que les dépendances dans le dossier Front-end.
-`==> cd back-end`
-`==> npm install`
+
+- Installer node_modules dans le dossier Front-end.
+`==> cd front-end`
+`==> npm i`
+
+/// Etape 2 ///
+- Lancer phpmyadmin
+- Attribuer une "nouvelle base de données" dans l'onglet de gauche, attribuer le nom de "groupomania", puis cliquer sur "Créer"
+- Sélectionner la base de données puis cliquer sur "importer"
+- Cliquer sur "choisir un fichier" puis sélectionner le fichier .sql se trouvant dans le dossier "config" du dossier "Back-end"
+- Cliquer sur "Executer"
+
+/// Etape 3 ///
+- 
 
 
 ## Lancement ##
@@ -37,15 +53,7 @@ Dernier projet de la formation Openclassrooms, qui consiste à créer un MVP d'u
 `==> npm start`
 
 *** Variables d'environnement ***
-- PORT=3000
-- CLIENT_URL="http://localhost:3001"
-
-- DB_HOST="localhost"
-- DB_USER="root"
-- DB_PASSWORD="aY)]R-6z57KP!-gW"
-- DB_NAME="groupomania"
-
-- TOKEN_SECRET="kc8JGC4E2b)}w$2[ius%9?cFH-MxH(7789"
-- TOKEN_EXPIRES="24h"
+le fichier .env a été volontairement retiré de .gitignore pour faciliter le lancement de l'application
 
 ![image Home](https://user-images.githubusercontent.com/90619952/179761722-94145a88-d3b1-45e2-8031-e0a5eadca0ab.jpg)
+
