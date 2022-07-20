@@ -33,7 +33,7 @@ const Profil = () => {
     useEffect(() => {
         
         if(paramsId === userId) {
-            dispatch(getUser());
+            dispatch(getUser(userId));
             dispatch(getUserPosts(userId));
         }
         else {
@@ -42,6 +42,11 @@ const Profil = () => {
         }
         // eslint-disable-next-line
     }, [ userId, paramsId])
+
+    useEffect(() => {
+        dispatch(getUser());
+        // eslint-disable-next-line
+      }, [])
 
     if(paramsId === userId) {
         return (

@@ -41,12 +41,6 @@ export const getUser = () => {
     return async (dispatch) => {
 
         try {
-
-            // Contrôle que l'userId est bien un nombre, sinon on bloque la fonction
-            // if (isNaN(userId)) {
-            //     return;
-            // }
-
             const res = await axios({
                 method: "get",
                 url: `${process.env.REACT_APP_API_URL}api/user/one`,

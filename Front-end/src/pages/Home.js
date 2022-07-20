@@ -5,6 +5,7 @@ import MiddleSection from '../components/Home/MiddleSection';
 import RightSection from '../components/Home/RightSection';
 import NavBarHome from '../components/Home/NavBarHome';
 import { getUserPosts } from '../actions/user_posts.actions';
+import { getUser } from '../actions/user.actions';
 
 
 const Home = () => {
@@ -24,6 +25,12 @@ const Home = () => {
         dispatch(getUserPosts(userId));
     }, [dispatch, userId]);
 
+    useEffect(() => {
+        dispatch(getUser());
+        // eslint-disable-next-line
+      }, [])
+
+      
     return(
         <div className="home-page">
             <div className="background-transparent">

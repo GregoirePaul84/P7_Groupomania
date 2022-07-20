@@ -1,7 +1,5 @@
 import React from 'react';
 import Routes from './components/Routes/index';
-import { useDispatch } from 'react-redux';
-import { getUser} from './actions/user.actions';
 
 export function convertTime(isoDate) {
   
@@ -21,10 +19,6 @@ export function convertTime(isoDate) {
 }
 
 const App = () => {
-  
-  const dispatch = useDispatch();
-
-  dispatch(getUser());
 
   return ( 
       <Routes />

@@ -95,6 +95,11 @@ const Settings = () => {
         
     }, [file])
 
+    useEffect(() => {
+        dispatch(getUser());
+        // eslint-disable-next-line
+      }, [])
+
     return (
         
         <div className="settings-page">
