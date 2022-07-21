@@ -56,5 +56,11 @@ Dernier projet de la formation Openclassrooms, qui consiste à créer un MVP d'u
 *** Variables d'environnement ***
 le fichier .env a été volontairement retiré de .gitignore pour faciliter le lancement de l'application
 
+*** Compte admin ***
+Un compte admin est présent pour la modération des posts :
+
+email : groupomania@gmail.com
+mdp : Admin84000
+
 ![image Home](https://user-images.githubusercontent.com/90619952/179761722-94145a88-d3b1-45e2-8031-e0a5eadca0ab.jpg)
 
