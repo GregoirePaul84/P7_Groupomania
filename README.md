@@ -1,9 +1,9 @@
 ## Groupomania ##
 
 !!! Important !!!
-Etant trop avancé lors de la mise à jour du projet le 26/05/2022, ce dernier correspond à l'ancienne version du 22/02/2022. Le fichier .sql est contenu dans la racine du dossier Back-end.
+Etant trop avancé lors de la mise à jour du projet le 26/05/2022, ce dernier correspond à l'ancienne version du 22/02/2022. 
 
-Dernier projet de la formation Openclassrooms, qui consiste à créer un MVP d'un réseau social d'entreprise. Ceci est mon premier projet basé en partie sur React.
+Dernier projet de la formation Openclassrooms, qui consiste à créer un MVP d'un réseau social d'entreprise. Ceci est mon premier projet basé en partie sur React. Le fichier .sql se situe dans le dossier config du dossier backend.
 
 *** Back-end ***
 - MySQL, NodeJS
@@ -30,14 +30,12 @@ Dernier projet de la formation Openclassrooms, qui consiste à créer un MVP d'u
 `==> npm i`
 
 /// Etape 2 ///
+
 - Lancer phpmyadmin
-- Attribuer une "nouvelle base de données" dans l'onglet de gauche, attribuer le nom de "groupomania", puis cliquer sur "Créer"
+- Attribuer une "nouvelle base de données" interclassement utf8mb4_0900_ai_ci , attribuer le nom de "groupomania", cliquer sur "Créer"
 - Sélectionner la base de données puis cliquer sur "importer"
 - Cliquer sur "choisir un fichier" puis sélectionner le fichier .sql se trouvant dans le dossier "config" du dossier "Back-end"
 - Cliquer sur "Executer"
-
-/// Etape 3 ///
-- 
 
 
 ## Lancement ##

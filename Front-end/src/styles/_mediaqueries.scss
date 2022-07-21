@@ -3,7 +3,6 @@
     .home-page {
         background-image: none;
         background-color: hsl(253deg 12% 14%);
-        height: 100%;
 
         .home-container {
             height: 100%;
@@ -191,6 +190,7 @@
 
     // Page settings / format tablette
     .settings-page {
+        height: auto;
         .settings-container {
             height: 100%;
             width: 100%;
@@ -212,7 +212,6 @@
             .main-section-settings {
                 border-radius: 0;
                 width: 100%;
-                height: auto;
 
                 .input-container {
                     height: auto;
@@ -444,6 +443,10 @@
                 }
             }
 
+            .settings-title-box {
+                justify-content: space-between;
+            }
+
             .input-container {
                 .info-container {
                     width: 50%;
@@ -459,7 +462,13 @@
 
 // Page Home / format mobile 430px
 @media screen and (max-width: 430px) {
+
+    .purple-line {
+        display: none;
+    }
+
     .home-page {
+        height: auto;
 
         .profil-nav-bar {
             padding: 0 1em !important;
@@ -524,6 +533,18 @@
 
     // Page Profil / format mobile 430px
     .profil-page {
+        .home-settings-links {
+            flex-direction: column-reverse;
+            justify-content: space-evenly;
+
+            .home, .profil, .settings, .contacts, .logout {
+                margin-right: 0 !important;
+            }
+        }
+    }
+
+    // Page Profil / format mobile 430px
+    .settings-page {
         .home-settings-links {
             flex-direction: column-reverse;
             justify-content: space-evenly;
