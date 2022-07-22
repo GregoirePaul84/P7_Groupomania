@@ -1,0 +1,22 @@
+.home-page {
+    background-image: url("../../images/cities-city-singapore-naght.jpg");
+    height: 100vh;
+    min-height: 663px;
+    
+    .home-container {
+        height: 95vh;
+        min-height: 678px;
+        width: 90vw;
+        min-width: 981px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+
+        main {
+            height: 80%;
+            width: 100%;
+            display: flex;
+        }
+    }
+
+}

@@ -1,0 +1,103 @@
+version: "3.7"
+services:
+    front:
+        image: node #:12.20.1-buster
+        hostname: front
+        restart: always
+        command: > 
+            /bin/bash -c "
+            cd /app 
+            && npm install
+            && npm start"
+        ports:
+            - 0.0.0.0:3001:3000
+        volumes:
+            - "./P7_Groupomania/Front-end:/app/"
+        depends_on: 
+            - back
+        expose:
+            - 3001
+        networks:
+            groupomania:
+                aliases:
+                    - front
+
+
+    back:
+        image: node
+        restart: always
+        command: >
+            /bin/bash -c " cd /app 
+            && npm i --save
+            && npm start"
+        depends_on:
+            - mysql
+        environment:
+            REACT_APP_CLIENT_URL: ${REACT_APP_CLIENT_URL}
+            REACT_APP_API_URL: ${REACT_APP_API_URL}
+
+            TOKEN_SECRET: ${TOKEN_SECRET}
+            PORT: ${PORT}
+            CLIENT_URL: ${CLIENT_URL}
+
+            DB_HOST: ${DB_HOST}
+            DB_USER: ${DB_USER}
+            DB_PASSWORD: ${DB_PASSWORD}
+            DB_NAME: ${DB_NAME}
+
+            TOKEN_EXPIRES: ${TOKEN_EXPIRES}
+
+        volumes:
+            - "./P7_Groupomania/Back-end:/app/"
+        ports:
+            - "0.0.0.0:3000:3000"
+        expose:
+            - 3000
+        tty: true
+        networks:
+            groupomania:
+                aliases:
+                    - back
+
+
+    mysql:
+        hostname: mysql
+        image: mysql:5.7
+        volumes:
+            - groupomania_mysql_x:/var/lib/mysql
+        ports:
+            - "0.0.0.0:3306:3306"
+        command: mysqld --sql_mode="" --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_DATABASE: ${DB_NAME}
+            # MYSQL_USER: ${DB_USER}
+            # MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+
+        networks:
+            groupomania:
+                aliases:
+                    - mysql
+
+    phpmy:
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - 18070:80
+        depends_on:
+            - mysql
+        links:
+            - "mysql:db"
+        networks:
+            groupomania:
+                aliases:
+                    - phpmy
+        
+    
+networks:
+    groupomania:
+        driver: bridge
+        driver_opts:
+            com.docker.network.bridge.name: br-groupomania
+
+volumes:
+    groupomania_mysql_x: {}

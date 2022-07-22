@@ -33,9 +33,9 @@ Dernier projet de la formation Openclassrooms, qui consiste à créer un MVP d'u
 
 1. Lancer phpmyadmin
 2. Dans le fichier .env qui se situe dans Back-end/config , indiquez :
-    - DB_USER= votre nom d'utilisateur (root par défaut)
-    - DB_PASS= votre mot de passe (vide par défaut)
-3. Attribuer une "nouvelle base de données" interclassement **utf8mb4_0900_ai_ci** , attribuer le nom de "groupomania", cliquer sur "Créer"
+- > DB_USER= votre nom d'utilisateur (root par défaut)
+- > DB_PASS= votre mot de passe (vide par défaut)
+3. Attribuer une "nouvelle base de données" interclassement utf8mb4_0900_ai_ci , attribuer le nom de "groupomania", cliquer sur "Créer"
 4. Sélectionner la base de données puis cliquer sur "importer"
 5. Cliquer sur "choisir un fichier" puis sélectionner le fichier .sql se trouvant dans le dossier "config" du dossier "Back-end"
 6. Cliquer sur "Executer"
@@ -59,8 +59,8 @@ le fichier .env a été volontairement retiré de .gitignore pour faciliter le l
 *** Compte admin ***
 Un compte admin est présent pour la modération des posts :
 
-- email : groupomania@gmail.com
-- mdp : Admin84000
+email : groupomania@gmail.com
+mdp : Admin84000
 
 ![image Home](https://user-images.githubusercontent.com/90619952/179761722-94145a88-d3b1-45e2-8031-e0a5eadca0ab.jpg)
 

@@ -1,0 +1,225 @@
+.user-posts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    border-radius: 0 0 20px 20px;
+    overflow: scroll;
+    &::-webkit-scrollbar {
+        width: 0px;
+        background: transparent; 
+    }
+}
+
+.card-container {
+    min-width: 620px;
+    background-color: #2A2831;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1em 0;
+    border-radius: 20px;
+    
+    .card-smallContainer {
+        background-color: #383641;
+        display: flex;
+        flex-wrap: wrap;
+        width: 90%;
+        border-radius: 20px;
+        margin: 1em 0;
+
+        .card-user-picture {
+            flex-grow: 1;
+            max-width: 115px;
+            height: 77px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #7D7D7D;
+
+            img {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+            }
+        }
+
+        .card-name-user {
+            height: 77px;
+            padding-left: 10px;
+            flex-grow: 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 1px solid #7D7D7D;
+
+            .user-name {
+                margin-bottom: 5px;
+            }
+        }
+
+        .modify-delete {
+            padding: 18px 20px 10px 10px;
+            flex-grow: 1;
+            border-bottom: 1px solid hsl(0deg 0% 49%);
+            display: flex;
+            justify-content: flex-end;
+
+            .fa-pen {
+                cursor: pointer;
+                path {
+                    height: 100%;
+                    width: 100%;
+                    &:hover {
+                        color: #8D76FF;
+                    }
+                }
+            }
+            .fa-trash-can {
+                margin-left: 25px;
+                cursor: pointer;
+                path {
+                    height: 100%;
+                    width: 100%;
+                    &:hover {
+                        color: rgb(255, 30, 30);
+                    }
+                }
+            }
+        }
+
+        .card-message {
+            height: 40%;
+            width: 100%;
+            border-bottom: 1px solid hsl(0deg 0% 49%);
+            border-radius: 0 0 20px 20px;
+
+            svg {
+                margin: 5px 15px 0 15px;
+            }
+            span {
+                font-size: 0.8em;
+            }
+            li {
+                margin-top: 1em;
+            }
+            .post-content {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                margin: 10px 15px;
+
+                .message {
+                    flex-basis: 100%;
+                }
+                .picture {
+                    max-width: 300px;
+                    height: 175px;
+                    margin: 15px 0 10px 0;
+                    img {
+                        width: 75%;
+                        height: 100%;
+                        border: 2px solid;
+                        border-radius: 20px;
+                        transition: transform 400ms;
+                        cursor: pointer;
+                        &:hover {
+                            transform: scale(1.05);
+                        }
+                    }
+                }
+            }
+            .update-post {
+                display: flex;
+                flex-basis: 100%;
+                flex-wrap: wrap;
+                justify-content: center;
+                textarea {
+                    flex-basis: 100%;
+                    margin: 10px 15px;
+                    background-color: #383641;
+                    border-radius: 10px;
+                    padding: 5px 10px;
+                    resize: vertical;
+                    min-height: 37px;
+                    max-height: 150px;
+                }
+                .update-button {
+                    margin-bottom: 10px;
+                    .btn {
+                        background-color: #2A2831;
+                        border: 2px solid #8D76FF;
+                        border-radius: 10px;
+                        padding: 4px;
+                        cursor: pointer;
+                        font-weight: bold;
+                        transition: transform 400ms;
+                        &:hover {
+                            transform: scale(1.15);
+                        }
+                    }
+                }
+
+            }
+            
+        }
+
+        .card-likes-posts {
+            height: 39px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-right: 25px;
+            gap: 15px;
+
+            .fa-message path {
+                &:hover {
+                    color: #8D76FF;
+                }
+            }
+
+            .thumbs-up path {
+                width: 18px;
+                height: 18px;
+                &:hover {
+                    color:hsl(120deg 70% 50%);
+                }
+            }
+
+            .active-green path{
+                color:hsl(120deg 70% 50%);
+            }
+            
+            .thumbs-down path {
+                width: 18px;
+                height: 18px;
+                &:hover {
+                    color: rgb(255, 30, 30);
+                }
+            }
+
+            .active-red path{
+                color: rgb(255, 30, 30);
+            }
+
+            svg {
+                cursor: pointer;
+            }
+
+            .post-like {
+                color: hsl(120deg 70% 50%);
+                .like-text {
+                    color: hsl(120deg 70% 50%);
+                }
+            }
+            .post-dislike {
+                color: rgb(255, 30, 30);
+                .dislike-text {
+                    color: rgb(255, 30, 30);
+                }
+            }
+            
+        }
+    }
+}

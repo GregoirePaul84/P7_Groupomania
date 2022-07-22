@@ -1,0 +1,563 @@
+// Page Home / format tablettes
+@media screen and (max-width: 996px) {
+    .home-page {
+        background-image: none;
+        background-color: hsl(253deg 12% 14%);
+
+        .home-container {
+            height: 100%;
+            width: 100%;
+            min-width: auto;
+
+            .home-header {
+                height: 20%;
+                border-radius: 0;
+
+                .profil-nav-bar {
+                    padding: 0 0.5em;                
+                }
+            }
+
+            .left-container {
+                width: 23%;
+                border-right: 1px solid hsl(253deg 22% 31%);
+                .user-identity {
+                    border-radius: 0;
+                    flex-direction: column;
+                    height: 35%;
+                    border-bottom: 1px solid hsl(253deg 22% 31%);
+
+                    .user-picture {
+                        width: 100px;
+                        height: 100px;
+                    }
+
+                    .user-name-container {
+                        text-align: center;
+                        width: 100%;
+                        margin: 0;
+
+                        h4{
+                            padding: 0 5px;
+                        }
+                    }
+                }
+
+                .likes-container {
+                    border-radius: 0;
+                    margin-top: 0;
+                    height: 65%;
+
+                    .likes-header {
+                        flex-direction: column;
+                        padding-top: 1em;
+
+                        span {
+                            align-self: center;
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+
+            .middle-container {
+                background-color: hsl(253deg 12% 14%);
+                
+                .stories, .input-area, .news-feed{
+                    width: 100%;
+                    border-radius: 0;
+                }
+
+                .stories {
+                    height: 220px;
+                    width: 93%;
+                    padding: 0;
+                    margin-left: -5px;
+                }
+
+                .picture-container {
+                    display: flex;
+                    align-items: center;
+                    img {
+                        height: 90%;
+                    }
+                    
+                }
+
+                .input-area {
+                    background-color: hsl(251deg, 9%, 23%);
+                    width: 93%;
+                    height: 75px;
+                    border-radius: 20px;
+                    
+                    .flex-container {
+                        width: 400px;
+                        height: 75px;
+                    }
+                }
+
+                .news-feed {
+                    margin-top: 1em;
+                }
+
+                .comments-text, .like-text, .dislike-text {
+                    display: none;
+                }
+
+                .card-smallContainer {
+                    width: 95%;
+
+                    .modify-delete {
+                        padding: 18px 0 10px 0;
+                    }
+                }
+            }
+
+            .right-container {
+                width: 27%;
+                min-width: 233px;
+                border-left: 1px solid hsl(253deg 22% 31%);
+
+                .user-description-container {
+                    align-items: center;
+                }
+                .user-picture {
+                    width: 50px;
+                    height: 50px;
+
+                    img {
+                        width: 50px;
+                    }
+                }
+                .friends {
+                    border-radius: 0;
+                }
+            }
+        }
+    }
+
+// Page Profil / format tablette
+
+    .profil-page {
+        .profil-container {
+            height: 100%;
+            width: 100%;
+            min-height: auto;
+            min-width: auto;
+
+            header {
+                border-radius: 0;
+
+                .profil-nav-bar {
+                    padding: 0.5em;
+                }
+            }
+
+            .user-description-box {
+                border-radius: 0;
+
+                .biography {
+                    margin: 0 0 1em 1em;
+                }
+
+                .title-line {
+                    margin-bottom: 0.5em;
+                }
+
+                .info-box {
+                    flex-direction: column;
+                    margin: 0 10px 0 0;
+
+                    .info-key {
+                        margin: 10px 0;
+                    }
+
+                    .info-value {
+                        margin-left: 0;
+                    }
+                }
+            }
+
+            .main-section-profil {
+                border-radius: 0;
+
+                    .card-container {
+                        min-width: auto;
+                    }
+            }
+        }
+    }
+
+    // Page settings / format tablette
+    .settings-page {
+        height: auto;
+        .settings-container {
+            height: 100%;
+            width: 100%;
+            min-height: auto;
+            min-width: auto;
+
+            header {
+                border-radius: 0;
+
+                h1 {
+                    display: none;
+                }
+
+                .profil-nav-bar {
+                    padding: 0.5em;
+                }
+            }
+
+            .main-section-settings {
+                border-radius: 0;
+                width: 100%;
+
+                .input-container {
+                    height: auto;
+                }
+            }
+
+            .user-description-box {
+                display: none;
+            }
+
+            .user-name {
+                display: flex;
+                align-self: center;
+                .cellphone-profil-pic {
+                    margin-right: 1em;
+                    display: block;
+
+                    img {
+                        height: 100px;
+                        width: 100px;
+                        border-radius: 20px;
+                    }
+                }
+
+                h2 {
+                    align-self: center;
+                }
+            }
+        }
+    }
+}
+
+
+@media screen and (max-width: 778px) {
+    // Page Register / Login format mobile
+    .register-page {
+        justify-content: center;
+        .colored-box-red, .colored-box-purple, .log-container {
+            margin-left: 0;
+        }
+
+    }
+
+    // Page Home / format mobile large
+    .home-page {
+        .background-transparent {
+            .home-container {
+                .home-header {
+
+                    .img-container h1 {
+                        display: none;
+                    }
+
+                    .profil-nav-bar {
+
+                        .home-settings-links {
+                            gap: 0;
+                        }
+
+                        .profil, .settings, .contacts, .logout {
+                            margin-right: 15px;
+                        }
+                        
+                        .contacts {
+                            display: block;
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                .left-container {
+                    display: none;
+                }
+
+                .middle-container {
+                    width: 100%;
+                    height: fit-content;
+                    .stories {
+                        width: 90%;
+                        background-color: inherit;
+                        height: 220px;
+                    }
+                    .input-area {
+                        background-color: inherit;
+                        height: 10%;
+                        max-height: 85px;
+                    }
+                    .news-feed {
+                        background-color: inherit;
+                        height: 60%;
+
+                        .card-container {
+                            margin-top: 0;
+                            width: 90%;
+
+                            .picture {
+                                margin-bottom: 15px;
+                                max-width: none;
+                                height: 130px;
+                            }
+                        }
+                    }
+                }
+
+                .right-container {
+                    position: absolute;
+                    right: 0;
+                    display: none;
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    // Page Profil / format mobile
+    .profil-container {
+
+        header {
+
+            .img-container img {
+                padding: 0 0 5px 0;
+            }
+
+            .img-container h1 {
+                display: none;
+            }
+
+            .home-settings-links {
+                gap: 0;
+
+                .home, .profil, .settings {
+                    margin-right: 25px;
+                }
+            }
+        }
+
+        .user-description-box {
+            display: none;
+        }
+
+        .main-section-profil {
+            width: 100%;
+
+            .flex-container {
+                justify-content: center;
+            }
+
+            .user-name {
+                align-items: center;
+                .cellphone-profil-pic {
+                    margin-right: 1em;
+                    display: block !important;
+
+                    img {
+                        height: 100px;
+                        width: 100px;
+                        border-radius: 20px;
+                    }
+                }
+            }
+
+            .input-pictures-contact-box {
+                justify-content: center;
+            }
+
+            .user-posts-container {
+
+                .comment-user-name {
+                    font-size: 1em;
+                }
+        
+                .email {
+                    font-size: 0.9em;
+                }
+
+                .input-comments-container {
+                    .flex-container {
+                        margin: 0;
+                    }
+                }
+
+                .comments-container {
+                    margin: 0;
+                    .modify-delete {
+                        padding: 10px 0 10px 0;
+    
+                        .garbage {
+                            padding-right: 10px;
+                        }
+                    }
+                }  
+
+                .comment-text, .like-text, .dislike-text {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    // Page Settings / format mobile 738px
+    
+    .settings-page {
+        .settings-container {
+
+            .home-settings-links {
+                gap: 0;
+
+                .home, .profil, .settings {
+                    margin-right: 25px;
+                }
+            }
+
+            .user-name {
+                display: flex;
+                align-self: center;
+                .cellphone-profil-pic {
+                    margin-right: 1em;
+                    display: block;
+
+                    img {
+                        height: 100px;
+                        width: 100px;
+                        border-radius: 20px;
+                    }
+                }
+
+                h2 {
+                    align-self: center;
+                }
+            }
+
+            .settings-title-box {
+                justify-content: space-between;
+            }
+
+            .input-container {
+                .info-container {
+                    width: 50%;
+
+                    label {
+                        font-size: 0.9em;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Page Home / format mobile 430px
+@media screen and (max-width: 430px) {
+
+    .purple-line {
+        display: none;
+    }
+
+    .home-page {
+        height: auto;
+
+        .profil-nav-bar {
+            padding: 0 1em !important;
+        }
+
+        .home-settings-links {
+            flex-direction: column-reverse;
+            justify-content: space-evenly;
+
+            .profil, .settings, .contacts, .logout {
+                margin-right: 0 !important;
+            }
+        }
+
+        .user-name {
+            font-size: 1em;
+        }
+
+        .email {
+            font-size: 0.9em;
+        }
+
+        .comment-name-user {
+            h3 {
+                font-size: 1em; 
+            }
+            p {
+                font-size: 0.9em;
+            }
+        }
+    }
+
+    // Page Profil / format mobile 430px
+    .profil-page {
+        .home-settings-links {
+            flex-direction: column-reverse;
+            justify-content: space-evenly;
+
+            .home, .profil, .settings, .contacts, .logout {
+                margin-right: 0 !important;
+            }
+        }
+
+        .input-send-post {
+            width: 100% !important;
+        }
+
+        .user-name {
+            font-size: 1em;
+        }
+
+        .email {
+            font-size: 0.9em;
+        }
+
+        .modify-delete {
+            .fa-trash-can {
+                margin-left: 15px !important;
+            }
+        }
+    }
+
+    // Page Profil / format mobile 430px
+    .profil-page {
+        .home-settings-links {
+            flex-direction: column-reverse;
+            justify-content: space-evenly;
+
+            .home, .profil, .settings, .contacts, .logout {
+                margin-right: 0 !important;
+            }
+        }
+    }
+
+    // Page Profil / format mobile 430px
+    .settings-page {
+        .home-settings-links {
+            flex-direction: column-reverse;
+            justify-content: space-evenly;
+
+            .home, .profil, .settings, .contacts, .logout {
+                margin-right: 0 !important;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 778px) {
+    .right-container {
+        display: block !important;
+    }
+}

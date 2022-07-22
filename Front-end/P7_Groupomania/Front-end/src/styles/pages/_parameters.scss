@@ -1,0 +1,174 @@
+.settings-page {
+    background-image: url("../../images/cities-city-singapore-naght.jpg");
+    min-height: 677px;
+    height: 100vh;
+
+    .settings-container {
+        position: relative;
+        height: 90vh;
+        min-height: 678px;
+        width: 80vw;
+        min-width: 981px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+.main-section-settings {
+    width: 70%;
+    height: 80%;
+    padding: 3% 3% 0 3%;
+    background-color: hsl(253deg 12% 14%);
+    border-radius: 0 0 33px 0;
+    display: flex;
+    flex-direction: column;
+
+    .flex-container {
+        display: flex;
+        justify-content: space-between;
+
+        .user-name {
+            align-self: center;
+            .cellphone-profil-pic {
+                display: none;
+            }
+        }
+        .pictures-contact-box {
+            display: flex;
+            align-items: center;
+
+            li {
+                cursor: pointer;
+                background-color: #2A2831;
+                padding: 0.6em 1.5em;
+                border-radius: 25px;
+                &:hover, &:hover path{
+                    color: #8D76FF;
+                
+                }
+                &:first-child {
+                    margin-right: 1.5em;
+                }
+
+                svg {
+                    height: 18px;
+                    margin-right: 10px;
+                    
+                }
+            }
+        }
+    }
+
+    .settings {
+        margin-top: 1em;
+
+        .settings-title-box {
+            display: flex;
+            margin-bottom: 1em;
+            .user-titles {
+                width: 20%;
+            }
+            .purple-line {
+                width: 70%;
+            }
+        }
+    }
+
+    .settings-form {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow: hidden;
+
+        textarea {
+            width: 100%;
+            resize: none;
+            height: 50px;
+            color: #2A2831;
+        }
+
+        label {
+            margin-top: 10px;
+            margin-bottom: 2px;
+        }
+
+
+        #profil-pic[type=file]::file-selector-button {
+            width: 114px;
+            cursor: pointer;
+            border-radius: 20px;
+        }
+
+        .change-color[type=file]::file-selector-button {
+            background-color: #8D76FF;
+        }
+
+        #lastName, #firstName, #birthday, #address, #tel, #password, #confirmPassword {
+            width: 70%;
+            height: 20px;
+            color: #2A2831;
+        }
+
+        
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            height: 50%;
+            width: 100%;
+            min-width: 460px;
+            margin-top: 1.3em;
+
+            .info-container {
+                width: 40%;
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+        .submit-container {
+            margin-top: 1.8em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            #submit-form {
+                background-color: #2A2831;
+                border: 2px solid #8D76FF;
+                border-radius: 10px;
+                padding: 4px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: transform 400ms;
+                width: 150px;
+                height: 40px;
+                &:hover {
+                    transform: scale(1.15);
+                }
+            }
+        }
+
+        .delete-account-container {
+            margin: 0.5em ;
+            display: flex;
+            justify-content: flex-end;
+
+            span {
+                font-size: 0.9em;
+                color: rgb(255, 30, 30);
+                cursor: pointer;
+
+                svg {
+                    margin-right: 10px;
+
+                }
+
+                path {
+                    color: rgb(255, 30, 30);
+                }
+            }
+        }
+        
+    }
+}
