@@ -26,7 +26,7 @@ const Home = () => {
     }, [dispatch, userId]);
 
     useEffect(() => {
-        dispatch(getUser());
+        dispatch(getUser())
         // eslint-disable-next-line
       }, [])
 

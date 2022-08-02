@@ -5,6 +5,7 @@ import React from 'react';
 // Importation des components de react-router-dom
 import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
 
+
 // Importation des pages
 import Register from '../../pages/Register';
 import Home from '../../pages/Home';

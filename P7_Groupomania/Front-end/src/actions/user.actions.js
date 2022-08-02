@@ -53,6 +53,7 @@ export const getUser = () => {
             });
             
         } catch (error) {
+            if (error.response.status === 401) window.location = 'http://localhost:3001/register';
             console.log(error);
         }
     }
